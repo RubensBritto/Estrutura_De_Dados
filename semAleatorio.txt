@@ -1,0 +1,41 @@
+#import pandas as pd
+import csv
+
+lista = []
+lista_temp = []
+
+#Abrindo o arquivo csv com a função open
+arq = open('../../archive/2015.csv', 'r')
+#atribuindo os valores do arquivo à uma lista até achar um \n
+lista_temp = arq.read().split("\n")
+#passando a lista para string para poder separar os elementos
+lista_temp = ','.join(lista_temp)
+#Separando os elementos quando se encontra uma vírgula
+lista_temp = lista_temp.split(",")
+#Fechando o arquivo csv para que a lista possa ser fechada 
+arq.close()
+
+def addLista(x,y):
+    item = []
+    j = 0
+    for i in range(x,y,1):
+        if j <= 11:
+            j += 1
+            item.append(lista_temp[i])
+    return item
+
+def main():
+    cmc =12
+    fim = 24
+    #1908
+    for i in range(158):
+        lista.append(addLista(cmc,fim))
+        cmc = fim
+        fim += 12
+    for j in range (158):    
+        print(lista[j])
+
+if __name__ == "__main__":
+    main()
+
+#Sem ser aleatorio
