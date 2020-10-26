@@ -54,10 +54,25 @@ class opLista:
 
         
     def editarDado(self):
-        choose = input('Em qual linha/coluna deseja editar um novo dado?')
+        choose = int(input('Em qual linha/coluna deseja editar um novo dado?'))
         if choose == 1:
-            newCountry = input('Entre com o novo país:')
-            self.country = newCountry
+            editCountry = input('Entre com o novo nome do país: ')
         elif choose == 2:
-            newRegion = input('Entre com a nova região')
+            editRegion = input('Entre com a novo nome da região: ')
+        elif choose == 3:
+            editHappinessRank = input('Entre com o novo Indice de Felicidade: ')
+        elif choose == 4:
+            editHappinessScore = input('Entre com o novo rank de Felicidade: ')
+        elif choose == 5:
+            editStandartError = input('Entre com o novo Erro Padrão: ')
+        elif choose == 6:
+            editEconomy = input('Entre com a novo valor da Economia: ')
+        elif choose == 7:
+            editFamilyHealth = input('Entre com o novo indice "Family health": ')
+        elif choose == 8:
+            editFreedom = input('Entre com o novo indice de liberdade: ')
+        elif choose == 9:
+            editTrust = input('Entre com o novo indice de confiança: ')
+        elif choose == 10:
+            editDystopiaResidual = input('Entre com a nova distopia Residual: ')
         pass

@@ -26,47 +26,70 @@ def addLista(x,y):
             item.append(dadosTemp[i])
     return item
 def verificar(newCountry, newHappinessRank):
-    for i in len(dados):
-        if newCountry == dados[0][i] or newHappinessRank== dados[2][i]:
-            print('Pais ou Rankg já existe')
+    '''
+    country1=0
+    happy1 = 0
+    while couytry1 != dados[newCountry]:
+        i+=1
+            return dados[i]
+    '''
+    i=0 
+    j=1 
+    #print(dados)
+    for i in dados[0:-1]:
+    
+        #print("O TIPO DE i é: ", str(type(i)))
+            #print("O tipo de dados[i] é: ", str(type(dados[i])))
+        
+        if newCountry in dados.index(newCountry):
+            print('Pais já existente')
             return False
         else:
+            print("Pais Cadastrado com sucesso!")
             return True
+        
+
 def criarDado():
     newLine = opLista()
-    newCountry = input('Digite o nome do pais')
+    newCountry = input('Digite o nome do pais: ')
     #verificar se ja existe 
-    newRegion = input('Digite o nome da regiao')
-    newHappinessRank = input('Digite o rank da felicidade')
+    newRegion = input('Digite o nome da regiao: ')
+    newHappinessRank = input('Digite o rank da felicidade: ')
     #verificar se já existe
     verificacao = verificar(newCountry,newHappinessRank)
     if verificacao == False:
         criarDado()
     else:
-        newHappinessScore = input('Digite o score da felicidade')
-        newStandardError = input('Digite o Erro Padrão')
-        newEconomy = input('Digite a economia')
-        newFamilyHealth = input('Digite a Saúde Família')
-        newFreedom = input('Digite a Liberdade')
-        newTrust = input('Digite a Confiança')
-        newDystopiaResidual = input('Digite a Distopia Residual')
+        newHappinessScore = input('Digite o score da felicidade: ')
+        newStandardError = input('Digite o Erro Padrão: ')
+        newEconomy = input('Digite a economia: ')
+        newFamilyHealth = input('Digite a Saúde Família: ')
+        newFreedom = input('Digite a Liberdade: ')
+        newTrust = input('Digite a Confiança: ')
+        newDystopiaResidual = input('Digite a Distopia Residual: ')
         retorno = newLine.criarNewDado(newCountry, newRegion, newHappinessRank, newHappinessScore, newStandardError,newEconomy, newFamilyHealth, newFreedom, newTrust, newDystopiaResidual)
         dados.append(retorno)
         print(dados)
 
 def editarDado():
     pass
-
+def showList():
+    for j in len(dados):    
+        print(dados[j])
+    
 def start():
-    print('Digite a opção desejada\n1-Criar\n2-Editar')
+    print('Digite a opção desejada\n1-Criar\n2-Editar\n3-Mostrar Lista')
     choose = int(input())
     if choose == 1:
         criarDado()
     if choose == 2:
         editarDado()
+    if choose == 3:
+        showList()
 def main():
     k = 0
     visitados = []
+    #print(dados)
     #1908
     while k < 100:
         valorAleatorio = random.randint(1,100)
@@ -81,13 +104,11 @@ def main():
     print(visitados)
     print("________________________________________________________________________")
     '''
-    def showList():
-        for j in range (100):    
-            print(dados[j])
 
     start()
 
 if __name__ == "__main__":
     main()
+    
 
 #Aleatorio
