@@ -81,37 +81,42 @@ def criarDado():
         retorno = newLine.criarNewDado(newCountry, newRegion, newHappinessRank, newHappinessScore, newStandardError,newEconomy, newFamilyHealth, newFreedom, newTrust, newDystopiaResidual)
         #retorno = list(retorno)
         dados.append(retorno)
-        print(type(retorno))
+        #print(type(retorno))
         #print(dados)
 
 def editarDado():
-    country = input("Digite o pais que deseja editar")
+    country = input("Digite o pais que deseja editar: ")
+    #print(dados.index(country))
     for i in range(len(dados)):
         if country.lower() in dados[i][0].lower():
+            print(i)
             dadosClone = dados
             newLine = opLista()
-            choose = int(input('Em qual linha/coluna deseja editar um novo dado?'))
+            print('Em qual linha/coluna deseja editar um novo dado?\n1 - Pais\n2 - Regiao\n3 - Rankg felicidade')
+            print('4 - Indice Felicidade\n5 - Erro Padrão\n6 - Economia\n7 - Indice Family health')
+            print('8 - Indice de liberdade\n9 - Indice de confiança\n10 - Distopia Residual')
+            choose = int(input())
             if choose == 1:
                 editCountry = input('Entre com o novo nome do país: ')
-                newLine.editarCountry(editCountry)
+                newLine.editarCountry(editCountry,i)
             elif choose == 2:
                 editRegion = input('Entre com a novo nome da região: ')
-                newLine.editarRegion(editRegion)
+                newLine.editarRegion(editRegion,i)
             elif choose == 3:
-                editHappinessRank = float(input('Entre com o novo Indice de Felicidade: '))
-                newLine.editarHappinessRank(editHappinessRank)
-            elif choose == 4:
                 editHappinessScore = float(input('Entre com o novo rank de Felicidade: '))
-                newLine.editarHappinessScore(editHappinessScore)
+                newLine.editarHappinessScore(editHappinessScore,i)
+            elif choose == 4:
+                editHappinessRank = float(input('Entre com o novo Indice de Felicidade: '))
+                newLine.editarHappinessRank(editHappinessRank,i)
             elif choose == 5:
                 editStandartError = float(input('Entre com o novo Erro Padrão: '))
-                newLine.editarStandardError(editStandartError)
+                newLine.editarStandardError(editStandartError,i)
             elif choose == 6:
                 editEconomy = float(input('Entre com a novo valor da Economia: '))
-                newLine.editarEconomy(editEconomy)
+                newLine.editarEconomy(editEconomy,i)
             elif choose == 7:
                 editFamilyHealth = float(input('Entre com o novo indice "Family health": '))
-                newLine.editarFamilyHealth(editFamilyHealth)
+                newLine.editarFamilyHealth(editFamilyHealth,i)
             elif choose == 8:
                 editFreedom = float(input('Entre com o novo indice de liberdade: '))
                 newLine.editarFreedom(editFreedom)
@@ -122,8 +127,8 @@ def editarDado():
                 editDystopiaResidual = float(input('Entre com a nova distopia Residual: '))
                 newLine.editarDystopiaResidual(editDystopiaResidual)
 
-        else:
-            print('País inválido ou Operação invalida')
+        #else:
+        #    print('País inválido ou Operação invalida')
 def showList():
     for j in range(len(dados)):    
         print(dados[j])

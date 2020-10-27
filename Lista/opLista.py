@@ -41,7 +41,7 @@ class opLista:
         return itemTemp
 
         
-    def editarCountry(self, newCountry, newRegion, newHappinessRank, newHappinessScore, newStandardError, newEconomy, newFamilyHealth, newFreedom, newTrust, newDystopiaResidual):
+    def editarCountry(self, newCountry):
         self.country = newCountry
         pass
     def editarRegion(self, newRegion):
