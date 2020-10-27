@@ -158,6 +158,7 @@ def main():
             dados.append(addLista(cmc,fim))
             k += 1
     '''
+    1,2,3 testando
     print("OS VALORES ALEATORIOS")
     print(visitados)
     print("________________________________________________________________________")
