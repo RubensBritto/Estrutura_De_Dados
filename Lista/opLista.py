@@ -16,58 +16,92 @@ class opLista:
         self.dystopiaResidual = dystopiaResidual
         pass
     '''
-    def criarNewDado(self, newCountry, newRegion, newHappinessRank, newHappinessScore, newStandardError, newEconomy, newFamilyHealth, newFreedom, newTrust, newDystopiaResidual):
+    def criarNewDado(self, newCountry, newRegion, newHappinessRank, newHappinessScore, newStandardError, newEconomy, newFamily, newHealth, newFreedom, newTrust, newGenerosity,newDystopiaResidual):
         itemTemp.clear()
+        
         self.country = newCountry
         itemTemp.append(newCountry)
+
         self.region = newRegion
         itemTemp.append(newRegion)
+
         self.happinessRank = newHappinessRank
         itemTemp.append(str(newHappinessRank))
+
         self.happinessScore = newHappinessScore
-        itemTemp.append(str(newHappinessRank)) 
+        itemTemp.append(str(newHappinessRank))
+        
         self.standardError = newStandardError
         itemTemp.append(str(newStandardError))
+
         self.economy = newEconomy
         itemTemp.append(str(newEconomy))
-        self.familyHealth = newFamilyHealth
-        itemTemp.append(str(newFamilyHealth))
+
+        self.family = str(newFamily)
+        itemTemp.append(str(newFamily))
+
+        self.health = str(newHealth)
+        itemTemp.append(str(newHealth))
+
         self.freedom = newFreedom
         itemTemp.append(str(newFreedom))
+        
         self.trust = newTrust
         itemTemp.append(str(newTrust))
+
+        self.generosity= newGenerosity
+        itemTemp.append(str(newGenerosity))
+        
         self.dystopiaResidual = newDystopiaResidual
         itemTemp.append(str(newDystopiaResidual))
+
         return itemTemp
 
         
     def editarCountry(self, newCountry):
         self.country = newCountry
-        pass
+        return str(newCountry)
+        
     def editarRegion(self, newRegion):
         self.region = newRegion
-        pass
+        return str(newRegion)
+        
     def editarHappinessRank(self, newHappinessRank):
         self.happinessRank = newHappinessRank
-        pass
+        return str(newHappinessRank)
+        
     def editarHappinessScore(self, newHappinessScore):
         self.happinessScore = newHappinessScore
-        pass
+        return str(newHappinessScore)
+        
     def editarStandardError(self, newStandardError):
         self.standardError = newStandardError
-        pass
+        return str(newStandardError)
+        
     def editarEconomy(self, newEconomy):
         self.economy = newEconomy
-        pass
-    def editarFamilyHealth(self, newFamilyHealth):
-        self.familyHealth = newFamilyHealth
-        pass
+        return str(newEconomy)
+        
+    def editarFamily(self, newFamily):
+        self.familyHealth = newFamily
+        return str(newFamily)
+
+    def editarHealth(self, newHealth):
+        self.health = newHealth
+        return str(newHealth)
+        
     def editarFreedom(self, newFreedom):
         self.freedom = newFreedom
-        pass
+        return str(newFreedom)
+        
     def editarTrust(self, newTrust):
         self.trust = newTrust
-        pass
+        return str(newTrust)
+        
+    def editarGenerosity(self,newGenerosity):
+        self.generosity = newGenerosity
+        return str(newGenerosity)
+        
     def editarDystopiaResidual(self, newDystopiaResidual):
         self.dystopiaResidual = newDystopiaResidual
-        pass
+        return str(newDystopiaResidual)
