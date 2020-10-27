@@ -18,61 +18,56 @@ class opLista:
     '''
     def criarNewDado(self, newCountry, newRegion, newHappinessRank, newHappinessScore, newStandardError, newEconomy, newFamilyHealth, newFreedom, newTrust, newDystopiaResidual):
         itemTemp.clear()
-        #newCountry = input('Digite o nome do pais')
         self.country = newCountry
         itemTemp.append(newCountry)
-        #verificar se ja existe 
-        #newRegion = input('Digite o nome da regiao')
         self.region = newRegion
         itemTemp.append(newRegion)
-        #newHappinessRank = input('Digite o rank da felicidade')
         self.happinessRank = newHappinessRank
-        itemTemp.append(newHappinessRank)
-        #verificar se já existe
-        #newHappinessScore = input('Digite o score da felicidade')
+        itemTemp.append(str(newHappinessRank))
         self.happinessScore = newHappinessScore
-        itemTemp.append(newHappinessRank) 
-        #newStandardError = input('Digite o Erro Padrão')
+        itemTemp.append(str(newHappinessRank)) 
         self.standardError = newStandardError
-        itemTemp.append(newStandardError)
-        #newEconomy = input('Digite a economia')
+        itemTemp.append(str(newStandardError))
         self.economy = newEconomy
-        itemTemp.append(newEconomy)
-        #newFamilyHealth = input('Digite a Saúde Família')
+        itemTemp.append(str(newEconomy))
         self.familyHealth = newFamilyHealth
-        itemTemp.append(newFamilyHealth)
-        #newFreedom = input('Digite a Liberdade')
+        itemTemp.append(str(newFamilyHealth))
         self.freedom = newFreedom
-        itemTemp.append(newFreedom)
-        #newTrust = input('Digite a Confiança')
+        itemTemp.append(str(newFreedom))
         self.trust = newTrust
-        itemTemp.append(newTrust)
-        #newDystopiaResidual = input('Digite a Distopia Residual')
+        itemTemp.append(str(newTrust))
         self.dystopiaResidual = newDystopiaResidual
-        itemTemp.append(newDystopiaResidual)
+        itemTemp.append(str(newDystopiaResidual))
         return itemTemp
 
         
-    def editarDado(self):
-        choose = int(input('Em qual linha/coluna deseja editar um novo dado?'))
-        if choose == 1:
-            editCountry = input('Entre com o novo nome do país: ')
-        elif choose == 2:
-            editRegion = input('Entre com a novo nome da região: ')
-        elif choose == 3:
-            editHappinessRank = input('Entre com o novo Indice de Felicidade: ')
-        elif choose == 4:
-            editHappinessScore = input('Entre com o novo rank de Felicidade: ')
-        elif choose == 5:
-            editStandartError = input('Entre com o novo Erro Padrão: ')
-        elif choose == 6:
-            editEconomy = input('Entre com a novo valor da Economia: ')
-        elif choose == 7:
-            editFamilyHealth = input('Entre com o novo indice "Family health": ')
-        elif choose == 8:
-            editFreedom = input('Entre com o novo indice de liberdade: ')
-        elif choose == 9:
-            editTrust = input('Entre com o novo indice de confiança: ')
-        elif choose == 10:
-            editDystopiaResidual = input('Entre com a nova distopia Residual: ')
+    def editarCountry(self, newCountry, newRegion, newHappinessRank, newHappinessScore, newStandardError, newEconomy, newFamilyHealth, newFreedom, newTrust, newDystopiaResidual):
+        self.country = newCountry
+        pass
+    def editarRegion(self, newRegion):
+        self.region = newRegion
+        pass
+    def editarHappinessRank(self, newHappinessRank):
+        self.happinessRank = newHappinessRank
+        pass
+    def editarHappinessScore(self, newHappinessScore):
+        self.happinessScore = newHappinessScore
+        pass
+    def editarStandardError(self, newStandardError):
+        self.standardError = newStandardError
+        pass
+    def editarEconomy(self, newEconomy):
+        self.economy = newEconomy
+        pass
+    def editarFamilyHealth(self, newFamilyHealth):
+        self.familyHealth = newFamilyHealth
+        pass
+    def editarFreedom(self, newFreedom):
+        self.freedom = newFreedom
+        pass
+    def editarTrust(self, newTrust):
+        self.trust = newTrust
+        pass
+    def editarDystopiaResidual(self, newDystopiaResidual):
+        self.dystopiaResidual = newDystopiaResidual
         pass

@@ -1,5 +1,22 @@
+
+# -*- coding: utf-8 -*- 
 import csv
-import random
+import random # módulo para geração de números pseudo-aleatórios
+import pickle # Módulo para salvar e recuperar estruturas sem perda em arquivos
+
+'''
+Para salvar ou recuperar uma estrutura de um arquivo com o módulo acima, faça assim:
+
+>>> import pickle
+>>> f = open("test.pck", "w")
+
+Para armazenar uma estrutura de dados, use o método dump e então feche o arquivo do modo usual:
+
+>>> pickle.dump(12.3, f)
+>>> pickle.dump([1,2,3], f)
+>>> f.close()
+'''
+
 from opLista import opLista
 
 dados = []
@@ -25,67 +42,108 @@ def addLista(x,y):
             j += 1
             item.append(dadosTemp[i])
     return item
+
 def verificar(newCountry, newHappinessRank):
-    '''
-    country1=0
-    happy1 = 0
-    while couytry1 != dados[newCountry]:
-        i+=1
-            return dados[i]
-    '''
-    i=0 
-    j=1 
-    #print(dados)
-    for i in dados[0:-1]:
-    
-        #print("O TIPO DE i é: ", str(type(i)))
-            #print("O tipo de dados[i] é: ", str(type(dados[i])))
-        
-        if newCountry in dados.index(newCountry):
-            print('Pais já existente')
+    for i in range(len(dados)):
+        if newCountry.lower() in dados[i][0].lower() or str(newHappinessRank) in dados[i][2]:
+            #print('Pais ou Rankg já existe')
             return False
-        else:
-            print("Pais Cadastrado com sucesso!")
-            return True
-        
+    print('Pais ou rankg nao existe')
+    return True
+
+def deletarDado():
+    country = input('Digite o pais que deseja deletar')
+    for i in range(len(dados)):
+        if country.lower() in dados[i][0].lower():
+            del dados[i][0]
+            print('Removido')
+    print('Pais não consta na lista')        
 
 def criarDado():
     newLine = opLista()
     newCountry = input('Digite o nome do pais: ')
     #verificar se ja existe 
     newRegion = input('Digite o nome da regiao: ')
-    newHappinessRank = input('Digite o rank da felicidade: ')
+    newHappinessRank = int(input('Digite o rank da felicidade: '))
     #verificar se já existe
     verificacao = verificar(newCountry,newHappinessRank)
     if verificacao == False:
+        print('Inicie Novamente o cadastro por favor')
         criarDado()
     else:
-        newHappinessScore = input('Digite o score da felicidade: ')
-        newStandardError = input('Digite o Erro Padrão: ')
-        newEconomy = input('Digite a economia: ')
-        newFamilyHealth = input('Digite a Saúde Família: ')
-        newFreedom = input('Digite a Liberdade: ')
-        newTrust = input('Digite a Confiança: ')
-        newDystopiaResidual = input('Digite a Distopia Residual: ')
+        newHappinessScore = float(input('Digite o score da felicidade: '))
+        newStandardError = float(input('Digite o Erro Padrão: '))
+        newEconomy = float(input('Digite a economia: '))
+        newFamilyHealth = float(input('Digite a Saúde Família: '))
+        newFreedom = float(input('Digite a Liberdade: '))
+        newTrust = float(input('Digite a Confiança: '))
+        newDystopiaResidual = float(input('Digite a Distopia Residual: '))
         retorno = newLine.criarNewDado(newCountry, newRegion, newHappinessRank, newHappinessScore, newStandardError,newEconomy, newFamilyHealth, newFreedom, newTrust, newDystopiaResidual)
+        #retorno = list(retorno)
         dados.append(retorno)
-        print(dados)
+        print(type(retorno))
+        #print(dados)
 
 def editarDado():
-    pass
+    country = input("Digite o pais que deseja editar")
+    for i in range(len(dados)):
+        if country.lower() in dados[i][0].lower():
+            dadosClone = dados
+            newLine = opLista()
+            choose = int(input('Em qual linha/coluna deseja editar um novo dado?'))
+            if choose == 1:
+                editCountry = input('Entre com o novo nome do país: ')
+                newLine.editarCountry(editCountry)
+            elif choose == 2:
+                editRegion = input('Entre com a novo nome da região: ')
+                newLine.editarRegion(editRegion)
+            elif choose == 3:
+                editHappinessRank = float(input('Entre com o novo Indice de Felicidade: '))
+                newLine.editarHappinessRank(editHappinessRank)
+            elif choose == 4:
+                editHappinessScore = float(input('Entre com o novo rank de Felicidade: '))
+                newLine.editarHappinessScore(editHappinessScore)
+            elif choose == 5:
+                editStandartError = float(input('Entre com o novo Erro Padrão: '))
+                newLine.editarStandardError(editStandartError)
+            elif choose == 6:
+                editEconomy = float(input('Entre com a novo valor da Economia: '))
+                newLine.editarEconomy(editEconomy)
+            elif choose == 7:
+                editFamilyHealth = float(input('Entre com o novo indice "Family health": '))
+                newLine.editarFamilyHealth(editFamilyHealth)
+            elif choose == 8:
+                editFreedom = float(input('Entre com o novo indice de liberdade: '))
+                newLine.editarFreedom(editFreedom)
+            elif choose == 9:
+                editTrust = float(input('Entre com o novo indice de confiança: '))
+                newLine.editarTrust(editTrust)
+            elif choose == 10:
+                editDystopiaResidual = float(input('Entre com a nova distopia Residual: '))
+                newLine.editarDystopiaResidual(editDystopiaResidual)
+
+        else:
+            print('País inválido ou Operação invalida')
 def showList():
-    for j in len(dados):    
+    for j in range(len(dados)):    
         print(dados[j])
     
 def start():
-    print('Digite a opção desejada\n1-Criar\n2-Editar\n3-Mostrar Lista')
+    print('Digite a opção desejada\n1-Criar\n2-Editar\n3-Mostrar Lista\n4-Deletar Item')
     choose = int(input())
     if choose == 1:
         criarDado()
+        start()
     if choose == 2:
         editarDado()
+        start()
     if choose == 3:
         showList()
+        start()
+    if choose == 4:
+        deletarDado()
+        start()
+    
 def main():
     k = 0
     visitados = []
