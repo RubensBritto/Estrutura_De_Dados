@@ -17,24 +17,22 @@ def openData():
 def aleatorioData():
     k = 0
     visitados = []
-    valorAleatorio = random.randint(1,100)
     while(k < 100):
+        valorAleatorio = random.randint(1,100)
         if valorAleatorio not in visitados:
             visitados.append(valorAleatorio)
-            print(dados[valorAleatorio])
             pilha.push(dados[valorAleatorio])
             k+=1
         
-'''
-def showList():
-    for i in range(len(dados)):
-        rint(pilha.)
-'''
+def showStack():
+    for i in range(pilha.size()):
+       print(pilha.showStack(i))
+
 def main():
     openData()
     aleatorioData()
     print(pilha.size())
-    #showList()
+    showStack()
     #print(len(dados))
 
 
