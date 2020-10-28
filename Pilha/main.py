@@ -76,14 +76,17 @@ def criarDado():
         newDystopiaResidual = float(input('Digite a Distopia Residual: '))
         itemTemp.append(str(newDystopiaResidual))
         pilha.push(itemTemp)
-def ordernar():
+def ordernar(indexPilha):
+    pilha[-1] = pilha[indexPilha]
+    pilha[indexPilha] = pilha[-2]
     pass    
        
 def deletarDado():
     country = input('Digite o pais que deseja deletar: ')
     if pilha.percorrer(0,country) == True:
         #ARRUMAR FUNÇÃO ORDENAR (COLOCAR O ITEM QUE DESEJA EXCLUIR NA ULTIMA POSIÇÃO)
-        ordernar()
+        indexPilha = pilha.index(country)
+        ordernar(indexPilha)
         pilha.pop()
         print('Removido!')
         return
