@@ -17,7 +17,11 @@ class Stack:
     def size(self):
         return len(self.items)
     
-    
+    def percorrer(self, j, dado):
+        for i in range(len(self.items)):
+            if (dado.lower() in self.items[i][j].lower()):
+                return True
+
     def showStack(self,i):
         return self.items[i]
     
