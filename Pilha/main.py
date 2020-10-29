@@ -10,6 +10,7 @@ from pilha import Stack
 dados = []
 pilha =  Stack()
 
+#print[pilha[-1]]
 def openData():
     with open('datas/2015.csv', newline='') as arquivo:
         leitor=csv.reader(arquivo)
@@ -152,12 +153,17 @@ def editarDado():
                 pilha.stackEditar(sumario,11,editDystopiaResidual)
                 return
     print('Pais não existe')
+def ordenar(indexItem):
+    pilha[-1] = pilha[indexItem]
+    pilha[indexItem] = pilha[-2] 
 def deletarDado():
+    listaTemp = []
     country = input('Digite o pais que deseja deletar: ')
     if pilha.percorrer(0,country) == True:
         #ARRUMAR FUNÇÃO ORDENAR (COLOCAR O ITEM QUE DESEJA EXCLUIR NA ULTIMA POSIÇÃO)
-        
-        pilha.trocar(country)
+        listaTemp = list(pilha)
+        indexItem = listaTemp.index(country)
+        ordenar(indexItem)
         pilha.pop()
         print('Removido!')
         return
