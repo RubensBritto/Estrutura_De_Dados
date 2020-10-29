@@ -9,18 +9,6 @@ from opLista import opLista
 dados = []
 dadosTemp = []
 
-'''
-#Abrindo o arquivo csv com a função open
-arq = open('datas/2015.csv', 'r')
-#atribuindo os valores do arquivo à uma lista até achar um \n
-dadosTemp = arq.read().split("\n")
-#passando a lista para string para poder separar os elementos
-dadosTemp = ','.join(dadosTemp)
-#Separando os elementos quando se encontra uma vírgula
-dadosTemp = dadosTemp.split(",")
-#Fechando o arquivo csv para que a lista possa ser fechada 
-arq.close()
-'''
 def openData():
     with open('datas/2015.csv', newline='') as arquivo:
         leitor=csv.reader(arquivo)
@@ -220,4 +208,3 @@ if __name__ == "__main__":
     main()
     
 
-#Aleatorio
