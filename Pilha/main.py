@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-# Usando módulo interno do python para ler arquivos em ssv
+# Usando módulo interno do python para ler arquivos em csv
 import csv
-from os import truncate
+#from os import truncate
 import random
 import os
 
@@ -18,10 +18,10 @@ def openData():
         for linha in leitor:
             dados.append(linha)
 
-def saveNewDataCsv(dados):
+def saveNewDataCsv(dadosFinal):
     with open('datas/2015_1.csv', 'w', newline='') as arquivo_csv:
         escrever = csv.writer(arquivo_csv)
-        for linha in dados:
+        for linha in dadosFinal:
             escrever.writerow(linha)
 
 def aleatorioData():
@@ -40,7 +40,7 @@ def showStack():
 
 def verificar(newCountry, newHappinessRank):
     for i in range(pilha.size()):
-        if pilha.percorrer(0,newCountry) == True or pilha.percorrer(2,newHappinessRank) == True: 
+        if pilha.percorrerStack(0,newCountry) == True or pilha.percorrerStack(2,newHappinessRank) == True: 
                 print('Pais ou Rankg ja existe')
                 return False 
     return True
@@ -81,7 +81,7 @@ def criarDado():
 def editarDado():
     country = str(input("Digite o pais que deseja editar: "))
     for i in range(pilha.size()):
-        if pilha.percorrer(0, country) == True:
+        if pilha.percorrerStack(0, country) == True:
             sumario = pilha.indiceStack(0,country)
             print(sumario)
             print('Em qual linha/coluna deseja editar um novo dado?\n1 - Pais\n2 - Regiao\n3 - Rankg felicidade')
@@ -153,23 +153,41 @@ def editarDado():
                 pilha.stackEditar(sumario,11,editDystopiaResidual)
                 return
     print('Pais não existe')
-def ordenar(indexItem):
-    pilha[-1] = pilha[indexItem]
-    pilha[indexItem] = pilha[-2] 
-def deletarDado():
+def removeFromStack(indexItem):
     listaTemp = []
-    country = input('Digite o pais que deseja deletar: ')
-    if pilha.percorrer(0,country) == True:
-        #ARRUMAR FUNÇÃO ORDENAR (COLOCAR O ITEM QUE DESEJA EXCLUIR NA ULTIMA POSIÇÃO)
-        listaTemp = list(pilha)
-        indexItem = listaTemp.index(country)
-        ordenar(indexItem)
+    newIndex = indexItem + 1
+    #index = 7
+    
+    for i in range(newIndex):
+        listaTemp.append(pilha.returnLast(i))
+        #print(listaTemp[i])
+    listaTemp.pop()
+    
+    newIndex = indexItem + 1
+    
+    for j in range(newIndex, pilha.size()):
+        listaTemp.append(pilha.returnLast(j))
+    
+    for j in range(pilha.size()):
         pilha.pop()
-        print('Removido!')
-        return
-    else:
-        print('Pais não consta na lista!')    
+    
+    i = 0    
+    while (i < (len(listaTemp))):
+        pilha.push(listaTemp[i])
+        i+=1
 
+
+def deletarDado():
+    if pilha.isEmpty() == False:
+        country = input('Digite o pais que deseja deletar: ')
+        #ARRUMAR FUNÇÃO ORDENAR (COLOCAR O ITEM QUE DESEJA EXCLUIR NA ULTIMA POSIÇÃO)
+        indexStack = pilha.desempilhar(0,country)
+        print(indexStack)
+        removeFromStack(indexStack)
+        print('Removido!')
+    else:
+        print('Pilha ja está vazia')
+    
 
 def start():
     print('Digite a opção desejada\n1-Criar\n2-Editar\n3-Mostrar Lista\n4-Deletar Item\n5-Exportar CSV\n6-Limpar Console\n0-Sair')
@@ -187,7 +205,10 @@ def start():
         deletarDado()
         start()
     if choose == 5:
-        saveNewDataCsv(dados)
+        dadosFinal = []
+        for i in range(pilha.size()):
+            dadosFinal.append(pilha.returnLast(i))
+        saveNewDataCsv(dadosFinal)
         start()
     if choose == 6:        
         os.system('clear')
@@ -200,8 +221,6 @@ def start():
 def main():
     openData()
     aleatorioData()
-    #ordernar()
-    print(pilha.peek())
     start()
 
 if __name__ == "__main__":

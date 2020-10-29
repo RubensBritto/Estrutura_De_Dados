@@ -20,14 +20,18 @@ class Stack:
     def size(self):
         return len(self.items)
     
-    def percorrer(self, j, dado):
+    def percorrerStack(self, j, dado):
         for i in range(self.size()):
             if (str(dado.lower()) in self.items[i][j].lower()):
                 return True
-    def percorrer2(self, j, dado):
+
+    def desempilhar(self, j, dado):
          for i in range(self.size()):
             if (dado.lower() in self.items[i][j].lower()):
-                return self.items[i]
+                return i
+
+    def returnLast(self, i):
+        return self.items[i]
     
     def stackEditar(self, i, j, dados):
         self.items[i][j] = str(dados)
@@ -40,3 +44,5 @@ class Stack:
     def showStack(self,i):
         return self.items[i]
     
+    def ordenar(indexItem):
+        pass
