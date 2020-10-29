@@ -157,8 +157,8 @@ def editarDado():
                 inserirDadoMatriz(linhaDados,11,retorno)
 
 def showList():
-    for j in range(len(dados)):    
-        print(dados[j])
+    for i in range(len(dados)):    
+        print(dados[i])
     
 def start():
     print('Digite a opção desejada\n1-Criar\n2-Editar\n3-Mostrar Lista\n4-Deletar Item\n5-Exportar CSV\n6-Limpar Console\n0-Sair')
