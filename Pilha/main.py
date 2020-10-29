@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 # Usando módulo interno do python para ler arquivos em csv
 import csv
-#from os import truncate
 import random
 import os
 
@@ -10,7 +9,6 @@ from pilha import Stack
 dados = []
 pilha =  Stack()
 
-#print[pilha[-1]]
 def openData():
     with open('datas/2015.csv', newline='') as arquivo:
         leitor=csv.reader(arquivo)
@@ -156,11 +154,9 @@ def editarDado():
 def removeFromStack(indexItem):
     listaTemp = []
     newIndex = indexItem + 1
-    #index = 7
     
     for i in range(newIndex):
         listaTemp.append(pilha.returnLast(i))
-        #print(listaTemp[i])
     listaTemp.pop()
     
     newIndex = indexItem + 1
@@ -180,7 +176,6 @@ def removeFromStack(indexItem):
 def deletarDado():
     if pilha.isEmpty() == False:
         country = input('Digite o pais que deseja deletar: ')
-        #ARRUMAR FUNÇÃO ORDENAR (COLOCAR O ITEM QUE DESEJA EXCLUIR NA ULTIMA POSIÇÃO)
         indexStack = pilha.desempilhar(0,country)
         print(indexStack)
         removeFromStack(indexStack)
