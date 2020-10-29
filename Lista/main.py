@@ -32,15 +32,6 @@ def altera_csv(dados):
         for linha in dados:
             escrever.writerow(linha)
 
-
-def addLista(x,y):
-    item = []
-    j = 0
-    for i in range(x,y,1):
-        if j <= 11:
-            j += 1
-            item.append(dadosTemp[i])
-    return item
 def inserirDadoMatriz(i,j,item):
     dados[i][j] = item
 
@@ -52,7 +43,6 @@ def indiceItem(country):
 def verificar(newCountry, newHappinessRank):
     for i in range(len(dados)):
         if newCountry.lower() in dados[i][0].lower() or str(newHappinessRank) in dados[i][2]:
-            #print('Pais ou Rankg já existe')
             return False
     print('Pais ou ranking nao existe')
     return True
@@ -61,7 +51,7 @@ def deletarDado():
     country = input('Digite o pais que deseja deletar: ')
     for i in range(len(dados)):
         if country.lower() in dados[i][0].lower():
-            del dados[i][0]
+            del dados[i]
             print('Removido!')
             return
     print('Pais não consta na lista!')        
@@ -93,8 +83,7 @@ def editarDado():
     country = input("Digite o pais que deseja editar: ")
     for i in range(len(dados)):
         if country.lower() in dados[i][0].lower():
-            print(i)
-            sumario = indiceItem(country)
+            linhaDados = indiceItem(country)
             newLine = opLista()
             print('Em qual linha/coluna deseja editar um novo dado?\n1 - Pais\n2 - Regiao\n3 - Rankg felicidade')
             print('4 - Indice Felicidade\n5 - Erro Padrão\n6 - Economia\n7 - Family\n8 - Health')
@@ -105,70 +94,68 @@ def editarDado():
                 retorno = newLine.editarCountry(editCountry)
                 retorno2 = verificar(editCountry,0)
                 if retorno2 == True:
-                    inserirDadoMatriz(sumario,0,retorno)
+                    inserirDadoMatriz(linhaDados,0,retorno)
                 else:
                     print("Pais já existe")
             elif choose == 2:
                 editRegion = input('Entre com a novo nome da região: ')
                 retorno = newLine.editarRegion(editRegion)
-                inserirDadoMatriz(sumario,1,retorno)
+                inserirDadoMatriz(linhaDados,1,retorno)
 
             elif choose == 3:
                 editHappinessScore = float(input('Entre com o novo rank de Felicidade: '))
                 retorno = newLine.editarHappinessScore(editHappinessScore)
                 retorno2 = verificar("",editHappinessScore)
                 if retorno2 == True:
-                    inserirDadoMatriz(sumario,2,retorno)
+                    inserirDadoMatriz(linhaDados,2,retorno)
                 else:
                     print("Rank já existe")
 
             elif choose == 4:
                 editHappinessRank = float(input('Entre com o novo Indice de Felicidade: '))
                 retorno = newLine.editarHappinessRank(editHappinessRank)
-                inserirDadoMatriz(sumario,3,retorno)
+                inserirDadoMatriz(linhaDados,3,retorno)
 
             elif choose == 5:
                 editStandartError = float(input('Entre com o novo Erro Padrão: '))
                 retorno = newLine.editarStandardError(editStandartError)
-                inserirDadoMatriz(sumario,4,retorno)
+                inserirDadoMatriz(linhaDados,4,retorno)
 
             elif choose == 6:
                 editEconomy = float(input('Entre com a novo valor da Economia: '))
                 retorno = newLine.editarEconomy(editEconomy)
-                inserirDadoMatriz(sumario,5,retorno)
+                inserirDadoMatriz(linhaDados,5,retorno)
 
             elif choose == 7:
                 editFamily = float(input('Entre com o novo indice "Family": '))
                 retorno = newLine.editarFamily(editFamily)
-                inserirDadoMatriz(sumario,6,retorno)
+                inserirDadoMatriz(linhaDados,6,retorno)
 
             elif choose == 8:
                 editHealth = float(input('Entre com o novo indice "Health": '))
                 retorno = newLine.editarHealth(editHealth)
-                inserirDadoMatriz(sumario,7,retorno)
+                inserirDadoMatriz(linhaDados,7,retorno)
 
             elif choose == 9:
                 editFreedom = float(input('Entre com o novo indice de liberdade: '))
                 retorno = newLine.editarFreedom(editFreedom)
-                inserirDadoMatriz(sumario,8,retorno)
+                inserirDadoMatriz(linhaDados,8,retorno)
 
             elif choose == 10:
                 editTrust = float(input('Entre com o novo indice de confiança: '))
                 retorno = newLine.editarTrust(editTrust)
-                inserirDadoMatriz(sumario,9,retorno)
+                inserirDadoMatriz(linhaDados,9,retorno)
 
             elif choose == 11:
                 editGenerosity = float(input('Entre com o novo indice "Generosity": '))
                 retorno = newLine.editarGenerosity(editGenerosity)
-                inserirDadoMatriz(sumario,10,retorno)
+                inserirDadoMatriz(linhaDados,10,retorno)
 
             elif choose == 12:
                 editDystopiaResidual = float(input('Entre com a nova distopia Residual: '))
                 retorno = newLine.editarDystopiaResidual(editDystopiaResidual)
-                inserirDadoMatriz(sumario,11,retorno)
+                inserirDadoMatriz(linhaDados,11,retorno)
 
-        #else:
-        #    print('País inválido ou Operação invalida')
 def showList():
     for j in range(len(dados)):    
         print(dados[j])

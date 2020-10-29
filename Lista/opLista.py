@@ -2,20 +2,6 @@
 itemTemp = []
 
 class opLista:
-    '''
-    def __init__(self, country, region, happinessRank, happinessScore, standardError, economy, familyHealth, freedom, trust, dystopiaResidual):
-        self.country = country
-        self.region = region 
-        self.happinessRank =  happinessRank
-        self.happinessScore = happinessScore
-        self.standardError =  standardError
-        self.economy =  economy
-        self.familyHealth =  familyHealth
-        self.freedom = freedom
-        self.trust = trust
-        self.dystopiaResidual = dystopiaResidual
-        pass
-    '''
     def criarNewDado(self, newCountry, newRegion, newHappinessRank, newHappinessScore, newStandardError, newEconomy, newFamily, newHealth, newFreedom, newTrust, newGenerosity,newDystopiaResidual):
         itemTemp.clear()
         
