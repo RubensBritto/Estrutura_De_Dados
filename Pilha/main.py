@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # Usando módulo interno do python para ler arquivos em ssv
 import csv
+from os import truncate
 import random
 import os
 
@@ -41,8 +42,7 @@ def verificar(newCountry, newHappinessRank):
         if pilha.percorrer(0,newCountry) == True or pilha.percorrer(2,newHappinessRank) == True: 
                 print('Pais ou Rankg ja existe')
                 return False 
-    
-
+    return True
 def criarDado():
     itemTemp = []
     newCountry = input('Digite o nome do pais: ')
@@ -76,23 +76,95 @@ def criarDado():
         newDystopiaResidual = float(input('Digite a Distopia Residual: '))
         itemTemp.append(str(newDystopiaResidual))
         pilha.push(itemTemp)
-def ordernar(indexPilha):
-    pilha[-1] = pilha[indexPilha]
-    pilha[indexPilha] = pilha[-2]
-    pass    
-       
+
+def editarDado():
+    country = str(input("Digite o pais que deseja editar: "))
+    for i in range(pilha.size()):
+        if pilha.percorrer(0, country) == True:
+            sumario = pilha.indiceStack(0,country)
+            print(sumario)
+            print('Em qual linha/coluna deseja editar um novo dado?\n1 - Pais\n2 - Regiao\n3 - Rankg felicidade')
+            print('4 - Indice Felicidade\n5 - Erro Padrão\n6 - Economia\n7 - Family\n8 - Health')
+            print('9 - Indice de liberdade\n10 - Indice de confiança\n11 - Indice de Generosidade\n12 - Distopia Residual')
+            choose = int(input())
+            if choose == 1:
+                editCountry = str(input('Entre com o novo nome do país: '))
+                retorno = verificar(editCountry,str(0.0))
+                print(retorno)
+                if retorno == True:
+                    pilha.stackEditar(sumario,0,editCountry)
+                else:
+                    print("Pais já existe")
+            elif choose == 2:
+                editRegion = input('Entre com a novo nome da região: ')
+                pilha.stackEditar(sumario,1,editRegion)
+                return
+
+            elif choose == 3:
+                editHappinessScore = float(input('Entre com o novo rank de Felicidade: '))
+                retorno = verificar(" ",str(editHappinessScore))
+                if retorno == True:
+                    pilha.stackEditar(sumario,2,editHappinessScore)
+                else:
+                    print("Rank já existe")
+            if choose == 4:
+                editHappinessRank = float(input('Entre com o novo Indice de Felicidade: '))
+                pilha.stackEditar(sumario,3,editHappinessRank)
+                return
+
+            elif choose == 5:
+                editStandartError = float(input('Entre com o novo Erro Padrão: '))
+                pilha.stackEditar(sumario,4,editStandartError)
+                return
+
+            elif choose == 6:
+                editEconomy = float(input('Entre com a novo valor da Economia: '))
+                pilha.stackEditar(sumario,5,editEconomy)
+                return
+
+            elif choose == 7:
+                editFamily = float(input('Entre com o novo indice "Family": '))
+                pilha.stackEditar(sumario,6,editFamily)
+                return
+
+            elif choose == 8:
+                editHealth = float(input('Entre com o novo indice "Health": '))
+                pilha.stackEditar(sumario,7,editHealth)
+                return
+
+            elif choose == 9:
+                editFreedom = float(input('Entre com o novo indice de liberdade: '))
+                pilha.stackEditar(sumario,8,editFreedom)
+                return
+
+            elif choose == 10:
+                editTrust = float(input('Entre com o novo indice de confiança: '))
+                pilha.stackEditar(sumario,9,editTrust)
+                return
+            
+            elif choose == 11:
+                editGenerosity = float(input('Entre com o novo indice "Generosity": '))
+                pilha.stackEditar(sumario,10,editGenerosity)
+                return
+
+            elif choose == 12:
+                editDystopiaResidual = float(input('Entre com a nova distopia Residual: '))
+                pilha.stackEditar(sumario,11,editDystopiaResidual)
+                return
+    print('Pais não existe')
 def deletarDado():
     country = input('Digite o pais que deseja deletar: ')
     if pilha.percorrer(0,country) == True:
         #ARRUMAR FUNÇÃO ORDENAR (COLOCAR O ITEM QUE DESEJA EXCLUIR NA ULTIMA POSIÇÃO)
-        indexPilha = pilha.index(country)
-        ordernar(indexPilha)
+        
+        pilha.trocar(country)
         pilha.pop()
         print('Removido!')
         return
     else:
         print('Pais não consta na lista!')    
-    
+
+
 def start():
     print('Digite a opção desejada\n1-Criar\n2-Editar\n3-Mostrar Lista\n4-Deletar Item\n5-Exportar CSV\n6-Limpar Console\n0-Sair')
     choose = int(input())
@@ -100,7 +172,7 @@ def start():
         criarDado()
         start()
     if choose == 2:
-        #editarDado()
+        editarDado()
         start()
     if choose == 3:
         showStack()
@@ -122,7 +194,8 @@ def start():
 def main():
     openData()
     aleatorioData()
-    ordernar()
+    #ordernar()
+    print(pilha.peek())
     start()
 
 if __name__ == "__main__":
