@@ -177,7 +177,6 @@ def deletarDado():
     if pilha.isEmpty() == False:
         country = input('Digite o pais que deseja deletar: ')
         indexStack = pilha.desempilhar(0,country)
-        print(indexStack)
         removeFromStack(indexStack)
         print('Removido!')
     else:
