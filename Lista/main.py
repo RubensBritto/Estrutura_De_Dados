@@ -3,27 +3,13 @@
 import csv
 import os
 import random # módulo para geração de números pseudo-aleatórios
-import pickle # Módulo para salvar e recuperar estruturas sem perda em arquivos
-
-'''
-Para salvar ou recuperar uma estrutura de um arquivo com o módulo acima, faça assim:
-
->>> import pickle
->>> f = open("test.pck", "w")
-
-Para armazenar uma estrutura de dados, use o método dump e então feche o arquivo do modo usual:
-
->>> pickle.dump(12.3, f)
->>> pickle.dump([1,2,3], f)
->>> f.close()
-'''
-
 from opLista import opLista
+
 
 dados = []
 dadosTemp = []
 
-
+'''
 #Abrindo o arquivo csv com a função open
 arq = open('datas/2015.csv', 'r')
 #atribuindo os valores do arquivo à uma lista até achar um \n
@@ -34,7 +20,23 @@ dadosTemp = ','.join(dadosTemp)
 dadosTemp = dadosTemp.split(",")
 #Fechando o arquivo csv para que a lista possa ser fechada 
 arq.close()
+'''
+def openData():
+    with open('datas/2015.csv', newline='') as arquivo:
+        leitor=csv.reader(arquivo)
+        leitor.__next__()
+        for linha in leitor:
+            dadosTemp.append(linha)
 
+def aleatorioData():
+    k = 0
+    visitados = []
+    while(k < 100):
+        valorAleatorio = random.randint(1,100)
+        if valorAleatorio not in visitados:
+            visitados.append(valorAleatorio)
+            dados.append(dadosTemp[valorAleatorio])
+            k+=1
 
 def altera_csv(dados):
     with open('datas/2015_1.csv', 'w', newline='') as arquivo_csv:
@@ -210,25 +212,8 @@ def start():
         print("Operação invalida!")
         start()
 def main():
-    k = 0
-    visitados = []
-    #print(dados)
-    #1908
-    while k < 100:
-        valorAleatorio = random.randint(1,100)
-        if valorAleatorio not in visitados:
-            visitados.append(valorAleatorio)
-            cmc = valorAleatorio * 12
-            fim = cmc + 12
-            dados.append(addLista(cmc,fim))
-            k += 1
-    '''
-    1,2,3 testando
-    print("OS VALORES ALEATORIOS")
-    print(visitados)
-    print("________________________________________________________________________")
-    '''
-
+    openData()
+    aleatorioData()
     start()
 
 if __name__ == "__main__":
