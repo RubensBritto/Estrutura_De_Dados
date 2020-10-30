@@ -35,7 +35,7 @@ def altera_csv(dados):
         for linha in dados:
             escrever.writerow(linha)
 
-#inserirDadoMatriz - adiciona de forma matricial todos os arquivos alterados ou colodaos na lista
+#inserirDadoMatriz - adiciona na lista os arquivos que forma alterados, de forma "pontual" na linha e coluna desejada
 def inserirDadoMatriz(i,j,item):
     dados[i][j] = item
 
