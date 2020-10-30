@@ -163,8 +163,8 @@ def editarDado():
     print('Pais não existe')
 
 # removeFromStack - cria uma lista temporaria, guarda o index do item da pilha a ser removido
-# passa a pilha pra lista, remove o item na lista e depois coloca essa lista sem o item de volta 
-# na pilha
+# passa a pilha para uma lista, remove o item na lista e depois coloca essa lista sem o item de volta na pilha
+
 def removeFromStack(indexItem):
     listaTemp = []
     newIndex = indexItem + 1
