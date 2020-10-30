@@ -1,14 +1,15 @@
 # -*- coding: utf-8 -*-
 # Usando módulo interno do python para ler arquivos em csv
-import csv
-import random
-import os
+import csv # módulo necessário poder se trabalhar com csv
+import random # módulo para geração de números pseudo-aleatórios
+import os # módulo para acessar o terminal do sistema e poder fazer a limpeza
 
 from pilha import Stack
 
 dados = []
 pilha =  Stack()
 
+# openData - abre os arquivos (csv) e faz toda manipulação para ser colocado na pilha
 def openData():
     with open('datas/2015.csv', newline='') as arquivo:
         leitor=csv.reader(arquivo)
@@ -16,12 +17,15 @@ def openData():
         for linha in leitor:
             dados.append(linha)
 
+# saveNewDataCsv - recebe a pilha de dados com todas as alterações e manipulações e exportar para outro arquivo csv
 def saveNewDataCsv(dadosFinal):
     with open('datas/2015_1.csv', 'w', newline='') as arquivo_csv:
         escrever = csv.writer(arquivo_csv)
         for linha in dadosFinal:
             escrever.writerow(linha)
 
+# aleatorioData - cria uma lista com os 100 dados aleatórios da base de dados original e 
+# adciona a pilha
 def aleatorioData():
     k = 0
     visitados = []
@@ -31,17 +35,22 @@ def aleatorioData():
             visitados.append(valorAleatorio)
             pilha.push(dados[valorAleatorio])
             k+=1
-        
+
+#showStack - imprime todos os dados contidos na pilha        
 def showStack():
     for i in range(pilha.size()):
        print(pilha.showStack(i))
 
+#verificar - mostra se o país em questão já está na pilha (impendindo repetições)
 def verificar(newCountry, newHappinessRank):
     for i in range(pilha.size()):
         if pilha.percorrerStack(0,newCountry) == True or pilha.percorrerStack(2,newHappinessRank) == True: 
                 print('Pais ou Rankg ja existe')
                 return False 
     return True
+
+# criarDado - pega todas as informações necessárias para o cadastro e adiciona na pilha 
+# (caso não tenha um pais de mesmo nome)
 def criarDado():
     itemTemp = []
     newCountry = input('Digite o nome do pais: ')
@@ -76,6 +85,7 @@ def criarDado():
         itemTemp.append(str(newDystopiaResidual))
         pilha.push(itemTemp)
 
+# editarDado - verifica se o país (chave) a ser editado existe e permite mudar seus atributos
 def editarDado():
     country = str(input("Digite o pais que deseja editar: "))
     for i in range(pilha.size()):
@@ -151,6 +161,10 @@ def editarDado():
                 pilha.stackEditar(sumario,11,editDystopiaResidual)
                 return
     print('Pais não existe')
+
+# removeFromStack - cria uma lista temporaria, guarda o index do item da pilha a ser removido
+# passa a pilha pra lista, remove o item na lista e depois coloca essa lista sem o item de volta 
+# na pilha
 def removeFromStack(indexItem):
     listaTemp = []
     newIndex = indexItem + 1
@@ -172,7 +186,7 @@ def removeFromStack(indexItem):
         pilha.push(listaTemp[i])
         i+=1
 
-
+#deletarDado - faz uma busca pelo país (chave) em questão e o deleta
 def deletarDado():
     if pilha.isEmpty() == False:
         country = input('Digite o pais que deseja deletar: ')
@@ -182,7 +196,7 @@ def deletarDado():
     else:
         print('Pilha ja está vazia')
     
-
+# start - aqui são oferecidas aos usuários todas as opções disponíveis em um menu interativo
 def start():
     print('Digite a opção desejada\n1-Criar\n2-Editar\n3-Mostrar Lista\n4-Deletar Item\n5-Exportar CSV\n6-Limpar Console\n0-Sair')
     choose = int(input())

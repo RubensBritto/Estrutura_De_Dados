@@ -1,7 +1,7 @@
 
 # -*- coding: utf-8 -*- 
-import csv
-import os
+import csv # módulo necessário poder se trabalhar com csv
+import os # módulo para acessar o terminal do sistema e poder fazer a limpeza
 import random # módulo para geração de números pseudo-aleatórios
 from opLista import opLista
 
@@ -9,6 +9,7 @@ from opLista import opLista
 dados = []
 dadosTemp = []
 
+# openData - abre os arquivos (csv) e faz toda manipulação para ser colocado na lista
 def openData():
     with open('datas/2015.csv', newline='') as arquivo:
         leitor=csv.reader(arquivo)
@@ -16,6 +17,7 @@ def openData():
         for linha in leitor:
             dadosTemp.append(linha)
 
+# aleatorioData - cria uma lista com os 100 dados aleatórios da base de dados original 
 def aleatorioData():
     k = 0
     visitados = []
@@ -26,20 +28,25 @@ def aleatorioData():
             dados.append(dadosTemp[valorAleatorio])
             k+=1
 
+# altera_csv - recebe a lista de dados com todas as alterações e manipulações e exportar para outro arquivo csv
 def altera_csv(dados):
     with open('datas/2015_1.csv', 'w', newline='') as arquivo_csv:
         escrever = csv.writer(arquivo_csv)
         for linha in dados:
             escrever.writerow(linha)
 
+#inserirDadoMatriz - adiciona de forma matricial todos os arquivos alterados ou colodaos na lista
 def inserirDadoMatriz(i,j,item):
     dados[i][j] = item
 
+#indiceItem - retorna o indice do item na lista, usando como chave o país
 def indiceItem(country):
     for i in range(len(dados)):
         if country.lower() in dados[i][0].lower():
             return i
     return
+
+#verificar - mostra se o país em questão já está na lista (impendindo repetições)
 def verificar(newCountry, newHappinessRank):
     for i in range(len(dados)):
         if newCountry.lower() in dados[i][0].lower() or str(newHappinessRank) in dados[i][2]:
@@ -47,6 +54,7 @@ def verificar(newCountry, newHappinessRank):
     print('Pais ou ranking nao existe')
     return True
 
+#deletarDado - faz uma busca pelo país (chave) em questão e o deleta
 def deletarDado():
     country = input('Digite o pais que deseja deletar: ')
     for i in range(len(dados)):
@@ -56,6 +64,8 @@ def deletarDado():
             return
     print('Pais não consta na lista!')        
 
+# criarDado - pega todas as informações necessárias para o cadastro e adiciona na lista 
+# (caso não tenha um pais de mesmo nome)
 def criarDado():
     newLine = opLista()
     newCountry = input('Digite o nome do pais: ')
@@ -78,7 +88,7 @@ def criarDado():
         retorno = newLine.criarNewDado(newCountry, newRegion, newHappinessRank, newHappinessScore, newStandardError,newEconomy, newFamily, newHealth, newFreedom, newTrust, newGenerosity, newDystopiaResidual)
         dados.append(retorno)
 
-
+# editarDado - verifica se o país (chave) a ser editado existe e permite mudar seus atributos
 def editarDado():
     country = input("Digite o pais que deseja editar: ")
     for i in range(len(dados)):
@@ -156,10 +166,12 @@ def editarDado():
                 retorno = newLine.editarDystopiaResidual(editDystopiaResidual)
                 inserirDadoMatriz(linhaDados,11,retorno)
 
+#showList - imprime todos os dados contidos na lista
 def showList():
     for i in range(len(dados)):    
         print(dados[i])
-    
+
+# start - aqui são oferecidas aos usuários todas as opções disponíveis em um menu interativo    
 def start():
     print('Digite a opção desejada\n1-Criar\n2-Editar\n3-Mostrar Lista\n4-Deletar Item\n5-Exportar CSV\n6-Limpar Console\n0-Sair')
     choose = int(input())

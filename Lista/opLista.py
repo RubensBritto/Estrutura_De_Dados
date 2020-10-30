@@ -2,6 +2,9 @@
 itemTemp = []
 
 class opLista:
+    #Função criarDados() - Função que adciona um novo dado na lista (adcionando todas as informações de um novo país)
+    #Usamos uma lista temporaria para ir guardando cada item necessário para completar uma linha de dados, depois
+    #Retornamos esse valor para ser adcionado na lista original
     def criarNewDado(self, newCountry, newRegion, newHappinessRank, newHappinessScore, newStandardError, newEconomy, newFamily, newHealth, newFreedom, newTrust, newGenerosity,newDystopiaResidual):
         itemTemp.clear()
         
@@ -40,10 +43,11 @@ class opLista:
         
         self.dystopiaResidual = newDystopiaResidual
         itemTemp.append(str(newDystopiaResidual))
-
+        #Retorno da lista com todas as novas informações
         return itemTemp
 
-        
+    #Campo das edições de dados: as funções a seguir permite editar cada item da base de dados validas!
+    #Colocamos em métodos separadas para melhorar a eficiência do retorno.
     def editarCountry(self, newCountry):
         self.country = newCountry
         return str(newCountry)

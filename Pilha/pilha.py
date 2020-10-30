@@ -1,5 +1,22 @@
 from os import sendfile
 
+#Nesta classe nós simulamos uma pilha implementada do zero. Basicamente definimos todas as funções que uma pilha tem 
+#implementada e acessamos seus métodos na main como se fosse uma função nativa da linguagem, praticamente!
+
+"""
+Temos basicamente as seguintes funções: 
+- isEmpty = verifica se a pilha está vazia
+- push = adiciona um elemento (seja string, int, ou até mesmo listas)
+- pop = remove um elemento da pilha, no caso, por se tratar de uma pilha, o último item
+- peek = retorna o último elemento da pilha, para consultas ou implementações
+- size = retorna o tamanho da pilha
+- percorrerStack = percorrer a lista e verifica se determinado dado está na lista
+- desempilhar = desempilha a lista para que determinado elemento possa ser removido
+- returnLast = retorna o último item da lista, pórem diferente da peek, este método pode ser alterado
+- stackEditar = método usado para acessar e editar determinado item da pilha
+- indiceStack = retorna o indice na pilha em que o dado procurado está posicionado
+- showStack = imprime na tela todos os itens presentes na pilha
+"""
 
 class Stack:
     def __init__(self):
