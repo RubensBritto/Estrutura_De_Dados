@@ -20,7 +20,8 @@ import random
 
 dadosTemp = []
 dados = []
-listaTemp2 = []
+tree = BinarySearchTree()
+
 
 '''
 with open('datas/2015.csv') as csv_file:
@@ -43,38 +44,27 @@ def openData():
     with open('datas/2015.csv', newline='') as arquivo:
         leitor=csv.reader(arquivo)
         leitor.__next__()
-        i = 0
-        j = 0
-        listTemp  = []
-        listaTemp2 = []
         for linha in leitor:
-            listTemp.append(j)
             dadosTemp.append(linha)
-            listaTemp2[i] = listTemp + dadosTemp
-            i+=1
-            j+=1
 
 def aleatorioData():
-    bst = BinarySearchTree()
     k = 0
     visitados = []
     while(k < 100):
         valorAleatorio = random.randint(1,100)
         if valorAleatorio not in visitados:
             visitados.append(valorAleatorio)
-            bst.insert(valorAleatorio)
-            dados.append(listaTemp2[k])
+            tree.insert(valorAleatorio)
+            dados.append(dadosTemp[k])
             k+=1
-    #bst.inorder_traversal()
-    #bst.simetric_traversal()
-    #bst.view()
-
 def main():
     openData()
     aleatorioData()
-    for i in range(len(dados)):
-        print(dados[i])
-    
+    tree.inorder_traversal()
+    if tree.search(2) != None:
+        print('ENCONTRADO')
+    else:
+        print('NÃO ENCONTRADO')
 if __name__ == "__main__":
     main()
     print()

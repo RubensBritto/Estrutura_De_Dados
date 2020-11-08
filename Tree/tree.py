@@ -22,7 +22,7 @@ class BinaryTree:
             node = self.root
         if node.left:
             self.inorder_traversal(node.left)
-        #print(node, end=' ')
+            print(node)
         if node.right:
             self.inorder_traversal(node.right)
 
@@ -43,4 +43,30 @@ class BinarySearchTree(BinaryTree):
             parent.left = Node(value)
         else:
             parent.right = Node(value)
-        
+    '''
+    def search(self, value):
+        return self._search(value, self.root)
+
+    def _search(self, value, node):
+        if node is None:
+            return node
+        if node.data == value:
+            return  node.data
+        if value < node.data:
+            return self._search(value, node.left)
+        return self._search(value, node.right)
+    '''
+
+    def search(self, value):
+        if  self.root == None:
+            return None
+        noAtual = self.root
+        while noAtual.data != value:
+            if value < noAtual.data:
+                noAtual = noAtual.left
+            else:
+                noAtual = noAtual.right
+            if noAtual == None:
+                return None
+        return noAtual
+ 
