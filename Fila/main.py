@@ -90,79 +90,77 @@ def criarDado():
 # editarDado - verifica se o país (chave) a ser editado existe e permite mudar seus atributos
 def editarDado():
     country = str(input("Digite o pais que deseja editar: "))
-    for i in range(fila.size()):
-        if fila.percorrerQueue(0, country) == True:
-            sumario = fila.indiceQueue(0,country)
-            print(sumario)
-            print('Em qual linha/coluna deseja editar um novo dado?\n1 - Pais\n2 - Regiao\n3 - Rankg felicidade')
-            print('4 - Indice Felicidade\n5 - Erro Padrão\n6 - Economia\n7 - Family\n8 - Health')
-            print('9 - Indice de liberdade\n10 - Indice de confiança\n11 - Indice de Generosidade\n12 - Distopia Residual')
-            choose = int(input())
-            if choose == 1:
-                editCountry = str(input('Entre com o novo nome do país: '))
-                retorno = verificar(editCountry,str(0.0))
-                print(retorno)
-                if retorno == True:
-                    fila.queueEditar(sumario,0,editCountry)
-                else:
-                    print("Pais já existe")
-            elif choose == 2:
-                editRegion = input('Entre com a novo nome da região: ')
-                fila.queueEditar(sumario,1,editRegion)
-                return
+    if fila.percorrerQueue(0, country) == True:
+        sumario = fila.indiceQueue(0,country)
+        print(sumario)
+        print('Em qual linha/coluna deseja editar um novo dado?\n1 - Pais\n2 - Regiao\n3 - Rankg felicidade')
+        print('4 - Indice Felicidade\n5 - Erro Padrão\n6 - Economia\n7 - Family\n8 - Health')
+        print('9 - Indice de liberdade\n10 - Indice de confiança\n11 - Indice de Generosidade\n12 - Distopia Residual')
+        choose = int(input())
+        if choose == 1:
+            editCountry = str(input('Entre com o novo nome do país: '))
+            retorno = verificar(editCountry,str(0.0))
+            print(retorno)
+            if retorno == True:
+                fila.queueEditar(sumario,0,editCountry)
+            else:
+                print("Pais já existe")
+        elif choose == 2:
+            editRegion = input('Entre com a novo nome da região: ')
+            fila.queueEditar(sumario,1,editRegion)
+            return
 
-            elif choose == 3:
-                editHappinessScore = float(input('Entre com o novo rank de Felicidade: '))
-                retorno = verificar(" ",str(editHappinessScore))
-                if retorno == True:
-                    fila.queueEditar(sumario,2,editHappinessScore)
-                else:
-                    print("Rank já existe")
-            if choose == 4:
-                editHappinessRank = float(input('Entre com o novo Indice de Felicidade: '))
-                fila.queueEditar(sumario,3,editHappinessRank)
-                return
+        elif choose == 3:
+            editHappinessScore = float(input('Entre com o novo rank de Felicidade: '))
+            retorno = verificar(" ",str(editHappinessScore))
+            if retorno == True:
+                fila.queueEditar(sumario,2,editHappinessScore)
+            else:
+                print("Rank já existe")
+        elif choose == 4:
+            editHappinessRank = float(input('Entre com o novo Indice de Felicidade: '))
+            fila.queueEditar(sumario,3,editHappinessRank)
+            return
 
-            elif choose == 5:
-                editStandartError = float(input('Entre com o novo Erro Padrão: '))
-                fila.queueEditar(sumario,4,editStandartError)
-                return
+        elif choose == 5:
+            editStandartError = float(input('Entre com o novo Erro Padrão: '))
+            fila.queueEditar(sumario,4,editStandartError)
+            return
 
-            elif choose == 6:
-                editEconomy = float(input('Entre com a novo valor da Economia: '))
-                fila.queueEditar(sumario,5,editEconomy)
-                return
+        elif choose == 6:
+            editEconomy = float(input('Entre com a novo valor da Economia: '))
+            fila.queueEditar(sumario,5,editEconomy)
+            return
+        elif choose == 7:
+            editFamily = float(input('Entre com o novo indice "Family": '))
+            fila.queueEditar(sumario,6,editFamily)
+            return
 
-            elif choose == 7:
-                editFamily = float(input('Entre com o novo indice "Family": '))
-                fila.queueEditar(sumario,6,editFamily)
-                return
+        elif choose == 8:
+            editHealth = float(input('Entre com o novo indice "Health": '))
+            fila.queueEditar(sumario,7,editHealth)
+            return
 
-            elif choose == 8:
-                editHealth = float(input('Entre com o novo indice "Health": '))
-                fila.queueEditar(sumario,7,editHealth)
-                return
+        elif choose == 9:
+            editFreedom = float(input('Entre com o novo indice de liberdade: '))
+            fila.queueEditar(sumario,8,editFreedom)
+            return
 
-            elif choose == 9:
-                editFreedom = float(input('Entre com o novo indice de liberdade: '))
-                fila.queueEditar(sumario,8,editFreedom)
-                return
-
-            elif choose == 10:
-                editTrust = float(input('Entre com o novo indice de confiança: '))
-                fila.queueEditar(sumario,9,editTrust)
-                return
+        elif choose == 10:
+            editTrust = float(input('Entre com o novo indice de confiança: '))
+            fila.queueEditar(sumario,9,editTrust)
+            return
             
-            elif choose == 11:
-                editGenerosity = float(input('Entre com o novo indice "Generosity": '))
-                fila.queueEditar(sumario,10,editGenerosity)
-                return
+        elif choose == 11:
+            editGenerosity = float(input('Entre com o novo indice "Generosity": '))
+            fila.queueEditar(sumario,10,editGenerosity)
+            return
 
-            elif choose == 12:
-                editDystopiaResidual = float(input('Entre com a nova distopia Residual: '))
-                fila.queueEditar(sumario,11,editDystopiaResidual)
-                return
-    print('Pais não existe')
+        elif choose == 12:
+            editDystopiaResidual = float(input('Entre com a nova distopia Residual: '))
+            fila.queueEditar(sumario,11,editDystopiaResidual)
+            return
+    print('Pais Existe')
 
 # removeFromQueue - cria uma lista temporaria, guarda o index do item da fila a ser removido
 # passa a fila para uma lista, remove o item na lista e depois coloca essa lista sem o item de volta na fila
