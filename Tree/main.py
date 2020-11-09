@@ -38,12 +38,13 @@ def aleatorioData():
 #inserirDados - adiciona na lista os arquivos que forma alterados, de forma "pontual" na linha e coluna desejada
 def inserirDados(i,j,item):
     dados[i][j] = str(item)
-
+'''
 def indiceItem(country):
     for i in range(len(dados)):
         if country.lower() in dados[i][0].lower():
             return i
     return None
+'''
 
 # criarDado - pega todas as informações necessárias para o cadastro e adiciona na pilha 
 # (caso não tenha um pais de mesmo nome)
@@ -85,10 +86,11 @@ def criarDado():
 # editarDado - verifica se o país (chave) a ser editado existe e permite mudar seus atributos
 def editarDado():
     country = str(input("Digite o pais que deseja editar: "))
-    sumario = indiceItem(country)
-    if sumario == None:
+    rt = tree.search(country)
+    if rt != None:
         print("Pais Existe")
     else:
+        sumario = tree.search2(country)
         print('Em qual linha/coluna deseja editar um novo dado?\n1 - Pais\n2 - Regiao\n3 - Rankg felicidade')
         print('4 - Indice Felicidade\n5 - Erro Padrão\n6 - Economia\n7 - Family\n8 - Health')
         print('9 - Indice de liberdade\n10 - Indice de confiança\n11 - Indice de Generosidade\n12 - Distopia Residual')
@@ -145,6 +147,14 @@ def editarDado():
             editDystopiaResidual = float(input('Entre com a nova distopia Residual: '))
             inserirDados(sumario,11,editDystopiaResidual)
             return
+
+def remover():  
+    country = str(input("Digite o pais que deseja remover: "))
+    verificar = tree.search(country)
+    if verificar != None:
+        verify = tree.search2(country)
+        #FALTA remover da arvore 
+        del dados[verify]
     
 # start - aqui são oferecidas aos usuários todas as opções disponíveis em um menu interativo
 def start():
@@ -181,12 +191,12 @@ def start():
 def main():
     openData()
     aleatorioData()
-    #tree.inorder_traversal()
+    tree.inorder_traversal()
     rtr = tree.search(101)
-    if  rtr != None:
-        print('ENCONTRADO')
+    if  rtr == None:
+        print('NAO ENCONTRADO')
     else:
-        print('NÃO ENCONTRADO')
+        print('ENCONTRADO')
     print(rtr)
 
 if __name__ == "__main__":
