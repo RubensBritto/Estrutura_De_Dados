@@ -1,3 +1,5 @@
+ROOT = 'root'
+
 class Node:
     def __init__(self,data):
         self.data = data
@@ -43,20 +45,21 @@ class BinarySearchTree(BinaryTree):
             parent.left = Node(value)
         else:
             parent.right = Node(value)
-    '''
+
     def search(self, value):
         return self._search(value, self.root)
 
     def _search(self, value, node):
         if node is None:
-            return node
+            return None
         if node.data == value:
-            return  node.data
+            return node.data
         if value < node.data:
             return self._search(value, node.left)
-        return self._search(value, node.right)
-    '''
+        else:
+            return self._search(value, node.right)
 
+    '''
     def search(self, value):
         if  self.root == None:
             return None
@@ -69,4 +72,17 @@ class BinarySearchTree(BinaryTree):
             if noAtual == None:
                 return None
         return noAtual
- 
+    '''
+    '''
+    def search(self, value, node=ROOT):
+        if node == ROOT:
+            node = self.root
+        elif node is None:
+            return node
+        elif node.data == value:
+            return node.data
+        elif value < node.data:
+            return self.search(value, node.left)
+        else:
+            return self.search(value, node.right)
+    '''
