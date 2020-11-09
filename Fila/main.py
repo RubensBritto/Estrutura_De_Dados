@@ -40,16 +40,7 @@ def aleatorioData():
 def showQueue():
     for i in range(fila.size()):
        print(fila.showQueue(i))
-'''
-#verificar - mostra se o país em questão já está na fila (impendindo repetições)
-def verificar(newCountry=None, newHappinessRank=None):
-    for i in range(fila.size()):
-        if fila.percorrerQueue(0,newCountry) == True or fila.percorrerQueue(2,newHappinessRank) == True: 
-                print('Pais ou Rankg ja existe')
-                return False 
-    return True
-    
-'''
+
 # criarDado - pega todas as informações necessárias para o cadastro e adiciona na fila 
 # (caso não tenha um pais de mesmo nome)
 
