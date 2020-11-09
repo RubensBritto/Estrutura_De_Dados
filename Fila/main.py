@@ -40,15 +40,16 @@ def aleatorioData():
 def showQueue():
     for i in range(fila.size()):
        print(fila.showQueue(i))
-
+'''
 #verificar - mostra se o país em questão já está na fila (impendindo repetições)
-def verificar(newCountry, newHappinessRank):
+def verificar(newCountry=None, newHappinessRank=None):
     for i in range(fila.size()):
         if fila.percorrerQueue(0,newCountry) == True or fila.percorrerQueue(2,newHappinessRank) == True: 
                 print('Pais ou Rankg ja existe')
                 return False 
     return True
-
+    
+'''
 # criarDado - pega todas as informações necessárias para o cadastro e adiciona na fila 
 # (caso não tenha um pais de mesmo nome)
 
@@ -61,8 +62,7 @@ def criarDado():
     itemTemp.append(newRegion)
     newHappinessRank = int(input('Digite o rank da felicidade: '))
     itemTemp.append(str(newHappinessRank))
-    verificacao = verificar(newCountry,str(newHappinessRank))
-    if verificacao == False:
+    if (fila.percorrerQueue(0,newCountry)) or (fila.percorrerQueue(2,str(newHappinessRank))) != False:
         print('Inicie Novamente o cadastro por favor')
         itemTemp.clear()
         criarDado()
@@ -99,24 +99,30 @@ def editarDado():
         choose = int(input())
         if choose == 1:
             editCountry = str(input('Entre com o novo nome do país: '))
-            retorno = verificar(editCountry,str(0.0))
+            retorno = fila.percorrerQueue(0,editCountry)
             print(retorno)
-            if retorno == True:
+            if retorno != True:
                 fila.queueEditar(sumario,0,editCountry)
+                return
             else:
                 print("Pais já existe")
+                return
+            return
         elif choose == 2:
             editRegion = input('Entre com a novo nome da região: ')
             fila.queueEditar(sumario,1,editRegion)
             return
 
         elif choose == 3:
-            editHappinessScore = float(input('Entre com o novo rank de Felicidade: '))
-            retorno = verificar(" ",str(editHappinessScore))
-            if retorno == True:
+            editHappinessScore = int(input('Entre com o novo rank de Felicidade: '))
+            retorno = fila.percorrerQueue(2,str(editHappinessScore))
+            if retorno != True:
                 fila.queueEditar(sumario,2,editHappinessScore)
+                return
             else:
                 print("Rank já existe")
+                return
+            return
         elif choose == 4:
             editHappinessRank = float(input('Entre com o novo Indice de Felicidade: '))
             fila.queueEditar(sumario,3,editHappinessRank)
