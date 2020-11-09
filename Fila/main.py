@@ -111,8 +111,8 @@ def editarDado():
                 fila.queueEditar(sumario,2,editHappinessScore)
                 return
             else:
-                editarDado()
                 print("Rank já existe")
+                editarDado()
                 return
             return
         elif choose == 4:
