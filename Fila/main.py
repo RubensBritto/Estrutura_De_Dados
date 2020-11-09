@@ -30,7 +30,7 @@ def aleatorioData():
     k = 0
     visitados = []
     while(k < 100):
-        valorAleatorio = random.randint(1,100)
+        valorAleatorio = random.randint(1,158)
         if valorAleatorio not in visitados:
             visitados.append(valorAleatorio)
             fila.enqueue(dados[valorAleatorio])
@@ -97,6 +97,7 @@ def editarDado():
                 return
             else:
                 print("Pais já existe")
+                editarDado()
                 return
             return
         elif choose == 2:
@@ -111,6 +112,7 @@ def editarDado():
                 fila.queueEditar(sumario,2,editHappinessScore)
                 return
             else:
+                editarDado()
                 print("Rank já existe")
                 return
             return
