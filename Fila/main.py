@@ -91,7 +91,6 @@ def editarDado():
         if choose == 1:
             editCountry = str(input('Entre com o novo nome do país: '))
             retorno = fila.percorrerQueue(0,editCountry)
-            print(retorno)
             if retorno != True:
                 fila.queueEditar(sumario,0,editCountry)
                 return
