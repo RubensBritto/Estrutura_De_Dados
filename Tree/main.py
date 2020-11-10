@@ -1,6 +1,7 @@
 
 # -*- coding: utf-8 -*-
 import csv
+from os import remove
 from tree import BinarySearchTree
 import random
 import os # módulo para acessar o terminal do sistema e poder fazer a limpeza
@@ -17,7 +18,7 @@ def openData():
         for linha in leitor:
             dadosTemp.append(linha)
 
-# saveNewDataCsv - recebe a pilha de dados com todas as alterações e manipulações e exportar para outro arquivo csv
+# saveNewDataCsv - recebe a árvore de dados com todas as alterações e manipulações e exportar para outro arquivo csv
 def saveNewDataCsv(dadosFinal):
     with open('datas/2015_1.csv', 'w', newline='') as arquivo_csv:
         escrever = csv.writer(arquivo_csv)
@@ -28,25 +29,28 @@ def aleatorioData():
     k = 0
     visitados = []
     while(k < 100):
-        valorAleatorio = random.randint(1,158)
+        valorAleatorio = random.randint(1,157)
         if valorAleatorio not in visitados:
             visitados.append(valorAleatorio)
-            tree.insert(valorAleatorio)
-            dados.append(dadosTemp[k])
+            #Coloca o dado de forma (e com chave) aleatória na tree
+            dados.append(dadosTemp[valorAleatorio])
             k+=1
+        
+    for i in range(len(visitados)):
+        for j in range(len(visitados)-1):
+            if int(visitados[j]) > int(visitados[j+1]):
+                temp = visitados[j]
+                visitados[j] = visitados[j+1]
+                visitados[j+1] = temp
+    for i in range(len(visitados)):
+        tree.insert(visitados[i])
+        
 
-#inserirDados - adiciona na lista os arquivos que forma alterados, de forma "pontual" na linha e coluna desejada
+#inserirDados - adiciona na árvore os arquivos que forma alterados, de forma "pontual" na linha e coluna desejada
 def inserirDados(i,j,item):
     dados[i][j] = str(item)
-'''
-def indiceItem(country):
-    for i in range(len(dados)):
-        if country.lower() in dados[i][0].lower():
-            return i
-    return None
-'''
 
-# criarDado - pega todas as informações necessárias para o cadastro e adiciona na pilha 
+# criarDado - pega todas as informações necessárias para o cadastro e adiciona na árbore 
 # (caso não tenha um pais de mesmo nome)
 def criarDado():
     itemTemp = []
@@ -58,6 +62,7 @@ def criarDado():
     itemTemp.append(str(newHappinessRank))
     verificacao = tree.search(newHappinessRank)
     if verificacao != None:
+        #Verifica se a árvore tá vazia
         print('Inicie Novamente o cadastro por favor')
         itemTemp.clear()
         criarDado()
@@ -83,14 +88,16 @@ def criarDado():
         itemTemp.append(str(newDystopiaResidual))
         dados.append(itemTemp)
 
-# editarDado - verifica se o país (chave) a ser editado existe e permite mudar seus atributos
+# editarDado - verifica se o país a ser editado existe e permite mudar seus atributos
 def editarDado():
     country = str(input("Digite o pais que deseja editar: "))
+    # rt - recebe a função que faz a busca do item na tree
     rt = tree.search(country)
     if rt != None:
         print("Pais Existe")
     else:
-        sumario = tree.search2(country)
+        #Recebe o index do item buscado na tree
+        sumario = tree.searchIndex(country)
         print('Em qual linha/coluna deseja editar um novo dado?\n1 - Pais\n2 - Regiao\n3 - Rankg felicidade')
         print('4 - Indice Felicidade\n5 - Erro Padrão\n6 - Economia\n7 - Family\n8 - Health')
         print('9 - Indice de liberdade\n10 - Indice de confiança\n11 - Indice de Generosidade\n12 - Distopia Residual')
@@ -108,7 +115,7 @@ def editarDado():
             if retorno != None:
                 print("Rank já existe")
             else:
-                tree.insert(editHappinessScore)
+                tree.insert(int(editHappinessScore))
                 inserirDados(sumario,2,editHappinessScore)
         elif choose == 4:
             editHappinessRank = float(input('Entre com o novo Indice de Felicidade: '))
@@ -148,17 +155,41 @@ def editarDado():
             inserirDados(sumario,11,editDystopiaResidual)
             return
 
-def remover():  
-    country = str(input("Digite o pais que deseja remover: "))
-    verificar = tree.search(country)
+def remover(data):  
+    verificar = tree.search(data)
     if verificar != None:
-        verify = tree.search2(country)
+        verify = tree.searchIndex(data)
         #FALTA remover da arvore 
         del dados[verify]
+
+def ordenar(data):
     
+    if data == 1:
+        for i in range(len(dados)):
+            for j in range(len(dados)-1):
+                if dados[j][0] > dados[j+1][0]:
+                    temp = dados[j]
+                    dados[j] = dados[j+1]
+                    dados[j+1] = temp
+    elif data == 2:
+        for i in range(len(dados)):
+            for j in range(len(dados)-1):
+                if dados[j][1] > dados[j+1][1]:
+                    temp = dados[j]
+                    dados[j] = dados[j+1]
+                    dados[j+1] = temp
+
+    elif data == 3:
+        for i in range(len(dados)):
+            for j in range(len(dados)-1):
+                if int(dados[j][2]) > int(dados[j+1][2]):
+                    temp = dados[j]
+                    dados[j] = dados[j+1]
+                    dados[j+1] = temp
+
 # start - aqui são oferecidas aos usuários todas as opções disponíveis em um menu interativo
 def start():
-    print('Digite a opção desejada\n1-Criar\n2-Editar\n3-Mostrar Lista\n4-Deletar Item\n5-Exportar CSV\n6-Limpar Console\n0-Sair')
+    print('Digite a opção desejada\n1-Criar\n2-Editar\n3-Mostrar Lista\n4-Deletar Item\n5- Ordenar\n6-Exportar CSV\n7-Limpar Console\n0-Sair')
     choose = int(input())
     if choose == 1:
         criarDado()
@@ -167,18 +198,43 @@ def start():
         editarDado()
         start()
     if choose == 3:
-        tree.inorder_traversal()
+        #tree.inorder_traversal()
+        for i in range(len(dados)):
+            print(dados[i])
         start()
     if choose == 4:
-        #deletarDado()
+        print("Digite qual coluna deseja excluir\n1 - Pais\n2 - Rank de Felicidade\n3 - Regiao")
+        esc = int(input())
+        if esc == 1:
+            country = str(input("Digite o pais que deseja remover: "))
+            remover(country)
+        elif esc == 2:
+            rank = str(input("Digite o Rank que deseja remover: "))
+            remover(rank)
+        elif esc == 3:
+            region = str(input("Digite a Região que deseja remover: "))
+            remover(region)
+        else:
+            print("Opção Inválida")
         start()
     if choose == 5:
+        esc = int(input("Digite como Deseja ordenar\n1 - Pais\n2 - Regiao \n3 - Rank\n"))
+        if esc == 1:
+            ordenar(esc)
+        elif esc == 2:
+            ordenar(esc)
+        elif esc == 3:
+            ordenar(esc)
+        else:
+            print("Opção Inválida")
+        start()
+    if choose == 6:
         dadosFinal = []
         for i in range(len(dados)):
             dadosFinal.append(dados(i))
         saveNewDataCsv(dadosFinal)
         start()
-    if choose == 6:        
+    if choose == 7:        
         os.system('clear')
         start()
     if choose == 0:
@@ -191,13 +247,15 @@ def start():
 def main():
     openData()
     aleatorioData()
-    tree.inorder_traversal()
-    rtr = tree.search(101)
+    #start()
+    print('TREE')
+    #tree.inorder_traversal()
+    #tree.printTree()
+    rtr = tree.search(90)
     if  rtr == None:
         print('NAO ENCONTRADO')
     else:
         print('ENCONTRADO')
-    print(rtr)
 
 if __name__ == "__main__":
     main()

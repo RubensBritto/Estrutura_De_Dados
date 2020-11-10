@@ -1,6 +1,9 @@
-ROOT = 'root'
+#ROOT - recebe a raiz da tree
+#ROOT = 'root'
 
+#Classe dos nós
 class Node:
+    #Recebe as chaves e seta os caminhos
     def __init__(self,data):
         self.data = data
         self.left = None
@@ -9,7 +12,9 @@ class Node:
     def __str__(self):
         return str(self.data)
 
+#Classe da árvore binária
 class BinaryTree:
+    #Definindo os pontos de cada caminho da árvore
     def __init__(self, data=None, node=None):
         if node:
             self.root = node
@@ -18,7 +23,7 @@ class BinaryTree:
             self.root = node
         else:
             self.root = None
-        
+    #Função recursiva de percorrer árvore    
     def inorder_traversal(self, node=None):
         if node is None:
             node = self.root
@@ -27,9 +32,12 @@ class BinaryTree:
             print(node)
         if node.right:
             self.inorder_traversal(node.right)
+            print(node)
+    
 
+#Classe de árvore binária de Busca
 class BinarySearchTree(BinaryTree):
-
+    #Inserir dado - insere um novo dado na árvore
     def insert(self, value):
         parent = None
         x = self.root
@@ -45,64 +53,39 @@ class BinarySearchTree(BinaryTree):
             parent.left = Node(value)
         else:
             parent.right = Node(value)
-    '''
-    def search(self, value):
-        return self._search(value, self.root)
 
-    def _search(self, value, node):
-        if node is None:
-            return None
-        if node.data == value:
-            return node.data
-        if value < node.data:
-            return self._search(value, node.left)
-        else:
-            return self._search(value, node.right)
-    '''
-    '''
+    #Busca - busca o item, atráves do index, na tree
     def search(self, value):
-        if  self.root == None:
-            return None
-        noAtual = self.root
-        while noAtual.data != value:
-            if value < noAtual.data:
-                noAtual = noAtual.left
-            else:
-                noAtual = noAtual.right
-            if noAtual == None:
-                return None
-        return noAtual
-    '''
-
-    def search(self, value, node=None):
-        if node is None:
-            print(node)
-            return None
-        else:
-            if value == node.data:
-                return value
+        node = self.root
+        while node is not None:
+            if int(value) == int(node.data):
+                return node
             elif value < node.data:
-                return self.search(value, node.left)
-            else:
-                return self.search(value, node.right)
-    '''     
-    def searchIndex(self, value, node=ROOT):
-        if node == ROOT:
-            node = self.root
-        elif node is None:
-            return node.data
-        elif node.data == value:
-            return False
-        elif value < node.data:
-            return self.search(value, node.left)
-        else:
-            return self.search(value, node.right)
+                node = node.left
+            elif value > node.data:
+                node = node.right
+        return None
     '''
+    def search(self, data):
+        return self.findNode(self.root, data)
+
+    def findNode(self, currentNode, data):
+        if(currentNode is None):
+            return False
+        elif(int(data) == int(currentNode.data)):
+            return True
+        elif(data < currentNode.data):
+            return self.findNode(currentNode.left, data)
+        else:
+            return self.findNode(currentNode.right, data)
+        
+    '''
+    #Busca por index - retorna o nó em que estar o index do item 
     def searchIndex(self, value, node):
         if node is None:
             return node
         else:
-            if node.data == value:
+            if int(node.data) == int(value):
                 return node.data
             elif value < node.data:
                 return self.search(value, node.left)
