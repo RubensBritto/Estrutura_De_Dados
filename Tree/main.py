@@ -10,6 +10,9 @@ import os # módulo para acessar o terminal do sistema e poder fazer a limpeza
 dadosTemp = []
 dados = []
 tree = BinarySearchTree()
+lastData1 = 0
+lastData2 = 0
+lastData3 = 0
 
 def openData():
     with open('datas/2015.csv', newline='') as arquivo:
@@ -33,11 +36,13 @@ def ordenar(escolha):
                     temp = dados[j]
                     dados[j] = dados[j+1]
                     dados[j+1] = temp
-        
         for i in range(len(dados)):
-            tree.insert(dados[i][0],dados[i][1],dados[i][2],dados[i][3],dados[i][4],dados[i][5],dados[i][6],dados[i][7],dados[i][8],dados[i][9],dados[i][10],dados[i][11])
+            tree.insert(dados[i][0],dados[i][1],dados[i][2],dados[i][3],dados[i][4],dados[i][5],dados[i][6],dados[i][7],dados[i][8],dados[i][9],dados[i][10],dados[i][11],escolha)
         for i in range(len(dados)):
             print(dados[i])
+        
+        return (dados[-1][2], dados[-1][2])
+
     if escolha == 2:
         for i in range(len(dados)):
             for j in range(len(dados)-1):
@@ -48,7 +53,9 @@ def ordenar(escolha):
         #for i in range(len(dados)):
         #    print(dados[i])
         for i in range(len(dados)):
-            tree.insert(dados[i][0],dados[i][1],dados[i][2],dados[i][3],dados[i][4],dados[i][5],dados[i][6],dados[i][7],dados[i][8],dados[i][9],dados[i][10],dados[i][11])
+            tree.insert(dados[i][0],dados[i][1],dados[i][2],dados[i][3],dados[i][4],dados[i][5],dados[i][6],dados[i][7],dados[i][8],dados[i][9],dados[i][10],dados[i][11],escolha)
+        
+        return (dados[-1][5], dados[-1][2])
 
     if escolha == 3:
         for i in range(len(dados)):
@@ -57,11 +64,13 @@ def ordenar(escolha):
                     temp = dados[j]
                     dados[j] = dados[j+1]
                     dados[j+1] = temp
+        
         #for i in range(len(dados)):
         #    print(dados[i])
         
         for i in range(len(dados)):
-            tree.insert(dados[i][0],dados[i][1],dados[i][2],dados[i][3],dados[i][4],dados[i][5],dados[i][6],dados[i][7],dados[i][8],dados[i][9],dados[i][10],dados[i][11])
+            tree.insert(dados[i][0],dados[i][1],dados[i][2],dados[i][3],dados[i][4],dados[i][5],dados[i][6],dados[i][7],dados[i][8],dados[i][9],dados[i][10],dados[i][11],escolha)
+        return (dados[-1][7], dados[-1][2])
 
 def aleatorioData():
     k = 0
@@ -74,45 +83,45 @@ def aleatorioData():
             dados.append(dadosTemp[valorAleatorio])
             k+=1
     escolha = int(input("Como deseja ordenar os dados\n1-Rank\n2-Economia\n3- Expeectativa de Vida "))
-    ordenar(int(escolha))
+    rt,rank = ordenar(int(escolha))
+    return (rt,escolha,rank)
     
 
 # criarDado - pega todas as informações necessárias para o cadastro e adiciona na árbore 
 # (caso não tenha um pais de mesmo nome)
-def criarDado():
-    listTemp = []
+def criarDado(lastData,escolha,rank):
+    newEconomy = 0
+    newHealth = 0
     newCountry = input('Digite o nome do pais: ')
-    listTemp.append(newCountry)
     newRegion = input('Digite o nome da regiao: ')
-    listTemp.append(newRegion)
-    newHappinessRank = int(input('Digite o rank da felicidade: '))
-    listTemp.append(newHappinessRank)
-    if tree.search(newHappinessRank) != None:
-        #Verifica se a árvore tá vazia
-        print('Inicie Novamente o cadastro por favor')
-        listTemp.clear()
-        criarDado()
-    else:
-        #salvar o novo indice in the tree
-        newHappinessScore = float(input('Digite o score da felicidade: '))
-        listTemp.append(newHappinessScore)
-        newStandardError = float(input('Digite o Erro Padrão: '))
-        listTemp.append(newStandardError)
-        newEconomy = float(input('Digite a economia: '))
-        listTemp.append(newEconomy)
-        newFamily = float(input('Digite da Família: '))
-        listTemp.append(newFamily)
-        newHealth = float(input('Digite da Saúde: '))
-        listTemp.append(newHealth)
-        newFreedom = float(input('Digite a Liberdade: '))
-        listTemp.append(newFreedom)
-        newTrust = float(input('Digite a Confiança: '))
-        listTemp.append(newTrust)
-        newGenerosity = float(input('Digite de Generosidade: '))
-        listTemp.append(newGenerosity)
-        newDystopiaResidual = float(input('Digite a Distopia Residual: '))
-        listTemp.append(newDystopiaResidual)
-        tree.ordernar(listTemp[0],listTemp[1],listTemp[2],listTemp[3],listTemp[4],listTemp[5],listTemp[6],listTemp[7],listTemp[8],listTemp[9],listTemp[10],listTemp[11])
+    newHappinessRank = int(rank)+1
+    print("O seu Rank é: " + str(newHappinessRank))
+    if escolha == 1:
+        newEconomy = float(input('Digite o Indice economico: '))
+        newHealth = float(input('Digite a Expectativa de Vida: '))
+    elif escolha == 2:
+        print("Digite um indice de economia maior que: " + str(lastData))
+        newEconomy = float(input('Digite o Indice economico: '))
+        if newEconomy < float(lastData):
+            criarDado(lastData,escolha,rank)
+        else:
+            newHealth = float(input('Digite a Expectativa de Vida: '))
+    elif escolha == 3:
+        print("Digite um indice de expectativa de vida maior que: " + str(lastData))
+        newHealth = float(input('Digite a Expectativa de Vida: '))
+        if newHealth < float(lastData):
+            criarDado(lastData,escolha,rank)
+        else:
+            newEconomy = float(input('Digite o Indice economico: '))   
+    #salvar o novo indice in the tree
+    newHappinessScore = float(input('Digite o score da felicidade: '))
+    newStandardError = float(input('Digite o Erro Padrão: '))
+    newFamily = float(input('Digite da Família: '))
+    newFreedom = float(input('Digite a Liberdade: '))
+    newTrust = float(input('Digite a Confiança: '))
+    newGenerosity = float(input('Digite de Generosidade: '))
+    newDystopiaResidual = float(input('Digite a Distopia Residual: '))
+    tree.insert(newCountry,newRegion,newHappinessRank,newHappinessScore,newStandardError,newEconomy,newFamily,newHealth,newFreedom,newTrust,newGenerosity,newDystopiaResidual,escolha)
 
 # editarDado - verifica se o país a ser editado existe e permite mudar seus atributos
 def editarDado():
@@ -192,18 +201,24 @@ def remover(data):
 
 
 # start - aqui são oferecidas aos usuários todas as opções disponíveis em um menu interativo
-def start():
-    print('Digite a opção desejada\n1-Criar\n2-Editar\n3-Mostrar Tree\n4-Deletar Item\n5- Ordenar\n6-Exportar CSV\n7-Limpar Console\n0-Sair')
+def start(retorno,escolha,rank):
+    print('Digite a opção desejada\n1-Criar\n2-Editar\n3-Mostrar Tree\n4-Deletar Item\n5-Exportar CSV\n6-Limpar Console\n0-Sair')
     choose = int(input())
     if choose == 1:
-        criarDado()
-        start()
+        if escolha == 1:
+            criarDado(retorno,escolha,rank)
+        elif escolha == 2:
+            criarDado(retorno,escolha,rank)
+        else:
+            criarDado(retorno,escolha,rank)
+        start(retorno,escolha,rank)
     if choose == 2:
         editarDado()
-        start()
+        start(retorno,escolha,rank)
     if choose == 3:
-        tree.inorder_traversal()
-        start()
+        #tree.inorder_traversal()
+        tree.postorder_traversal()
+        start(retorno,escolha,rank)
     if choose == 4:
         print("Digite qual coluna deseja excluir\n1 - Pais\n2 - Rank de Felicidade\n3 - Regiao")
         esc = int(input())
@@ -218,46 +233,31 @@ def start():
             remover(region)
         else:
             print("Opção Inválida")
-        start()
+        start(retorno,escolha,rank)
     if choose == 5:
-        esc = int(input("Digite como Deseja ordenar\n1 - Pais\n2 - Regiao \n3 - Rank\n"))
-        if esc == 1:
-            ordenar(esc)
-        elif esc == 2:
-            ordenar(esc)
-        elif esc == 3:
-            ordenar(esc)
-        else:
-            print("Opção Inválida")
-        start()
-    if choose == 6:
         dadosFinal = []
-        for i in range(len(dados)):
-            dadosFinal.append(dados(i))
+        x = True
+        i = 1
+        while x != None:
+            data= tree.saveTree(i)
+            print(data)
+            dadosFinal.append(data)
+            i+=1
         saveNewDataCsv(dadosFinal)
-        start()
-    if choose == 7:        
+        start(retorno,escolha,rank)
+    if choose == 6:        
         os.system('clear')
-        start()
+        start(retorno,escolha,rank)
     if choose == 0:
         exit()
     else:
         print("Operação invalida!")
-        start()
+        start(retorno,escolha,rank)
 
 
 def main():
     openData()
-    aleatorioData()
-    start()
-    print('TREE')
-    tree.inorder_traversal()
-    #tree.printTree()
-    rtr = tree.search(90)
-    if  rtr == None:
-        print('NAO ENCONTRADO')
-    else:
-        print('ENCONTRADO')
-
+    retorno,escolha,rank = aleatorioData()
+    start(retorno, escolha,rank)
 if __name__ == "__main__":
     main()
