@@ -1,17 +1,6 @@
+
 #ROOT - recebe a raiz da tree
-#ROOT = 'root'
-#Country
-#Region
-# Happiness Rank
-# Happiness Score
-# Standard Error
-# Economy (GDP per Capita)
-# Family 
-# Health (Life Expectancy)
-# Freedom
-# Trust (Government Corruption)
-# Generosity
-# Dystopia Residual
+ROOT = 'root'
 
 #Classe dos nós
 from os import sendfile
@@ -38,7 +27,7 @@ class Node:
     def __str__(self):
         print("Pais: " + self.country + " - " +"Região: " + self.region + " - " + "Rank Felicidade: " + self.happinessRank + " - " +
         "Score Felicidade: " + self.happinessScore+ " - " + "Erro Padrão: " + self.standardError + " - " +
-        "Economia: " + self.economy+ " - " + "Familia: " + self.family + " - " +"Expectativa de vida: " + self.health+
+        "Economia: " + self.economy+ " - " + "Familia: " + self.family + " - " +"Expectativa de vida: " + self.health + " - "
         " Indice de Liberdade: " + self.freedom+ " - " + " Indice de Confiança: " + self.trust + " - " +" Indice de Generosidade: " + self.genorosity+
         " Indice de Distopia Residual: " + self.dystopiaResidual)
         return str()
@@ -55,6 +44,7 @@ class BinaryTree:
         else:
             self.root = None
     '''
+    
     #Função recursiva de percorrer árvore    
     def inorder_traversal(self, node=None):
         if node is None:
@@ -136,10 +126,31 @@ class BinarySearchTree(BinaryTree):
                 node = node.right
         return None
 
+    def searchEconomy(self, value):
+        node = self.root
+        while node is not None:
+            if int(value) == int(node.happinessRank):
+                return node.economy
+            elif int(value) < int(node.happinessRank):
+                node = node.left
+            elif int(value) > int(node.happinessRank):
+                node = node.right
+        return None
+    
+    def searchHealth(self, value):
+        node = self.root
+        while node is not None:
+            if int(value) == int(node.happinessRank):
+                return node.health
+            elif int(value) < int(node.happinessRank):
+                node = node.left
+            elif int(value) > int(node.happinessRank):
+                node = node.right
+        return None
+
     
     def searchString(self, value):
         node = self.root
-        print('aquii')
         while node is not None:
             if str(value.lower()) in str(node.country.lower()):
                 return value
@@ -215,41 +226,45 @@ class BinarySearchTree(BinaryTree):
                 listaTemp.append(str(node.genorosity))
                 listaTemp.append(str(node.dystopiaResidual))
                 listaFinal.append(listaTemp)
-                return (listaFinal)
+                return (listaFinal,int(node.happinessRank))
             elif int(value) < int(node.happinessRank):
                 node = node.left
             elif int(value) > int(node.happinessRank):
                 node = node.right
-        return None
-
-
-    def remove(self,country,region,happinessRank,happinessScore,standardError, economy, family, health, freedom, trust, genorosity, dystopiaResidual):
-
-        if int(happinessRank) < int(self.happinessRank):
-                self.left = self.left.remove(self,country=None,region=None,happinessRank=None,happinessScore=None,standardError=None, economy=None, family=None, health=None, freedom=None, trust=None, genorosity=None, dystopiaResidual=None)
-        else:
-            # encontramos o elemento, então vamos removê-lo!
-            if self.right is None:
-                    return self.left
-            if self.left is None:
-                return self.right
-            #ao invés de remover o nó, copiamos os valores do nó substituto
-                tmp = self.right._min()
-                self.key, self.value = tmp.key, tmp.value
-                self.right._remove_min()
-            return self
-    def _min(self):
+        return (None,None)
+    
+    
+    def _min(self, node=ROOT):
+        if node == ROOT:
+            node = self.root
        #Retorna o menor elemento da subárvore que tem self como raiz.
-        if self.left is None:
-            return self
+        while node.left:
+            node = node.left
+        return node.data
+    
+    #def remove2(self,country=None,region=None,happinessRank,happinessScore=None,standardError=None, economy=None, family=None, health=None, freedom=None, trust=None, genorosity=None, dystopiaResidual=None):
+    def remove(self, data, escolha,node= ROOT):
+        
+        if node == ROOT:
+            node = self.root
+        
+        if node is None:
+            return None
+        
+        if int(data) < int(node.happinessRank):
+            node.left = self.remove(data, escolha,node.left)
+            
+        if int(data) > int(node.happinessRank):
+            node.right = self.remove(data,escolha,node.right)
+        
         else:
-            return self.left._min()
- 
-    def _remove_min(self):
-        
-        #Remove o menor elemento da subárvore que tem self como raiz.
-        
-        if self.left is None:  # encontrou o min, daí pode rearranjar
-            return self.right
-        self.left = self.left._removeMin()
-        return self
+            if node.left is None:
+                return node.right
+            elif node.right is None:
+                return node.left
+            else:
+                substituto = self._min(node.right)
+                node.happinessRank = substituto
+                node.right = self.remove(substituto,escolha,node.right)
+        return node
+   

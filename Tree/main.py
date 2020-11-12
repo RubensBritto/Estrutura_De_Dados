@@ -223,25 +223,35 @@ def start(retorno,escolha,rank):
         print("Digite qual coluna deseja excluir\n1 - Pais\n2 - Rank de Felicidade\n3 - Regiao")
         esc = int(input())
         if esc == 1:
-            country = str(input("Digite o pais que deseja remover: "))
-            remover(country)
+            print("Exclusão Por ordenação de Rank")
+            country = int(input("Digite o indice do pais deseja remover: "))
+            tree.remove(country,escolha)
+            tree.postorder_traversal()
+
         elif esc == 2:
-            rank = str(input("Digite o Rank que deseja remover: "))
-            remover(rank)
+            print("Exclusão Por ordenação de Economia")
+            economy = str(input("Digite o Rank que deseja remover: "))
+            tree.remove(economy,escolha)
+            tree.postorder_traversal()
+
+
         elif esc == 3:
-            region = str(input("Digite a Região que deseja remover: "))
-            remover(region)
+            print("Exclusão Por ordenação de Expectativa de vida")
+            healt = str(input("Digite a que deseja remover: "))
+            tree.remove(healt,escolha)
         else:
             print("Opção Inválida")
         start(retorno,escolha,rank)
     if choose == 5:
         dadosFinal = []
-        x = True
         i = 1
-        while x != None:
-            data= tree.saveTree(i)
+        data = 0
+        while data != None:
+            data,j= tree.saveTree(i)
             print(data)
-            dadosFinal.append(data)
+            if data != None:
+                dadosFinal.append(data)
+                i = j
             i+=1
         saveNewDataCsv(dadosFinal)
         start(retorno,escolha,rank)
