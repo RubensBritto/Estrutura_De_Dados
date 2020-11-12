@@ -43,18 +43,6 @@ class BinaryTree:
             self.root = node
         else:
             self.root = None
-    '''
-    
-    #Função recursiva de percorrer árvore    
-    def inorder_traversal(self, node=None):
-        if node is None:
-            node = self.root
-        if node.left:
-            self.inorder_traversal(node.left)
-            print(node)
-        if node.right:
-            self.inorder_traversal(node.right)
-    '''
     def postorder_traversal(self, node=None):
         if node is None:
             node = self.root
@@ -242,9 +230,7 @@ class BinarySearchTree(BinaryTree):
             node = node.left
         return node.data
     
-    #def remove2(self,country=None,region=None,happinessRank,happinessScore=None,standardError=None, economy=None, family=None, health=None, freedom=None, trust=None, genorosity=None, dystopiaResidual=None):
-    def remove(self, data, escolha,node= ROOT):
-        
+    def remove(self, data,node= ROOT):
         if node == ROOT:
             node = self.root
         
@@ -252,10 +238,10 @@ class BinarySearchTree(BinaryTree):
             return None
         
         if int(data) < int(node.happinessRank):
-            node.left = self.remove(data, escolha,node.left)
+            node.left = self.remove(data,node.left)
             
         if int(data) > int(node.happinessRank):
-            node.right = self.remove(data,escolha,node.right)
+            node.right = self.remove(data,node.right)
         
         else:
             if node.left is None:
@@ -265,6 +251,6 @@ class BinarySearchTree(BinaryTree):
             else:
                 substituto = self._min(node.right)
                 node.happinessRank = substituto
-                node.right = self.remove(substituto,escolha,node.right)
+                node.right = self.remove(substituto,node.right)
         return node
-   
+    

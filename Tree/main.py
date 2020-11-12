@@ -38,9 +38,7 @@ def ordenar(escolha):
                     dados[j+1] = temp
         for i in range(len(dados)):
             tree.insert(dados[i][0],dados[i][1],dados[i][2],dados[i][3],dados[i][4],dados[i][5],dados[i][6],dados[i][7],dados[i][8],dados[i][9],dados[i][10],dados[i][11],escolha)
-        for i in range(len(dados)):
-            print(dados[i])
-        
+
         return (dados[-1][2], dados[-1][2])
 
     if escolha == 2:
@@ -50,8 +48,7 @@ def ordenar(escolha):
                     temp = dados[j]
                     dados[j] = dados[j+1]
                     dados[j+1] = temp
-        #for i in range(len(dados)):
-        #    print(dados[i])
+
         for i in range(len(dados)):
             tree.insert(dados[i][0],dados[i][1],dados[i][2],dados[i][3],dados[i][4],dados[i][5],dados[i][6],dados[i][7],dados[i][8],dados[i][9],dados[i][10],dados[i][11],escolha)
         
@@ -64,10 +61,7 @@ def ordenar(escolha):
                     temp = dados[j]
                     dados[j] = dados[j+1]
                     dados[j+1] = temp
-        
-        #for i in range(len(dados)):
-        #    print(dados[i])
-        
+
         for i in range(len(dados)):
             tree.insert(dados[i][0],dados[i][1],dados[i][2],dados[i][3],dados[i][4],dados[i][5],dados[i][6],dados[i][7],dados[i][8],dados[i][9],dados[i][10],dados[i][11],escolha)
         return (dados[-1][7], dados[-1][2])
@@ -82,7 +76,7 @@ def aleatorioData():
             #Coloca o dado de forma (e com chave) aleatória na tree
             dados.append(dadosTemp[valorAleatorio])
             k+=1
-    escolha = int(input("Como deseja ordenar os dados\n1-Rank\n2-Economia\n3- Expeectativa de Vida "))
+    escolha = int(input("Como deseja ordenar os dados\n1-Rank\n2-Economia\n3- Expectativa de Vida "))
     rt,rank = ordenar(int(escolha))
     return (rt,escolha,rank)
     
@@ -220,25 +214,23 @@ def start(retorno,escolha,rank):
         tree.postorder_traversal()
         start(retorno,escolha,rank)
     if choose == 4:
-        print("Digite qual coluna deseja excluir\n1 - Pais\n2 - Rank de Felicidade\n3 - Regiao")
-        esc = int(input())
-        if esc == 1:
+        if escolha == 1:
             print("Exclusão Por ordenação de Rank")
-            country = int(input("Digite o indice do pais deseja remover: "))
-            tree.remove(country,escolha)
-            tree.postorder_traversal()
+            data = int(input("Digite o indice do pais deseja remover: "))
+            tree.remove(data)
+            print("Removido com sucesso")
 
-        elif esc == 2:
+        elif escolha == 2:
             print("Exclusão Por ordenação de Economia")
-            economy = str(input("Digite o Rank que deseja remover: "))
-            tree.remove(economy,escolha)
-            tree.postorder_traversal()
+            data = int(input("Digite o indice que deseja remover: "))
+            tree.remove(data)
+            print("Removido com sucesso")
 
-
-        elif esc == 3:
+        elif escolha == 3:
             print("Exclusão Por ordenação de Expectativa de vida")
-            healt = str(input("Digite a que deseja remover: "))
-            tree.remove(healt,escolha)
+            data = int(input("Digite o indice que deseja remover: "))
+            tree.remove(data)
+            print("Removido com sucesso")
         else:
             print("Opção Inválida")
         start(retorno,escolha,rank)
