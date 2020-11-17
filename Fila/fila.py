@@ -1,4 +1,18 @@
+'''
+Class Queue - Classe da fila para realizar as operações
 
+_init_: inicia a fila
+isEmpty : retorna se a fila está vazia ou não
+enqueue : insere um novo dado na Fila
+dequeue : remove o primeiro item na Fila
+size : retorna o tamanho da fila
+showQueue: exibe a fila
+percorrerQueue: retorna se determinado elemento existe ou não
+indiceQueue: retorna o indice do elemento passado na Fila
+editarQueue: edita um elemento na fila (caso ele exista!)
+unqueue: reordena a fila caso o elemento que se deseja tirar não estiver no inicio
+returnLast: retorna o último elemento da fila
+'''
 
 class Queue:
     def __init__(self):

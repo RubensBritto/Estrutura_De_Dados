@@ -27,7 +27,7 @@ def saveNewDataCsv(dadosFinal):
         escrever = csv.writer(arquivo_csv)
         for linha in dadosFinal:
             escrever.writerow(linha)
-
+#Da a opção de ordenação por determinados indices na tree (Rank,Qualidade de vida,Economia)
 def ordenar(escolha):
     if escolha == 1:   
         for i in range(len(dados)):
@@ -117,7 +117,7 @@ def criarDado(lastData,escolha,rank):
     newDystopiaResidual = float(input('Digite a Distopia Residual: '))
     tree.insert(newCountry,newRegion,newHappinessRank,newHappinessScore,newStandardError,newEconomy,newFamily,newHealth,newFreedom,newTrust,newGenerosity,newDystopiaResidual,escolha)
 
-# editarDado - verifica se o país a ser editado existe e permite mudar seus atributos
+# editarDado - verifica se a chave do país a ser editado existe e permite mudar seus atributos
 def editarDado():
     id = int(input("Digite o id que deseja editar: "))
     if tree.search(id) == None:
@@ -185,12 +185,11 @@ def editarDado():
             editDystopiaResidual = float(input('Entre com a nova distopia Residual: '))
             tree.editarTree(sumario,editDystopiaResidual,12)
             return
-
+#Verifica se o item na árvore existe e o remove
 def remover(data):  
     verificar = tree.search(data)
     if verificar != None:
-        verify = tree.searchIndex(data)
-        #FALTA remover da arvore 
+        verify = tree.searchIndex(data) 
         del dados[verify]
 
 
