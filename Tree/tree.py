@@ -147,7 +147,7 @@ class BinarySearchTree(BinaryTree):
             elif str(value.lower()) > str(node.country.lower()):
                 node = node.right
         return None
-    
+    #Edita um item presente na tree
     def editarTree(self, index, dado, tipo):
         node = self.root
         while node is not None:
@@ -194,7 +194,7 @@ class BinarySearchTree(BinaryTree):
             elif int(index) > int(node.happinessRank):
                 node = node.right
         return None
-
+#saveTree : Salva a árvore numa lista para poder ser exportada para csv
     def saveTree(self,value):
         listaTemp = []
         listaFinal = []
@@ -229,7 +229,7 @@ class BinarySearchTree(BinaryTree):
         while node.left:
             node = node.left
         return node.data
-    
+    #Remove da tree a partir do elemento passado, já reordenando a árvore
     def remove(self, data,node= ROOT):
         if node == ROOT:
             node = self.root
