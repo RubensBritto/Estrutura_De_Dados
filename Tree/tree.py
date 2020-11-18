@@ -103,7 +103,7 @@ class BinarySearchTree(BinaryTree):
                 parent.right = Node(country,region,happinessRank,happinessScore,standardError, economy, family, health, freedom, trust, genorosity, dystopiaResidual)   
     
     #Busca - busca o item, atráves do index, na tree
-    def search(self, value):
+    def searchHappinessRank(self, value):
         node = self.root
         while node is not None:
             if int(value) == int(node.happinessRank):
@@ -114,30 +114,32 @@ class BinarySearchTree(BinaryTree):
                 node = node.right
         return None
 
+    #Busca - busca o item, atráves do index economy, na tree
     def searchEconomy(self, value):
         node = self.root
         while node is not None:
-            if int(value) == int(node.happinessRank):
-                return node.economy
-            elif int(value) < int(node.happinessRank):
+            if float(value) == float(node.economy):
+                return value
+            elif float(value) < float(node.economy):
                 node = node.left
-            elif int(value) > int(node.happinessRank):
-                node = node.right
-        return None
-    
-    def searchHealth(self, value):
-        node = self.root
-        while node is not None:
-            if int(value) == int(node.happinessRank):
-                return node.health
-            elif int(value) < int(node.happinessRank):
-                node = node.left
-            elif int(value) > int(node.happinessRank):
+            elif float(value) > float(node.economy):
                 node = node.right
         return None
 
+    #Busca - busca o item, atráves do index health, na tree
+    def searchHealth(self, value):
+        node = self.root
+        while node is not None:
+            if float(value) == float(node.health):
+                return value
+            elif float(value) < float(node.health):
+                node = node.left
+            elif float(value) > float(node.health):
+                node = node.right
+        return None
     
-    def searchString(self, value):
+    # Busca se o Pais existe na arvore  
+    def searchCountry(self, value):
         node = self.root
         while node is not None:
             if str(value.lower()) in str(node.country.lower()):
@@ -147,6 +149,7 @@ class BinarySearchTree(BinaryTree):
             elif str(value.lower()) > str(node.country.lower()):
                 node = node.right
         return None
+    
     #Edita um item presente na tree
     def editarTree(self, index, dado, tipo):
         node = self.root
@@ -159,33 +162,24 @@ class BinarySearchTree(BinaryTree):
                     node.region = str(dado)
                     return self.insert(country=None,region=node.region,happinessRank=index,happinessScore=None,standardError=None, economy=None, family=None, health=None, freedom=None, trust=None, genorosity=None, dystopiaResidual=None,escolha=None)
                 elif tipo == 3:
-                    node.happinessRank = str(dado)
-                    return self.insert(country=None,region=None,happinessRank=index,happinessScore=None,standardError=None, economy=None, family=None, health=None, freedom=None, trust=None, genorosity=None, dystopiaResidual=None,escolha=None)
-                elif tipo == 4:
                     node.happinessScore = str(dado)
                     return self.insert(country=None,region=None,happinessRank=index,happinessScore=node.happinessScore,standardError=None, economy=None, family=None, health=None, freedom=None, trust=None, genorosity=None, dystopiaResidual=None,escolha=None)
-                elif tipo == 5:
+                elif tipo == 4:
                     node.standardError = str(dado)
                     return self.insert(country=None,region=None,happinessRank=index,happinessScore=None,standardError=node.standardError, economy=None, family=None, health=None, freedom=None, trust=None, genorosity=None, dystopiaResidual=None,escolha=None)
-                elif tipo == 6:
-                    node.economy = str(dado)
-                    return self.insert(country=None,region=None,happinessRank=index,happinessScore=None,standardError=None, economy=node.economy, family=None, health=None, freedom=None, trust=None, genorosity=None, dystopiaResidual=None,escolha=None)               
-                elif tipo == 7:
+                elif tipo == 5:
                     node.family = str(dado)
                     return self.insert(country=None,region=None,happinessRank=index,happinessScore=None,standardError=None, economy=None, family=node.family, health=None, freedom=None, trust=None, genorosity=None, dystopiaResidual=None,escolha=None)
-                elif tipo == 8:
-                    node.health = str(dado)
-                    return self.insert(country=None,region=None,happinessRank=index,happinessScore=None,standardError=None, economy=None, family=None, health=node.health, freedom=None, trust=None, genorosity=None, dystopiaResidual=None,escolha=None)
-                elif tipo == 9:
+                elif tipo == 6:
                     node.freedom = str(dado)
                     return self.insert(country=None,region=None,happinessRank=index,happinessScore=None,standardError=None, economy=None, family=None, health=None, freedom=node.freedom, trust=None, genorosity=None, dystopiaResidual=None,escolha=None)
-                elif tipo == 10:
+                elif tipo == 7:
                     node.trust = str(dado)
                     return self.insert(country=None,region=None,happinessRank=index,happinessScore=None,standardError=None, economy=None, family=None, health=None, freedom=None, trust=node.trust, genorosity=None, dystopiaResidual=None,escolha=None)
-                elif tipo == 11:
+                elif tipo == 8:
                     node.genorosity = str(dado)
                     return self.insert(country=None,region=None,happinessRank=index,happinessScore=None,standardError=None, economy=None, family=None, health=None, freedom=None, trust=None, genorosity=node.genorosity, dystopiaResidual=None,escolha=None)
-                elif tipo == 12:
+                elif tipo == 9:
                     node.dystopiaResidual = str(dado)
                     return self.insert(country=None,region=None,happinessRank=index,happinessScore=None,standardError=None, economy=None, family=None, health=None, freedom=None, trust=None, genorosity=None, dystopiaResidual=node.dystopiaResidual,escolha=None)
 
@@ -229,8 +223,9 @@ class BinarySearchTree(BinaryTree):
         while node.left:
             node = node.left
         return node.data
-    #Remove da tree a partir do elemento passado, já reordenando a árvore
-    def remove(self, data,node= ROOT):
+    
+    #Remove da tree a partir do Happiness Rank, já reordenando a árvore
+    def removeHappinessRank(self, data,node= ROOT):
         if node == ROOT:
             node = self.root
         
@@ -238,10 +233,10 @@ class BinarySearchTree(BinaryTree):
             return None
         
         if int(data) < int(node.happinessRank):
-            node.left = self.remove(data,node.left)
+            node.left = self.removeHappinessRank(data,node.left)
             
         if int(data) > int(node.happinessRank):
-            node.right = self.remove(data,node.right)
+            node.right = self.removeHappinessRank(data,node.right)
         
         else:
             if node.left is None:
@@ -251,6 +246,55 @@ class BinarySearchTree(BinaryTree):
             else:
                 substituto = self._min(node.right)
                 node.happinessRank = substituto
-                node.right = self.remove(substituto,node.right)
+                node.right = self.removeHappinessRank(substituto,node.right)
         return node
     
+    #Remove da tree a partir do Economy, já reordenando a árvore
+    def removeEconomy(self, data,node= ROOT):
+        if node == ROOT:
+            node = self.root
+        
+        if node is None:
+            return None
+        
+        if float(data) < float(node.economy):
+            node.left = self.removeEconomy(data,node.left)
+            
+        if float(data) > float(node.economy):
+            node.right = self.removeEconomy(data,node.right)
+        
+        else:
+            if node.left is None:
+                return node.right
+            elif node.right is None:
+                return node.left
+            else:
+                substituto = self._min(node.right)
+                node.economy = substituto
+                node.right = self.removeEconomy(substituto,node.right)
+        return node
+
+    #Remove da tree a partir do Health, já reordenando a árvore
+    def removeHealth(self, data,node= ROOT):
+        if node == ROOT:
+            node = self.root
+        
+        if node is None:
+            return None
+        
+        if float(data) < float(node.health):
+            node.left = self.removeHealth(data,node.left)
+            
+        if float(data) > float(node.health):
+            node.right = self.removeHealth(data,node.right)
+        
+        else:
+            if node.left is None:
+                return node.right
+            elif node.right is None:
+                return node.left
+            else:
+                substituto = self._min(node.right)
+                node.health = substituto
+                node.right = self.removeHealth(substituto,node.right)
+        return node
