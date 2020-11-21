@@ -35,10 +35,16 @@ class Queue:
 
     #Procura o elemento na fila e retorna true or false
     def percorrerQueue(self, j, dado):
-        for i in range(self.size()):
-            if (str(dado.lower()) in self.items[i][j].lower()):
-                return True
-        return False
+        if j == 0:
+            for i in range(self.size()):
+                if (str(dado.lower()) in self.items[i][j].lower()):
+                    return True
+            return False
+        elif j == 2:
+            for i in range(self.size()):
+                if (dado in self.items[i][j]):
+                    return True
+            return False
     #Retorna o indice do elemento na fila
     def indiceQueue(self,j,dado):
         for i in range(self.size()):
