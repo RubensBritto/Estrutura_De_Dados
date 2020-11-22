@@ -5,7 +5,6 @@ ROOT = 'root'
 #Classe dos nós
 from os import sendfile
 
-
 class Node:
     #Recebe as chaves e seta os caminhos
     def __init__(self,country,region,happinessRank,happinessScore,standardError, economy, family, health, freedom, trust, genorosity, dystopiaResidual):

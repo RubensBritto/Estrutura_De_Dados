@@ -1,11 +1,14 @@
 
 # -*- coding: utf-8 -*-
+from Tree.tree import BinaryTree
 import csv
 from os import remove
 from tree import BinarySearchTree
+from pais import Pais
 import random
 import os # módulo para acessar o terminal do sistema e poder fazer a limpeza
 
+tree = BinaryTree()
 
 dadosTemp = []
 dados = []
