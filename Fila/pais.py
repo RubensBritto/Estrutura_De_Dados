@@ -2,83 +2,111 @@ from fila import Queue
 fila =  Queue()
 
 class Pais:
-    def __init__(self):
-        self.name = None
-        self.region = None
-        self.happinessRank = None
-        self.happinessScore = None
-        self.standardError = None
-        self.economy = None
-        self.family = None
-        self.health = None
-        self.freedom = None
-        self.trust = None
-        self.genorosity = None
-        self.dystopiaResidual = None
-        self.item = []
-
-    def insert(self,name,region,happinessRank,happinessScore,standardError, economy, family, health, freedom, trust, genorosity, dystopiaResidual):
+    def __init__(self,name=None,region=None,happinessRank=None,happinessScore=None,standardError=None, economy=None, family=None, health=None, freedom=None, trust=None, genorosity=None, dystopiaResidual=None):
         self.name = str(name)
-        self.item.append(self.name)
         self.region = str(region)
-        self.item.append(self.region)
         self.happinessRank = str(happinessRank)
-        self.item.append(self.happinessRank)
         self.happinessScore = str(happinessScore)
-        self.item.append(self.happinessScore)
         self.standardError = str(standardError)
-        self.item.append(self.standardError)
         self.economy = str(economy)
-        self.item.append(self.economy) 
         self.family = str(family)
-        self.item.append(self.family)
         self.health = str(health)
-        self.item.append(self.health)
         self.freedom = str(freedom)
-        self.item.append(self.freedom)
         self.trust = str(trust)
-        self.item.append(self.trust)
         self.genorosity = str(genorosity)
-        self.item.append(self.genorosity)
         self.dystopiaResidual = str(dystopiaResidual)
-        self.item.append(self.dystopiaResidual)
-        return self.item
+        self.item = []
+# criarDado - pega todas as informações necessárias para o cadastro e adiciona na fila 
+# (caso não tenha um pais de mesmo nome)
 
-    def editar(self,data,escolha):
-        if escolha == 0:
-            self.name = str(data)
-            return self.name
-        elif escolha == 1:
-            self.region = str(data)
-            return self.region
-        elif escolha == 2:
-            self.happinessRank = str(data)
-            return self.happinessRank
-        elif escolha == 3:   
-            self.happinessScore = str(data)
-            return self.happinessScore
-        elif escolha == 4:
-            self.standardError = str(data)
-            return self.standardError
-        elif escolha == 5:
-            self.economy = str(data)
-            return self.economy
-        elif escolha == 6:   
-            self.family = str(data)
-            return self.family
-        elif escolha == 7:
-            self.health = str(data)
-            return self.health
-        elif escolha == 8:
-            self.freedom = str(data)
-            return self.freedom
-        elif escolha == 9:
-            self.trust = str(data)
-            return self.trust
-        elif escolha == 10:
-            self.genorosity = str(data)
-            return self.genorosity
-        elif escolha == 11:
-            self.dystopiaResidual = str(data)
-            return self.dystopiaResidual
+    def insert(self, newCountry,newHappinessRank):
+        try:
+            self.item.insert(0,newCountry)
+            newRegion = input('Digite o nome da regiao: ')
+            self.item.append(newRegion)
+            self.item.insert(2,newHappinessRank)
+            newHappinessScore = float(input('Digite o score da felicidade: '))
+            self.item.append(newHappinessScore)
+            newStandardError = float(input('Digite o Erro Padrão: '))
+            self.item.append(newStandardError)
+            newEconomy = float(input('Digite a economia: '))
+            self.item.append(newEconomy)
+            newFamily = float(input('Digite da Família: '))
+            self.item.append(newFamily)
+            newHealth = float(input('Digite da Saúde: '))
+            self.item.append(newHealth)
+            newFreedom = float(input('Digite a Liberdade: '))
+            self.item.append(newFreedom)
+            newTrust = float(input('Digite a Confiança: '))
+            self.item.append(newTrust)
+            newGenerosity = float(input('Digite de Generosidade: '))
+            self.item.append(newGenerosity)
+            newDystopiaResidual = float(input('Digite a Distopia Residual: '))
+            self.item.append(newDystopiaResidual)
+            return(self.item)
+        except:
+            print("Erro de tipo")
+            self.insert(newCountry,newHappinessRank)
 
+# editarDado - verifica se o país (chave) a ser editado existe e permite mudar seus atributos
+
+    def editar(self,sumario):
+        
+        print('Em qual linha/coluna deseja editar um novo dado?\n1 - Pais\n2 - Regiao\n3 - Rankg felicidade')
+        print('4 - Indice Felicidade\n5 - Erro Padrão\n6 - Economia\n7 - Family\n8 - Health')
+        print('9 - Indice de liberdade\n10 - Indice de confiança\n11 - Indice de Generosidade\n12 - Distopia Residual')
+        choose = int(input())
+        if choose == 1:
+            editCountry = input('Entre com o novo nome do país: ')
+            return (sumario,0,editCountry)
+        
+        elif choose == 2:
+            editRegion = input('Entre com a novo nome da região: ')
+            return(sumario,1,editRegion)
+
+        elif choose == 3:
+            editHappinessScore = int(input('Entre com o novo rank de Felicidade: '))
+            return(sumario,2,editHappinessScore)
+       
+        elif choose == 4:
+            editHappinessRank = float(input('Entre com o novo Indice de Felicidade: '))
+            return(sumario,3,editHappinessRank)
+            
+        elif choose == 5:
+            editStandartError = float(input('Entre com o novo Erro Padrão: '))
+            return(sumario,4,editStandartError)
+            
+
+        elif choose == 6:
+            editEconomy = float(input('Entre com a novo valor da Economia: '))
+            return(sumario,5,editEconomy)
+            
+        elif choose == 7:
+            editFamily = float(input('Entre com o novo indice "Family": '))
+            return(sumario,6,editFamily)
+            
+
+        elif choose == 8:
+            editHealth = float(input('Entre com o novo indice "Health": '))
+            return(sumario,7,editHealth)
+            
+
+        elif choose == 9:
+            editFreedom = float(input('Entre com o novo indice de liberdade: '))
+            return(sumario,8,editFreedom)
+            
+
+        elif choose == 10:
+            editTrust = float(input('Entre com o novo indice de confiança: '))
+            return(sumario,9,editTrust)
+            
+
+        elif choose == 11:
+            editGenerosity = float(input('Entre com o novo indice "Generosity": '))
+            return(sumario,10,editGenerosity)
+            
+
+        elif choose == 12:
+            editDystopiaResidual = float(input('Entre com a nova distopia Residual: '))
+            return(sumario,11,editDystopiaResidual)
+            
