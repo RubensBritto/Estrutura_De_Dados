@@ -1,6 +1,5 @@
 
 # -*- coding: utf-8 -*-
-from Tree.tree import BinaryTree
 import csv
 from os import remove
 
@@ -10,15 +9,11 @@ from pais import Pais
 import random
 import os # módulo para acessar o terminal do sistema e poder fazer a limpeza
 
-tree = BinaryTree()
 country = Pais()
+tree = BinarySearchTree()
 
 dadosTemp = []
 dados = []
-tree = BinarySearchTree()
-lastData1 = 0
-lastData2 = 0
-lastData3 = 0
 
 def openData():
     with open('datas/2015.csv', newline='') as arquivo:
@@ -87,63 +82,6 @@ def aleatorioData():
     rt,rank = ordenar(int(escolha))
     return (rt,escolha,rank)
     
-
-# criarDado - pega todas as informações necessárias para o cadastro e adiciona na árbore 
-# (caso não tenha um pais de mesmo nome)
-def criarDado(lastData,escolha,rank):
-    newEconomy = 0
-    newHealth = 0
-    newHappinessRank = ''
-    try:
-        newCountry = input('Digite o nome do pais: ')
-        if tree.searchCountry(newCountry) != None:
-            print("Pais já existe")
-        else:
-            newRegion = input('Digite o nome da regiao: ')
-            if escolha == 1:
-                newHappinessRank = int(rank)+1
-                print("O seu Rank é: " + str(newHappinessRank))
-                newEconomy = float(input('Digite o Indice economico: '))
-                newHealth = float(input('Digite a Expectativa de Vida: '))
-            
-            elif escolha == 2:
-                newHappinessRank = input("Digite o seu rank: ")
-                if tree.searchHappinessRank(newHappinessRank) != None:
-                    print("Pais Já Existe")
-                    print("Inicie novamente")
-                    criarDado(lastData,escolha,rank)
-                else:
-                    print("Digite um indice de economia maior que: " + str(lastData))
-                    newEconomy = float(input('Digite o Indice economico: '))
-                    if newEconomy < float(lastData):
-                        criarDado(lastData,escolha,rank)
-                    else:
-                        newHealth = float(input('Digite a Expectativa de Vida: '))
-            
-            elif escolha == 3:
-                newHappinessRank = input("Digite o seu rank: ")
-                if tree.searchHappinessRank(newHappinessRank) != None:
-                    print("Pais Já Existe")
-                    print("Inicie novamente")
-                    criarDado(lastData,escolha,rank)
-                print("Digite um indice de expectativa de vida maior que: " + str(lastData))
-                newHealth = float(input('Digite a Expectativa de Vida: '))
-                if newHealth < float(lastData):
-                    criarDado(lastData,escolha,rank)
-                else:
-                    newEconomy = float(input('Digite o Indice economico: '))   
-            #salvar o novo indice in the tree
-            newHappinessScore = float(input('Digite o score da felicidade: '))
-            newStandardError = float(input('Digite o Erro Padrão: '))
-            newFamily = float(input('Digite da Família: '))
-            newFreedom = float(input('Digite a Liberdade: '))
-            newTrust = float(input('Digite a Confiança: '))
-            newGenerosity = float(input('Digite de Generosidade: '))
-            newDystopiaResidual = float(input('Digite a Distopia Residual: '))
-            tree.insert(newCountry,newRegion,newHappinessRank,newHappinessScore,newStandardError,newEconomy,newFamily,newHealth,newFreedom,newTrust,newGenerosity,newDystopiaResidual,escolha)
-    except:
-        print("Erro de tipo")
-        criarDado(lastData,escolha,rank)
 
 # editarDado - verifica se a chave do país a ser editado existe e permite mudar seus atributos
 def editarDado():
@@ -215,14 +153,25 @@ def start(retorno,escolha,rank):
     choose = int(input())
     if choose == 1:
         if escolha == 1:
-            criarDado(retorno,escolha,rank)
+            rtCountry,region,happinessRank,happinessScore,standardError, economy, family, health, freedom, trust, genorosity, dystopiaResidual = country.insert(retorno,escolha,rank)
+            tree.insert(rtCountry,region,happinessRank,happinessScore,standardError, economy, family, health, freedom, trust, genorosity, dystopiaResidual,escolha)
         elif escolha == 2:
-            criarDado(retorno,escolha,rank)
+            rtCountry,region,happinessRank,happinessScore,standardError, economy, family, health, freedom, trust, genorosity, dystopiaResidual = country.insert(retorno,escolha,rank)
+            tree.insert(rtCountry,region,happinessRank,happinessScore,standardError, economy, family, health, freedom, trust, genorosity, dystopiaResidual,escolha)
         else:
-            criarDado(retorno,escolha,rank)
+            rtCountry,region,happinessRank,happinessScore,standardError, economy, family, health, freedom, trust, genorosity, dystopiaResidual = country.insert(retorno,escolha,rank)
+            tree.insert(rtCountry,region,happinessRank,happinessScore,standardError, economy, family, health, freedom, trust, genorosity, dystopiaResidual,escolha)        
         start(retorno,escolha,rank)
     if choose == 2:
-        editarDado()
+        
+        id = int(input("Digite o id que deseja editar: "))
+        if tree.searchHappinessRank(id) == None:
+            print("Pais Não Existe")
+            start(retorno,escolha,rank)
+            
+        id,data,colum = country.editar(id)
+        tree.editarTree(id,data,colum)
+
         start(retorno,escolha,rank)
     if choose == 3:
         tree.postorder_traversal()
