@@ -46,7 +46,7 @@ class Graph:
         else:
             return None
 
-    #
+    #add_edge = adciona uma nova aresta no grafo
     def add_edge(self, frm, to, cost = 0):
         if frm not in self.vert_dict:
             self.add_vertex(frm)
@@ -55,7 +55,7 @@ class Graph:
 
         self.vert_dict[frm].add_neighbor(self.vert_dict[to], cost)
         self.vert_dict[to].add_neighbor(self.vert_dict[frm], cost)
-
+    # get_vertices = retorna todos os vertices do grafo
     def get_vertices(self):
         return self.vert_dict.keys()
 
