@@ -22,25 +22,31 @@ class Vertex:
 
 #Classe Graph = classe na qual é montado nosso grafo
 class Graph:
+    
+    # __init__ = inicialização do vertice e o numero de vertices
     def __init__(self):
         self.vert_dict = {}
         self.num_vertices = 0
-
+    
+    # __iter__ = função para iterar os valores dos vertices
     def __iter__(self):
         return iter(self.vert_dict.values())
-
+    
+    # add_vertex = se adciona um novo vertice no grafo com as ligações já existentes
     def add_vertex(self, node):
         self.num_vertices = self.num_vertices + 1
         new_vertex = Vertex(node)
         self.vert_dict[node] = new_vertex
         return new_vertex
 
+    #get_vertex = retorna (se existir) um nó do vertice
     def get_vertex(self, n):
         if n in self.vert_dict:
             return self.vert_dict[n]
         else:
             return None
 
+    #
     def add_edge(self, frm, to, cost = 0):
         if frm not in self.vert_dict:
             self.add_vertex(frm)
