@@ -35,11 +35,11 @@ def constructorGraph():
     #Transforma a lista de adjacencia em um dicionario
     aresta = dict(list)
     
-    #Adicona as chaves do dicionairo com aresta do grafo
+    #Adicona as chaves do dicionairo com vertice do grafo
     for i in aresta.keys():
         graphs.add_vertex(i)
 
-    #Cria os vertices com a ligação das arestas junto do peso (subtração dos salarios)
+    #Cria as arestas (que são a ligação dos vertices) ponderadas (subtração dos salarios)
     for i,j,k in listTemp:
         graphs.add_edge(i,j,k) 
 
