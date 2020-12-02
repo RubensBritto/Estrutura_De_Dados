@@ -58,10 +58,15 @@ def showData():
             print ('VERTICE [%s]= %s' %(v.get_id(), graphs.vert_dict[v.get_id()]))
             print('')
 
+
+
 def main():
     openData()
     constructorGraph()
-    showData()
+    #showData()
+    a=input()
+    b=input()
+    graphs.dijkstra('16000','15000')
 
 
 if __name__ == "__main__":

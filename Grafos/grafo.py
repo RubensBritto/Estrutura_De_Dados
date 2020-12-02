@@ -1,4 +1,7 @@
 #Classe Vertex: Onde é montado nossos Vertices
+from typing import Coroutine
+
+
 class Vertex:
     #__init__ = Inicialzação das arestas setando o id e o vertice adjacente
     def __init__(self, node):
@@ -21,7 +24,7 @@ class Vertex:
         return self.adjacent[neighbor]
 
 #Classe Graph = classe na qual é montado nosso grafo
-class Graph:
+class Graph(dict):
     
     # __init__ = inicialização do vertice e o numero de vertices
     def __init__(self):
@@ -55,12 +58,66 @@ class Graph:
 
         self.vert_dict[frm].add_neighbor(self.vert_dict[to], cost)
         self.vert_dict[to].add_neighbor(self.vert_dict[frm], cost)
+    
     # get_vertices = retorna todos os vertices do grafo
     def get_vertices(self):
         return self.vert_dict.keys()
 
+    def dijkstra(self, start, end):
+        shortest_distance = {}
+        track_predecessor = {}
+        unseenNodes = Graph()
+        infinity = 999999
+        track_path = []
+
+        for node in unseenNodes:
+            shortest_distance[node] = infinity
+        shortest_distance[start] = 0
+
+        while unseenNodes:
+            min_distance_node = None
+
+            for node in unseenNodes:
+                if min_distance_node is None:
+                    min_distance_node = node
+                elif shortest_distance[node] < shortest_distance[min_distance_node]:
+                    min_distance_node = node
+            #path_options = os items do grafo(olhar linha de baixo)
+            path_options = self.vert_dict[min_distance_node].items() 
+
+            for child_node, weight in path_options:
+                if weight + shortest_distance[min_distance_node] < shortest_distance[child_node]:
+                    shortest_distance[child_node] = weight + shortest_distance[min_distance_node]
+                    track_predecessor[child_node] = min_distance_node
+            
+            unseenNodes.pop(min_distance_node)
+        currentNode = end
+
+        while currentNode != start:
+            track_path.insert(0,currentNode)
+            print(track_predecessor)
+            print(currentNode)
+            currentNode = track_predecessor[currentNode] #ESSA MERDA TA DANDO ERRO
+
+        
+        track_path.insert(0,start)
+
+        if shortest_distance[end] != infinity:
+            print("Menor distancia é" + str(shortest_distance[end]))
+            print("Caminho a ser seguido" + str(track_path))
+
+'''
+    def search(self, start,end, visitados=[]):
+        if start == end:
+            return None
+        else:
+            visitados.append(start)
+            for vizinho in self.vert_dict:
+                if vizinho not in visitados:
+                    self.search(vizinho,end, visitados)
+
 if __name__ == '__main__':
-    '''
+
     g = Graph()
 
     g.add_vertex('a')
