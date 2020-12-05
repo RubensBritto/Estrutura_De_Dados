@@ -4,6 +4,8 @@
 import csv # módulo necessário poder se trabalhar com csv
 import os # módulo para acessar o terminal do sistema e poder fazer a limpeza
 import random # módulo para geração de números pseudo-aleatórios
+from init import Interface
+
 
 itemTemp = []
 
@@ -171,7 +173,9 @@ class Main:
     # (caso não tenha um pais de mesmo nome)
     def criarDado(self):
         newLine = Pais()
-        newCountry = input('Digite o nome do pais: ')
+        
+        #newCountry = input('Digite o nome do pais: ')
+        newCountry =str(Interface().criarLista.insertName.get())
         newRegion = input('Digite o nome da regiao: ')
         newHappinessRank = int(input('Digite o rank da felicidade: '))
         verificacao = self.verificar(newCountry,newHappinessRank)
