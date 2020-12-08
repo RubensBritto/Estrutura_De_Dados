@@ -4,9 +4,12 @@
 import csv # módulo necessário poder se trabalhar com csv
 import os # módulo para acessar o terminal do sistema e poder fazer a limpeza
 import random # módulo para geração de números pseudo-aleatórios
-from init import Interface
+from tkinter import *
+from tkinter import messagebox
+ 
 
-
+dados = []
+dadosTemp = []
 itemTemp = []
 
 class Pais:
@@ -104,15 +107,14 @@ class Pais:
         self.dystopiaResidual = newDystopiaResidual
         return str(newDystopiaResidual)
 
-dados = []
-dadosTemp = []
 
 
 class Main:
+
     def __init__(self):
         self.openData()
         self.aleatorioData()
-        self.start()
+        #self.start()
         
     # openData - abre os arquivos (csv) e faz toda manipulação para ser colocado na lista
     def openData(self):
@@ -154,154 +156,123 @@ class Main:
     #verificar - mostra se o país em questão já está na lista (impendindo repetições)
     def verificar(self,newCountry, newHappinessRank):
         for i in range(len(dados)):
+            print(i)
             if newCountry.lower() in dados[i][0].lower() or str(newHappinessRank) in dados[i][2]:
                 return False
-        print('Pais ou ranking nao existe')
         return True
+    #verificar - mostra se o país em questão já está na lista (impendindo repetições)
+    
+    def verificar2(self,esc,newCountry=None, newHappinessRank=None):
+        for i in range(len(dados)):
+            if esc == 1:
+                if newCountry.lower() in dados[i][0].lower():
+                    return False
 
+            if esc == 2:
+                if str(newHappinessRank) in dados[i][2]:
+                    return False
+        return True
     #deletarDado - faz uma busca pelo país (chave) em questão e o deleta
-    def deletarDado(self):
-        country = input('Digite o pais que deseja deletar: ')
+    def deletarDado(self,country):
         for i in range(len(dados)):
             if country.lower() in dados[i][0].lower():
                 del dados[i]
-                print('Removido!')
+                messagebox.showinfo("OK", "Pais Removido com Sucesso")
                 return
-        print('Pais não consta na lista!')        
+        messagebox.showerror("Error", "Pais não existe")     
 
     # criarDado - pega todas as informações necessárias para o cadastro e adiciona na lista 
     # (caso não tenha um pais de mesmo nome)
-    def criarDado(self):
-        newLine = Pais()
+    def criarDado(self,newCountry, newRegion, newHappinessRank, newHappinessScore, newStandardError,newEconomy, newFamily, newHealth, newFreedom, newTrust, newGenerosity, newDystopiaResidual):        
         
-        #newCountry = input('Digite o nome do pais: ')
-        newCountry =str(Interface().criarLista.insertName.get())
-        newRegion = input('Digite o nome da regiao: ')
-        newHappinessRank = int(input('Digite o rank da felicidade: '))
-        verificacao = self.verificar(newCountry,newHappinessRank)
-        if verificacao == False:
-            print('Inicie Novamente o cadastro por favor')
-            self.criarDado()
+        newLine = Pais()
+        country = newCountry 
+        rank = newHappinessRank
+        verify = self.verificar(country,rank)
+        print(verify)
+        if  verify == False:
+            messagebox.showinfo("Erro", "Pais ou rank já existe")
+            return
         else:
-            newHappinessScore = float(input('Digite o score da felicidade: '))
-            newStandardError = float(input('Digite o Erro Padrão: '))
-            newEconomy = float(input('Digite a economia: '))
-            newFamily = float(input('Digite da Família: '))
-            newHealth = float(input('Digite da Saúde: '))
-            newFreedom = float(input('Digite a Liberdade: '))
-            newTrust = float(input('Digite a Confiança: '))
-            newGenerosity = float(input('Digite de Generosidade: '))
-            newDystopiaResidual = float(input('Digite a Distopia Residual: '))
             retorno = newLine.criarNewDado(newCountry, newRegion, newHappinessRank, newHappinessScore, newStandardError,newEconomy, newFamily, newHealth, newFreedom, newTrust, newGenerosity, newDystopiaResidual)
             dados.append(retorno)
+            messagebox.showinfo("Ok", "Pais criado com Sucesso")
+
 
     # editarDado - verifica se o país (chave) a ser editado existe e permite mudar seus atributos
-    def editarDado(self):
-        country = input("Digite o pais que deseja editar: ")
+    def editarDado(self,choose,country,data):
         for i in range(len(dados)):
-            if country.lower() in dados[i][0].lower():
+            if str(country.lower()) in dados[i][0].lower():
                 linhaDados = self.indiceItem(country)
-                newLine = self.opLista()
-                print('Em qual linha/coluna deseja editar um novo dado?\n1 - Pais\n2 - Regiao\n3 - Rankg felicidade')
-                print('4 - Indice Felicidade\n5 - Erro Padrão\n6 - Economia\n7 - Family\n8 - Health')
-                print('9 - Indice de liberdade\n10 - Indice de confiança\n11 - Indice de Generosidade\n12 - Distopia Residual')
-                choose = int(input())
+                newLine = Pais()
                 if choose == 1:
-                    editCountry = input('Entre com o novo nome do país: ')
-                    retorno = newLine.editarCountry(editCountry)
-                    retorno2 = self.verificar(editCountry,0)
+                    retorno = newLine.editarCountry(data)
+                    retorno2 = self.verificar2(1,data)
+
                     if retorno2 == True:
                         self.inserirDadoMatriz(linhaDados,0,retorno)
+                        messagebox.showinfo("Ok", "Edição Realizada")
                     else:
-                        print("Pais já existe")
+                        messagebox.showerror("Error", "Pais já Existe")
                 elif choose == 2:
-                    editRegion = input('Entre com a novo nome da região: ')
-                    retorno = newLine.editarRegion(editRegion)
+                    retorno = newLine.editarRegion(data)
                     self.inserirDadoMatriz(linhaDados,1,retorno)
 
                 elif choose == 3:
-                    editHappinessScore = float(input('Entre com o novo rank de Felicidade: '))
-                    retorno = newLine.editarHappinessScore(editHappinessScore)
-                    retorno2 = self.verificar("",editHappinessScore)
+                    retorno = newLine.editarHappinessScore(data)
+                    retorno2 = self.verificar2(2,data)
                     if retorno2 == True:
                         self.inserirDadoMatriz(linhaDados,2,retorno)
                     else:
-                        print("Rank já existe")
+                        messagebox.showinfo("Erro", "Rank já existe")
 
                 elif choose == 4:
-                    editHappinessRank = float(input('Entre com o novo Indice de Felicidade: '))
-                    retorno = newLine.editarHappinessRank(editHappinessRank)
+                    retorno = newLine.editarHappinessRank(data)
                     self.inserirDadoMatriz(linhaDados,3,retorno)
 
                 elif choose == 5:
-                    editStandartError = float(input('Entre com o novo Erro Padrão: '))
-                    retorno = newLine.editarStandardError(editStandartError)
+                    retorno = newLine.editarStandardError(data)
                     self.inserirDadoMatriz(linhaDados,4,retorno)
 
                 elif choose == 6:
-                    editEconomy = float(input('Entre com a novo valor da Economia: '))
-                    retorno = newLine.editarEconomy(editEconomy)
+                    retorno = newLine.editarEconomy(data)
                     self.inserirDadoMatriz(linhaDados,5,retorno)
 
                 elif choose == 7:
-                    editFamily = float(input('Entre com o novo indice "Family": '))
-                    retorno = newLine.editarFamily(editFamily)
+                    retorno = newLine.editarFamily(data)
                     self.inserirDadoMatriz(linhaDados,6,retorno)
 
                 elif choose == 8:
-                    editHealth = float(input('Entre com o novo indice "Health": '))
-                    retorno = newLine.editarHealth(editHealth)
+                    retorno = newLine.editarHealth(data)
                     self.inserirDadoMatriz(linhaDados,7,retorno)
 
                 elif choose == 9:
-                    editFreedom = float(input('Entre com o novo indice de liberdade: '))
-                    retorno = newLine.editarFreedom(editFreedom)
+                    retorno = newLine.editarFreedom(data)
                     self.inserirDadoMatriz(linhaDados,8,retorno)
 
                 elif choose == 10:
-                    editTrust = float(input('Entre com o novo indice de confiança: '))
-                    retorno = newLine.editarTrust(editTrust)
+                    retorno = newLine.editarTrust(data)
                     self.inserirDadoMatriz(linhaDados,9,retorno)
 
                 elif choose == 11:
-                    editGenerosity = float(input('Entre com o novo indice "Generosity": '))
-                    retorno = newLine.editarGenerosity(editGenerosity)
+                    retorno = newLine.editarGenerosity(data)
                     self.inserirDadoMatriz(linhaDados,10,retorno)
 
                 elif choose == 12:
-                    editDystopiaResidual = float(input('Entre com a nova distopia Residual: '))
-                    retorno = newLine.editarDystopiaResidual(editDystopiaResidual)
+                    retorno = newLine.editarDystopiaResidual(data)
                     self.inserirDadoMatriz(linhaDados,11,retorno)
+
+
+    def salvaData(self):
+        self.altera_csv(dados)
+        messagebox.showinfo("OK", "Arquivo Criado com Sucesso")
 
     #showList - imprime todos os dados contidos na lista
     def showList(self):
-        for i in range(len(dados)):    
-            print(dados[i])
+        root = Tk()
+        show = Text(root,width=500, height=50)
+        show.pack()
 
-    # start - aqui são oferecidas aos usuários todas as opções disponíveis em um menu interativo    
-    def start(self):
-        print('Digite a opção desejada\n1-Criar\n2-Editar\n3-Mostrar Lista\n4-Deletar Item\n5-Exportar CSV\n6-Limpar Console\n0-Sair')
-        choose = int(input())
-        if choose == 1:
-            self.criarDado()
-            self.start()
-        if choose == 2:
-            self.editarDado()
-            self.start()
-        if choose == 3:
-            self.showList()
-            self.start()
-        if choose == 4:
-            self.deletarDado()
-            self.start()
-        if choose == 5:
-            self.altera_csv(dados)
-            self.start()
-        if choose == 6:        
-            os.system('clear')
-            self.start()
-        if choose == 0:
-            exit()
-        else:
-            print("Operação invalida!")
-            self.start()
+        for i in range(len(dados)):
+            show.insert(END,dados[i])
+
