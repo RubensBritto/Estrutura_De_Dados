@@ -485,6 +485,7 @@ class newLista:
         self.salvarData = Button(self.frameLista, bg="red", text="SALVAR", bd="0", fg="white",command=lambda: Lista.Main().deletarDado(str(self.insertName.get()))).pack(pady=12)
         self.returnMain = Button(self.frameLista, bg="red", text="Voltar", bd="0", fg="white",command= self.windowsLista.destroy).pack(pady=12)
     def mostrarDados():
+        self.windowsLista = Tk()
         print("Mostrar os dados na tela")
         file = open("/data.csv", "r")
         text_area = tkinter.Text(self.windowsLista,font="Arial 12",width=1280,height=720)
