@@ -1,3 +1,4 @@
+import tkinter
 from numpy.lib.function_base import insert
 import Fila
 import Pilha
@@ -485,8 +486,10 @@ class newLista:
         self.returnMain = Button(self.frameLista, bg="red", text="Voltar", bd="0", fg="white",command= self.windowsLista.destroy).pack(pady=12)
     def mostrarDados():
         print("Mostrar os dados na tela")
-        file = open("data.csv", "r")
-        text_area = file.read()
+        file = open("/data.csv", "r")
+        text_area = tkinter.Text(self.windowsLista,font="Arial 12",width=1280,height=720)
+        text_area.pack()
+        text_area= file.read()
         file.close()
 
 #Lista.Main()
