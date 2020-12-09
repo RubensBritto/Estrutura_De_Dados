@@ -483,7 +483,8 @@ class newLista:
         
         self.salvarData = Button(self.frameLista, bg="red", text="SALVAR", bd="0", fg="white",command=lambda: Lista.Main().deletarDado(str(self.insertName.get()))).pack(pady=12)
         self.returnMain = Button(self.frameLista, bg="red", text="Voltar", bd="0", fg="white",command= self.windowsLista.destroy).pack(pady=12)
-
+    def mostrarDados():
+        print("Mostrar os dados na tela")
 
 #Lista.Main()
 i = Interface()
