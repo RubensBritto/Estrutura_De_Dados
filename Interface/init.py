@@ -485,6 +485,9 @@ class newLista:
         self.returnMain = Button(self.frameLista, bg="red", text="Voltar", bd="0", fg="white",command= self.windowsLista.destroy).pack(pady=12)
     def mostrarDados():
         print("Mostrar os dados na tela")
+        file = open("data.csv", "r")
+        text_area = file.read()
+        file.close()
 
 #Lista.Main()
 i = Interface()
