@@ -3,7 +3,9 @@
 import csv # módulo necessário poder se trabalhar com csv
 import random # módulo para geração de números pseudo-aleatórios
 import os # módulo para acessar o terminal do sistema e poder fazer a limpeza
-
+from tkinter import *
+from tkinter import messagebox
+ 
 '''
 Class Queue - Classe da fila para realizar as operações
 _init_: inicia a fila
@@ -18,6 +20,7 @@ editarQueue: edita um elemento na fila (caso ele exista!)
 unqueue: reordena a fila caso o elemento que se deseja tirar não estiver no inicio
 returnLast: retorna o último elemento da fila
 '''
+
 
 class Queue:
     def __init__(self):
@@ -47,7 +50,7 @@ class Queue:
             return False
         elif j == 2:
             for i in range(self.size()):
-                if (dado in self.items[i][j]):
+                if (str(dado) in str(self.items[i][j])):
                     return True
             return False
     #Retorna o indice do elemento na fila
@@ -67,7 +70,8 @@ class Queue:
     
     def returnLast(self, i):
         return self.items[i]
-    
+
+fila =  Queue()
 
 class Pais:
     def __init__(self,name=None,region=None,happinessRank=None,happinessScore=None,standardError=None, economy=None, family=None, health=None, freedom=None, trust=None, genorosity=None, dystopiaResidual=None):
@@ -87,107 +91,106 @@ class Pais:
     # criarDado - pega todas as informações necessárias para o cadastro e adiciona na fila 
     # (caso não tenha um pais de mesmo nome)
 
-    def insert(self, newCountry,newHappinessRank):
-        try:
+    def insert(self, newCountry,newRegion,newHappinessRank,newHappinessScore,newStandardError,newEconomy,newFamily,newHealth,newFreedom,newTrust,newGenerosity,newDystopiaResidual):
+        cond1 = fila.percorrerQueue(0,newCountry)
+        cond2 = (fila.percorrerQueue(2,str(newHappinessRank)))
+        if ((cond1 != True) and (cond2 != True)):
             self.item.insert(0,newCountry)
-            newRegion = input('Digite o nome da regiao: ')
+            #newRegion = input('Digite o nome da regiao: ')
             self.item.append(newRegion)
             self.item.insert(2,newHappinessRank)
-            newHappinessScore = float(input('Digite o score da felicidade: '))
+            #newHappinessScore = float(input('Digite o score da felicidade: '))
             self.item.append(newHappinessScore)
-            newStandardError = float(input('Digite o Erro Padrão: '))
+            #newStandardError = float(input('Digite o Erro Padrão: '))
             self.item.append(newStandardError)
-            newEconomy = float(input('Digite a economia: '))
+            #newEconomy = float(input('Digite a economia: '))
             self.item.append(newEconomy)
-            newFamily = float(input('Digite da Família: '))
+            #newFamily = float(input('Digite da Família: '))
             self.item.append(newFamily)
-            newHealth = float(input('Digite da Saúde: '))
+            #newHealth = float(input('Digite da Saúde: '))
             self.item.append(newHealth)
-            newFreedom = float(input('Digite a Liberdade: '))
+            #newFreedom = float(input('Digite a Liberdade: '))
             self.item.append(newFreedom)
-            newTrust = float(input('Digite a Confiança: '))
+            #newTrust = float(input('Digite a Confiança: '))
             self.item.append(newTrust)
-            newGenerosity = float(input('Digite de Generosidade: '))
+            #newGenerosity = float(input('Digite de Generosidade: '))
             self.item.append(newGenerosity)
-            newDystopiaResidual = float(input('Digite a Distopia Residual: '))
+            #newDystopiaResidual = float(input('Digite a Distopia Residual: '))
             self.item.append(newDystopiaResidual)
-            return(self.item)
-        except:
-            print("Erro de tipo")
-            self.insert(newCountry,newHappinessRank)
+            fila.enqueue(self.item)
+            messagebox.showinfo("Ok", "Pais Adicionado com sucesso")
+            return
+        #return(self.item)
+        else:
+            messagebox.showerror("Error","Pais ou Rank ja Existe")
+            return  
 
     # editarDado - verifica se o país (chave) a ser editado existe e permite mudar seus atributos
 
-    def editar(self,sumario):
-        print('Em qual linha/coluna deseja editar um novo dado?\n1 - Pais\n2 - Regiao\n3 - Rankg felicidade')
-        print('4 - Indice Felicidade\n5 - Erro Padrão\n6 - Economia\n7 - Family\n8 - Health')
-        print('9 - Indice de liberdade\n10 - Indice de confiança\n11 - Indice de Generosidade\n12 - Distopia Residual')
-        choose = int(input())
-        if choose == 1:
-            editCountry = input('Entre com o novo nome do país: ')
-            return (sumario,0,editCountry)
-        
-        elif choose == 2:
-            editRegion = input('Entre com a novo nome da região: ')
-            return(sumario,1,editRegion)
+    def editar(self,choose,nameCountry,data):
+        cond1 = fila.percorrerQueue(0, nameCountry)
+        #print(cond1)
+        if cond1 == True:
+            sumario = fila.indiceQueue(0,nameCountry) #Se o Pais existe na Fila ele pode ser alterado
+            if choose == 0:
+                cond2 = fila.percorrerQueue(0, data)
+                #print(cond2)
+                if cond2 != True:
+                    fila.queueEditar(sumario,0,data)
+                else:
+                    messagebox.showerror("Error", "Nome do Pais ja consta na Fila")
+                    return
 
-        elif choose == 3:
-            editHappinessScore = int(input('Entre com o novo rank de Felicidade: '))
-            return(sumario,2,editHappinessScore)
-       
-        elif choose == 4:
-            editHappinessRank = float(input('Entre com o novo Indice de Felicidade: '))
-            return(sumario,3,editHappinessRank)
-            
-        elif choose == 5:
-            editStandartError = float(input('Entre com o novo Erro Padrão: '))
-            return(sumario,4,editStandartError)
-            
+            elif choose == 1:
+                fila.queueEditar(sumario,1,data)
 
-        elif choose == 6:
-            editEconomy = float(input('Entre com a novo valor da Economia: '))
-            return(sumario,5,editEconomy)
-            
-        elif choose == 7:
-            editFamily = float(input('Entre com o novo indice "Family": '))
-            return(sumario,6,editFamily)
-            
+            elif choose == 2:
+                cond3 = fila.percorrerQueue(2, data)
+                if cond3 != True:
+                    fila.queueEditar(sumario,2,data)
+                else:
+                    messagebox.showerror("Error", "Rank já existe")
+                    return
+            elif choose == 3:
+                fila.queueEditar(sumario,3,data)
 
-        elif choose == 8:
-            editHealth = float(input('Entre com o novo indice "Health": '))
-            return(sumario,7,editHealth)
-            
+            elif choose == 4:
+                fila.queueEditar(sumario,4,data)
 
-        elif choose == 9:
-            editFreedom = float(input('Entre com o novo indice de liberdade: '))
-            return(sumario,8,editFreedom)
-            
+            elif choose == 5:
+                fila.queueEditar(sumario,5,data)
 
-        elif choose == 10:
-            editTrust = float(input('Entre com o novo indice de confiança: '))
-            return(sumario,9,editTrust)
-            
+            elif choose == 6:
+                fila.queueEditar(sumario,6,data)
 
-        elif choose == 11:
-            editGenerosity = float(input('Entre com o novo indice "Generosity": '))
-            return(sumario,10,editGenerosity)
-            
+            elif choose == 7:
+                fila.queueEditar(sumario,7,data)
 
-        elif choose == 12:
-            editDystopiaResidual = float(input('Entre com a nova distopia Residual: '))
-            return(sumario,11,editDystopiaResidual)
-            
+            elif choose == 8:
+                fila.queueEditar(sumario,8,data)
+
+            elif choose == 9:
+                fila.queueEditar(sumario,9,data)
+
+            elif choose == 10:
+                fila.queueEditar(sumario,10,data)
+
+            elif choose == 11:
+                fila.queueEditar(sumario,11,data)
+        elif cond1 != True:
+            messagebox.showerror("Error", "Pais não costa na fila")
+            return
+        messagebox.showinfo("OK", "Alteração Realizada")
+    
 dados = []
-fila =  Queue()
-country = Pais()
+country = Pais()    
 
 class Main:
-
-    def __init__(self):
+    
+    def iniciar (self):
         self.openData()
         self.aleatorioData()
-        self.start()
-    
+
     # openData - abre os arquivos (csv) e faz toda manipulação para ser colocado na fila
     def openData(self):
         with open('data.csv', newline='') as arquivo:
@@ -217,9 +220,17 @@ class Main:
 
     #showQueue - imprime todos os dados contidos na fila        
     def showQueue(self):
+        root = Tk()
+        show = Text(root,width=500, height=50,pady=10,padx=10)
+        show.pack()
+        dados = []
         for i in range(fila.size()):
-            print(fila.showQueue(i))
-
+            dados.append(fila.showQueue(i))
+            show.insert(END,"Pais: " + str(dados[i][0] )+ "\nRegião: " + str(dados[i][1] )+ "\nRank Felicidade: " + str(dados[i][2] )+ "\nScore Felicidade: " + str(dados[i][3] )+
+                "\nErro Padrão: " + str(dados[i][4] )+ "\nIndice de Economia: " + str(dados[i][5] )+ "\nIndice da Familia: " + str(dados[i][6] )+ "\nExpectativa de Vida: " + str(dados[i][7] )+
+                "\nIndice de Liberdade: " + str(dados[i][8] )+ "\nIndice de Confiança: " + str(dados[i][9] )+ "\nIndice de Genorosidade: "+ str(dados[i][10])+ "\nIndice de Distopia Residual: "+
+                str(dados[i][11]) + "\n\n")
+            
 
     # removeFromQueue - cria uma lista temporaria, guarda o index do item da fila a ser removido
     # passa a fila para uma lista, remove o item na lista e depois coloca essa lista sem o item de volta na fila
@@ -244,82 +255,19 @@ class Main:
             fila.enqueue(listaTemp[len(listaTemp)-i])
 
     #deletarDado - faz uma busca pelo país (chave) em questão e o deleta
-    def deletarDado(self):
+    def deletarDado(self,country):
         if fila.isEmpty() == False:
-            country = input('Digite o pais que deseja deletar: ')
+            #country = input('Digite o pais que deseja deletar: ')
             indexQueue = fila.unqueue(0,country)
             self.removeFromQueue(indexQueue)
-            print('Removido!')
+            messagebox.showinfo("Ok","Pais removido com Sucesso")
         else:
-            print('Fila ja está vazia')
+            messagebox.showerror("Error", "A pilha já esta fazia")
 
+    def salvaCSV(self):
+        dadosFinal = []
+        for i in range(fila.size()):
+            dadosFinal.append(fila.returnLast(i))
+        self.saveNewDataCsv(dadosFinal)
+        messagebox.showinfo("Ok", "CSV Exportado com Sucesso")
 
-    # start - aqui são oferecidas aos usuários todas as opções disponíveis em um menu interativo
-    def start(self):
-        print('Digite a opção desejada\n1-Criar\n2-Editar\n3-Mostrar Lista\n4-Deletar Item\n5-Exportar CSV\n6-Limpar Console\n0-Sair')
-        esc = int(input())
-        if esc == 1:
-            #criarDado()
-            newCountry = input('Digite o nome do pais: ')
-            newHappinessRank = int(input('Digite o rank da felicidade: '))
-            if (fila.percorrerQueue(0,newCountry)) != False or (fila.percorrerQueue(2,str(newHappinessRank))) != False:
-                print('Inicie Novamente o cadastro por favor')
-                self.start()
-            item = country.insert(newCountry,newHappinessRank)
-            fila.enqueue(item)
-            self.start()
-            
-        if esc == 2:
-            nameCountry = str(input("Digite o nome do pais que deseja editar: "))
-            if fila.percorrerQueue(0, nameCountry) == True:
-                sumario = fila.indiceQueue(0,nameCountry)
-                i,j,data =country.editar(sumario)
-                if j == 0:
-                    if fila.percorrerQueue(0,data) != True:
-                        fila.queueEditar(i,j,data)
-                        self.start()
-                    else:
-                        print("Nome da pais ja existe na fila")
-                        self.start()
-                elif j == 2:
-                    if fila.percorrerQueue(2,int(data)) != True:
-                        fila.queueEditar(i,j,data)
-                        self.start()
-                    else:
-                        print("Rankg ja existe na fila")
-                        self.start()   
-                else: 
-                    fila.queueEditar(i,j,data)
-                    print("EDIÇÃO COMPLETA")
-                    self.start()
-            else:
-                print("Pais não existe na fila")
-                self.start()
-            
-        if esc == 3:
-            self.showQueue()
-            self.start()
-            
-        
-        if esc == 4:
-            self.deletarDado()
-            self.start()
-                
-        if esc == 5:
-            dadosFinal = []
-            for i in range(fila.size()):
-                dadosFinal.append(fila.returnLast(i))
-            self.saveNewDataCsv(dadosFinal)
-            self.start()
-            
-        if esc == 6:        
-            os.system('clear')
-            self.start()
-            
-        if esc == 0:
-            exit()
-            
-        else:
-            print("Operação invalida!")
-            self.start()
-    

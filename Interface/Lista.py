@@ -111,10 +111,9 @@ class Pais:
 
 class Main:
 
-    def __init__(self):
+    def iniciar (self):
         self.openData()
         self.aleatorioData()
-        #self.start()
         
     # openData - abre os arquivos (csv) e faz toda manipulação para ser colocado na lista
     def openData(self):
@@ -129,19 +128,18 @@ class Main:
         k = 0
         visitados = []
         while(k < 100):
-            valorAleatorio = random.randint(1,100)
+            valorAleatorio = random.randint(1,157)
             if valorAleatorio not in visitados:
                 visitados.append(valorAleatorio)
                 dados.append(dadosTemp[valorAleatorio])
                 k+=1
-
     # altera_csv - recebe a lista de dados com todas as alterações e manipulações e exportar para outro arquivo csv
     def altera_csv(self,dados):
         with open('data_1.csv', 'w', newline='') as arquivo_csv:
             escrever = csv.writer(arquivo_csv)
             for linha in dados:
                 escrever.writerow(linha)
-
+    
     #inserirDadoMatriz - adiciona na lista os arquivos que forma alterados, de forma "pontual" na linha e coluna desejada
     def inserirDadoMatriz(self,i,j,item):
         dados[i][j] = item
@@ -156,7 +154,6 @@ class Main:
     #verificar - mostra se o país em questão já está na lista (impendindo repetições)
     def verificar(self,newCountry, newHappinessRank):
         for i in range(len(dados)):
-            print(i)
             if newCountry.lower() in dados[i][0].lower() or str(newHappinessRank) in dados[i][2]:
                 return False
         return True
@@ -184,19 +181,21 @@ class Main:
     # criarDado - pega todas as informações necessárias para o cadastro e adiciona na lista 
     # (caso não tenha um pais de mesmo nome)
     def criarDado(self,newCountry, newRegion, newHappinessRank, newHappinessScore, newStandardError,newEconomy, newFamily, newHealth, newFreedom, newTrust, newGenerosity, newDystopiaResidual):        
-        
         newLine = Pais()
         country = newCountry 
         rank = newHappinessRank
         verify = self.verificar(country,rank)
-        print(verify)
         if  verify == False:
             messagebox.showinfo("Erro", "Pais ou rank já existe")
             return
+            
         else:
             retorno = newLine.criarNewDado(newCountry, newRegion, newHappinessRank, newHappinessScore, newStandardError,newEconomy, newFamily, newHealth, newFreedom, newTrust, newGenerosity, newDystopiaResidual)
             dados.append(retorno)
+            print(dados)
             messagebox.showinfo("Ok", "Pais criado com Sucesso")
+            return
+            
 
 
     # editarDado - verifica se o país (chave) a ser editado existe e permite mudar seus atributos
@@ -270,9 +269,13 @@ class Main:
     #showList - imprime todos os dados contidos na lista
     def showList(self):
         root = Tk()
-        show = Text(root,width=500, height=50)
+        show = Text(root,width=500, height=50,pady=10,padx=10)
         show.pack()
-
+        print(len(dados))
         for i in range(len(dados)):
-            show.insert(END,dados[i])
-
+                show.insert(END,"Pais: " + dados[i][0] + "\nRegião: " + dados[i][1] + "\nRank Felicidade: " + dados[i][2] + "\nScore Felicidade: " + dados[i][3] +
+                "\nErro Padrão: " + dados[i][4] + "\nIndice de Economia: " + dados[i][5] + "\nIndice da Familia: " + dados[i][6] + "\nExpectativa de Vida: " + dados[i][7] +
+                "\nIndice de Liberdade: " + dados[i][8] + "\nIndice de Confiança: " + dados[i][9] + "\nIndice de Genorosidade: "+ dados[i][10]+ "\nIndice de Distopia Residual: "+
+                dados[i][11] + "\n\n")
+  
+        return

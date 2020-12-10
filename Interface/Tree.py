@@ -2,7 +2,11 @@
 import csv
 from os import remove
 import random
-import os # módulo para acessar o terminal do sistema e poder fazer a limpeza
+import os
+from tkinter import messagebox 
+from tkinter import *
+
+#módulo para acessar o terminal do sistema e poder fazer a limpeza
 
 #######  CLASSE TREE #######
 
@@ -32,7 +36,7 @@ class Node:
         self.right = None
 
     def __str__(self):
-        print("Pais: " + self.country + " - " +"Região: " + self.region + " - " + "Rank Felicidade: " + self.happinessRank + " - " +
+        ("Pais: " + self.country + " - " +"Região: " + self.region + " - " + "Rank Felicidade: " + self.happinessRank + " - " +
         "Score Felicidade: " + self.happinessScore+ " - " + "Erro Padrão: " + self.standardError + " - " +
         "Economia: " + self.economy+ " - " + "Familia: " + self.family + " - " +"Expectativa de vida: " + self.health + " - "
         " Indice de Liberdade: " + self.freedom+ " - " + " Indice de Confiança: " + self.trust + " - " +" Indice de Generosidade: " + self.genorosity+
@@ -50,14 +54,17 @@ class BinaryTree:
             self.root = node
         else:
             self.root = None
+
     def postorder_traversal(self, node=None):
+        listTemp = []
         if node is None:
             node = self.root
         if node.left:
             self.postorder_traversal(node.left)
         if node.right:
             self.postorder_traversal(node.right)
-        print(node)
+        listTemp.append(str(node))
+        print(listTemp)
     
 
 #Classe de árvore binária de Busca
@@ -233,6 +240,10 @@ class BinarySearchTree(BinaryTree):
     
     #Remove da tree a partir do Happiness Rank, já reordenando a árvore
     def removeHappinessRank(self, data,node= ROOT):
+        if tree.searchHappinessRank(data) == None:
+            messagebox.showerror("Error", "Rank não Existe na Arvore")
+            return
+        
         if node == ROOT:
             node = self.root
         
@@ -258,6 +269,10 @@ class BinarySearchTree(BinaryTree):
     
     #Remove da tree a partir do Economy, já reordenando a árvore
     def removeEconomy(self, data,node= ROOT):
+        if tree.searchEconomy(data) == None:
+            messagebox.showerror("Error", "Rank não Existe na Arvore")
+            return
+        
         if node == ROOT:
             node = self.root
         
@@ -283,6 +298,9 @@ class BinarySearchTree(BinaryTree):
 
     #Remove da tree a partir do Health, já reordenando a árvore
     def removeHealth(self, data,node= ROOT):
+        if tree.searchHealth(data) == None:
+            messagebox.showerror("Error", "Rank não Existe na Arvore")
+            return
         if node == ROOT:
             node = self.root
         
@@ -326,118 +344,85 @@ class Pais:
     # Insert - pega todas as informações necessárias para o cadastro e adiciona na arvore 
     # (caso não tenha um pais de mesmo nome)
 
-    def insert(self,lastData,escolha,rank):
-        try:
-            newEconomy = 0
-            newHealth = 0
-            newHappinessRank = ''
-            newRegion = ''
-            #try:
-            newCountry = input('Digite o nome do pais: ')
-            if tree.searchCountry(newCountry) != None:
-                print("Pais já existe")
+    def insert(self,escolha,retorno,newCountry,newRegion,newHappinessRank,newHappinessScore,newStandardError, newEconomy, newFamily, newHealth, newFreedom, newTrust, newGenerosity, newDystopiaResidual):
+        if escolha == 1:
+            if int(newHappinessRank) < int(retorno):
+                messagebox.showerror("Error","Digite um valor Superior a: " + retorno)
+                return
+        if escolha == 2:
+            if float(newHappinessRank) < float(retorno):
+                    messagebox.showerror("Error","Digite um valor Superior a: " + retorno)
+                    return
+        if escolha == 3:
+            if float(newHappinessRank) < float(retorno):
+                messagebox.showerror("Error","Digite um valor Superior a: " + retorno)
+                return  
+        verify1 = tree.searchCountry(newCountry) 
+        
+        if  verify1 != None:
+            messagebox.showerror("Error","Pais já existe")
+            return
+        else:
+            verify2 = tree.searchHappinessRank(newHappinessRank)
+            if verify2 != None:
+                messagebox.showerror("Error","Rankg já existe")
+                return
             else:
-                newRegion = input('Digite o nome da regiao: ')
-            if escolha == 1:
-                newHappinessRank = int(rank)+1
-                print("O seu Rank é: " + str(newHappinessRank))
-                newEconomy = float(input('Digite o Indice economico: '))
-                newHealth = float(input('Digite a Expectativa de Vida: '))
+                tree.insert(newCountry,newRegion,newHappinessRank,newHappinessScore,newStandardError, newEconomy, newFamily, newHealth, newFreedom, newTrust, newGenerosity, newDystopiaResidual,escolha)
+                messagebox.showinfo("OK", "Inserção Feita com Sucesso")
             
-            elif escolha == 2:
-                newHappinessRank = input("Digite o seu rank: ")
-                if tree.searchHappinessRank(newHappinessRank) != None:
-                    print("Pais Já Existe")
-                    print("Inicie novamente")
-                    self.insert(lastData,escolha,rank)
-                else:
-                    print("Digite um indice de economia maior que: " + str(lastData))
-                    newEconomy = float(input('Digite o Indice economico: '))
-                    if newEconomy < float(lastData):
-                        self.insert(lastData,escolha,rank)
-                    else:
-                        newHealth = float(input('Digite a Expectativa de Vida: '))
-            
-            elif escolha == 3:
-                newHappinessRank = input("Digite o seu rank: ")
-                if tree.searchHappinessRank(newHappinessRank) != None:
-                    print("Pais Já Existe")
-                    print("Inicie novamente")
-                    self.insert(lastData,escolha,rank)
-                print("Digite um indice de expectativa de vida maior que: " + str(lastData))
-                newHealth = float(input('Digite a Expectativa de Vida: '))
-                if newHealth < float(lastData):
-                    self.insert(lastData,escolha,rank)
-                else:
-                    newEconomy = float(input('Digite o Indice economico: '))   
-            #salvar o novo indice in the tree
-            newHappinessScore = float(input('Digite o score da felicidade: '))
-            newStandardError = float(input('Digite o Erro Padrão: '))
-            newFamily = float(input('Digite da Família: '))
-            newFreedom = float(input('Digite a Liberdade: '))
-            newTrust = float(input('Digite a Confiança: '))
-            newGenerosity = float(input('Digite de Generosidade: '))
-            newDystopiaResidual = float(input('Digite a Distopia Residual: '))
-            print(newCountry)
-            return (newCountry,newRegion,newHappinessRank,newHappinessScore,newStandardError, newEconomy, newFamily, newHealth, newFreedom, newTrust, newGenerosity, newDystopiaResidual)
-        except:
-            print("Erro de Tipo")
-            self.insert(lastData,escolha,rank)
 
-    def editar(self,id):
-        try:
-            print('Em qual linha/coluna deseja editar um novo dado?\n1 - Pais\n2 - Regiao')
-            print('3 - Indice Felicidade\n5 - Erro Padrão\n6 - Family')
-            print('7 - Indice de liberdade\n8 - Indice de confiança\n9 - Indice de Generosidade\n10 - Distopia Residual')
-            choose = int(input())
+    def editar(self,choose,id,dado):
+        verify = tree.searchHappinessRank(id)
+        print(verify)
+        if verify == None:
+            messagebox.showerror("Error","Pais Não Existe")
+            return
+        else:
             if choose == 1:
-                editCountry = str(input('Entre com o novo nome do país: '))            
-
-                if tree.searchCountry(editCountry) != None:
-                    print("Pais já existe")
+                #editCountry = str(input('Entre com o novo nome do país: '))            
+                if tree.searchCountry(dado) != None:
+                    messagebox.showerror("Error", "Pais ja existe na Arvore")
+                    return
                 else:
-                    return(id,editCountry,1)
-           
+                    tree.editarTree(id,dado,1)
+        
             elif choose == 2:
-                editRegion = str(input('Entre com a novo nome da região: '))
-                return(id,editRegion,2)
+                #editRegion = str(input('Entre com a novo nome da região: '))
+                tree.editarTree(id,dado,2)
         
             elif choose == 3:
-                editHappinessScore = float(input('Entre com o novo Indice de Felicidade: '))
-                return(id,editHappinessScore,3)
-
-           
+                #editHappinessScore = float(input('Entre com o novo Indice de Felicidade: '))
+                tree.editarTree(id,dado,3)
+        
             elif choose == 4:
-                editStandartError = float(input('Entre com o novo Erro Padrão: '))
-                return(id,editStandartError,4)
+                #editStandartError = float(input('Entre com o novo Erro Padrão: '))
+                tree.editarTree(id,dado,4)
                 
             elif choose == 5:
-                editFamily = float(input('Entre com o novo indice "Family": '))
-                return(id,editFamily,5)
+                #editFamily = float(input('Entre com o novo indice "Family": '))
+                tree.editarTree(id,dado,5)
                 
             elif choose == 6:
-                editFreedom = float(input('Entre com o novo indice de liberdade: '))
-                return(id,editFreedom,6)
+                #editFreedom = float(input('Entre com o novo indice de liberdade: '))
+                tree.editarTree(id,dado,6)
                 
-           
+        
             elif choose == 7:
-                editTrust = float(input('Entre com o novo indice de confiança: '))
-                return(id,editTrust,7)
+                #editTrust = float(input('Entre com o novo indice de confiança: '))
+                tree.editarTree(id,dado,7)
                 
                 
             elif choose == 8:
-                editGenerosity = float(input('Entre com o novo indice "Generosity": '))
-                return(id,editGenerosity,8)
+                #editGenerosity = float(input('Entre com o novo indice "Generosity": '))
+                tree.editarTree(id,dado,8)
                 
-           
+        
             elif choose == 9:
-                editDystopiaResidual = float(input('Entre com a nova distopia Residual: '))
-                return(id,editDystopiaResidual,9)
-       
-        except:
-            print("Erro de Tipo, Tente Novamente")
-            self.editarDado(id)
-
+                #editDystopiaResidual = float(input('Entre com a nova distopia Residual: '))
+                tree.editarTree(id,dado,9)
+        messagebox.showinfo("Ok", "Alteração Efetuada")
+        return
 
 country = Pais()
 tree = BinarySearchTree()
@@ -445,10 +430,21 @@ tree = BinarySearchTree()
 dadosTemp = []
 dados = []
 class Main:
-    def __init__(self):
+    def iniciar(self,escolha):
+        #print("oi")
         self.openData()
-        retorno,escolha,rank = self.aleatorioData()
-        self.start(retorno,escolha,rank)
+        k = 0
+        visitados = []
+        while(k < 100):
+            valorAleatorio = random.randint(1,157)
+            if valorAleatorio not in visitados:
+                visitados.append(valorAleatorio)
+                #Coloca o dado de forma (e com chave) aleatória na tree
+                dados.append(dadosTemp[valorAleatorio])
+                k+=1
+        rt,rank = self.ordenar(int(escolha))
+        return (rt,escolha,rank)
+
     
     def openData(self):
         with open('data.csv', newline='') as arquivo:
@@ -503,99 +499,42 @@ class Main:
                 tree.insert(dados[i][0],dados[i][1],dados[i][2],dados[i][3],dados[i][4],dados[i][5],dados[i][6],dados[i][7],dados[i][8],dados[i][9],dados[i][10],dados[i][11],escolha)
             return (dados[-1][7], dados[-1][2])
 
-    def aleatorioData(self):
-        k = 0
-        visitados = []
-        while(k < 100):
-            valorAleatorio = random.randint(1,157)
-            if valorAleatorio not in visitados:
-                visitados.append(valorAleatorio)
-                #Coloca o dado de forma (e com chave) aleatória na tree
-                dados.append(dadosTemp[valorAleatorio])
-                k+=1
-        escolha = int(input("Como deseja ordenar os dados\n1-Rank\n2-Economia\n3- Expectativa de Vida "))
-        rt,rank = self.ordenar(int(escolha))
-        return (rt,escolha,rank)
-        
-
-    # editarDado - verifica se a chave do país a ser editado existe e permite mudar seus atributos
-    def editarDado(self):
-        try:
-            id = int(input("Digite o id que deseja editar: "))
-            if tree.searchHappinessRank(id) == None:
-                print("Pais Não Existe")
-            else:
-                print('Em qual linha/coluna deseja editar um novo dado?\n1 - Pais\n2 - Regiao\n')
-                print('3 - Indice Felicidade\n5 - Erro Padrão\n6 - Family\n')
-                print('7 - Indice de liberdade\n8 - Indice de confiança\n9 - Indice de Generosidade\n10 - Distopia Residual')
-                choose = int(input())
-                if choose == 1:
-                    editCountry = str(input('Entre com o novo nome do país: '))            
-
-                    if tree.searchCountry(editCountry) != None:
-                        print("Pais já existe")
-                    else:
-                        tree.editarTree(id,editCountry,1)
-                        print("editado")
-                        return
-            
-                elif choose == 2:
-                    editRegion = str(input('Entre com a novo nome da região: '))
-                    tree.editarTree(id,editRegion,2)
-                    return
-            
-                elif choose == 3:
-                    editHappinessScore = float(input('Entre com o novo Indice de Felicidade: '))
-                    tree.editarTree(id,editHappinessScore,3)
-                    return
-            
-                elif choose == 4:
-                    editStandartError = float(input('Entre com o novo Erro Padrão: '))
-                    tree.editarTree(id,editStandartError,4)
-                    return
-
-                elif choose == 5:
-                    editFamily = float(input('Entre com o novo indice "Family": '))
-                    tree.editarTree(id,editFamily,5)
-                    return
-                    
-                elif choose == 6:
-                    editFreedom = float(input('Entre com o novo indice de liberdade: '))
-                    tree.editarTree(id,editFreedom,6)
-                    return
-            
-                elif choose == 7:
-                    editTrust = float(input('Entre com o novo indice de confiança: '))
-                    tree.editarTree(id,editTrust,7)
-                    return
-                    
-                elif choose == 8:
-                    editGenerosity = float(input('Entre com o novo indice "Generosity": '))
-                    tree.editarTree(id,editGenerosity,8)
-                    return
-            
-                elif choose == 9:
-                    editDystopiaResidual = float(input('Entre com a nova distopia Residual: '))
-                    tree.editarTree(id,editDystopiaResidual,9)
-                    return
-        except:
-            print("Erro de Tipo, Tente Novamente")
-            self.editarDado()
 
     # start - aqui são oferecidas aos usuários todas as opções disponíveis em um menu interativo
+    def removeHappinessRank(self,dado):
+        rt = tree.removeHappinessRank(dado)
+        if rt != None:
+            messagebox.showinfo("OK","Remoção realizada")
+            return
+    
+    def removeEconomy(self,dado):
+        rt = tree.removeEconomy(dado)
+        if rt != None:
+            messagebox.showinfo("OK","Remoção realizada")
+            return
+    
+    def removeHealth(self,dado):
+        rt = tree.removeHealth(dado)
+        if rt != None:
+            messagebox.showinfo("OK","Remoção realizada")
+            return
+    def show(self):
+        tree.postorder_traversal()
+
+
     def start(self,retorno,escolha,rank):
         print('Digite a opção desejada\n1-Criar\n2-Editar\n3-Mostrar Tree\n4-Deletar Item\n5-Exportar CSV\n6-Limpar Console\n0-Sair')
         choose = int(input())
         if choose == 1:
             if escolha == 1:
                 rtCountry,region,happinessRank,happinessScore,standardError, economy, family, health, freedom, trust, genorosity, dystopiaResidual = country.insert(retorno,escolha,rank)
-                tree.insert(rtCountry,region,happinessRank,happinessScore,standardError, economy, family, health, freedom, trust, genorosity, dystopiaResidual,escolha)
+                #tree.insert(rtCountry,region,happinessRank,happinessScore,standardError, economy, family, health, freedom, trust, genorosity, dystopiaResidual,escolha)
             elif escolha == 2:
                 rtCountry,region,happinessRank,happinessScore,standardError, economy, family, health, freedom, trust, genorosity, dystopiaResidual = country.insert(retorno,escolha,rank)
-                tree.insert(rtCountry,region,happinessRank,happinessScore,standardError, economy, family, health, freedom, trust, genorosity, dystopiaResidual,escolha)
+                #tree.insert(rtCountry,region,happinessRank,happinessScore,standardError, economy, family, health, freedom, trust, genorosity, dystopiaResidual,escolha)
             else:
                 rtCountry,region,happinessRank,happinessScore,standardError, economy, family, health, freedom, trust, genorosity, dystopiaResidual = country.insert(retorno,escolha,rank)
-                tree.insert(rtCountry,region,happinessRank,happinessScore,standardError, economy, family, health, freedom, trust, genorosity, dystopiaResidual,escolha)        
+                #tree.insert(rtCountry,region,happinessRank,happinessScore,standardError, economy, family, health, freedom, trust, genorosity, dystopiaResidual,escolha)        
             self.start(retorno,escolha,rank)
         if choose == 2:
             
