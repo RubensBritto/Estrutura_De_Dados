@@ -1471,9 +1471,9 @@ class newTree:
         self.buttonCriar = Button(self.frameTree, bg="red", text="Criar", bd="5", fg="white",width=10,command=lambda: self.criarTree(retorno,escolha,rank)).pack(pady=12)
         self.buttonEditar = Button(self.frameTree, bg="red", text="Editar Dados", bd="5", fg="white",width=10,command=self.editarTreeOption).pack(pady=12)
         self.buttonDeletar = Button(self.frameTree, bg="red", text="Deletar Dados", bd="5", fg="white",width=10,command=self.deletarTree).pack(pady=12)
-        self.buttonMostraItems = Button(self.frameTree, bg="red", text="Mostrar Dados", bd="5", fg="white",width=10,command= lambda: Tree.Main().show()).pack(pady=12)
-        #self.buttonSalva = Button(self.frameTree, bg="red", text="Salvar Dados", bd="5", fg="white",width=10,command= lambda: Tree.Main().salvaCSV()).pack(pady=12)
-        #self.returnMain = Button(self.frameTree, bg="red", text="Voltar", bd="5", fg="white",command= self.windowsTree.destroy).pack(pady=12, side="left")
+        self.buttonMostraItems = Button(self.frameTree, bg="red", text="Mostrar Dados", bd="5", fg="white",width=10,command= lambda: Tree.Main().showTree()).pack(pady=12)
+        self.buttonSalva = Button(self.frameTree, bg="red", text="Salvar Dados", bd="5", fg="white",width=10,command= lambda: Tree.Main().saveNewDataCsv()).pack(pady=12)
+        self.returnMain = Button(self.frameTree, bg="red", text="Voltar", bd="5", fg="white",command= self.windowsTree.destroy).pack(pady=12, side="left")
 
     def criarTree(self,retorno,escolha,rank):
 

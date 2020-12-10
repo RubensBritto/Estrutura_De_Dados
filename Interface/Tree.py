@@ -34,7 +34,7 @@ class Node:
         self.dystopiaResidual = str(dystopiaResidual)
         self.left = None
         self.right = None
-
+    '''
     def __str__(self):
         ("Pais: " + self.country + " - " +"Região: " + self.region + " - " + "Rank Felicidade: " + self.happinessRank + " - " +
         "Score Felicidade: " + self.happinessScore+ " - " + "Erro Padrão: " + self.standardError + " - " +
@@ -42,7 +42,7 @@ class Node:
         " Indice de Liberdade: " + self.freedom+ " - " + " Indice de Confiança: " + self.trust + " - " +" Indice de Generosidade: " + self.genorosity+
         " Indice de Distopia Residual: " + self.dystopiaResidual)
         return str()
-
+    '''
 #Classe da árvore binária
 class BinaryTree:
     #Definindo os pontos de cada caminho da árvore
@@ -56,15 +56,28 @@ class BinaryTree:
             self.root = None
 
     def postorder_traversal(self, node=None):
+        global listTemp2
         listTemp = []
+        listTemp2 = []
         if node is None:
             node = self.root
         if node.left:
             self.postorder_traversal(node.left)
         if node.right:
             self.postorder_traversal(node.right)
-        listTemp.append(str(node))
-        print(listTemp)
+        listTemp.append(node.country)
+        listTemp.append(node.region)
+        listTemp.append(node.happinessRank)
+        listTemp.append(node.happinessScore)
+        listTemp.append(node.standardError)
+        listTemp.append(node.economy)
+        listTemp.append(node.family)
+        listTemp.append(node.health)
+        listTemp.append(node.freedom)
+        listTemp.append(node.trust)
+        listTemp.append(node.genorosity)
+        listTemp.append(node.dystopiaResidual)
+        listTemp2.append(listTemp)
     
 
 #Classe de árvore binária de Busca
@@ -430,6 +443,7 @@ tree = BinarySearchTree()
 dadosTemp = []
 dados = []
 class Main:
+    
     def iniciar(self,escolha):
         #print("oi")
         self.openData()
@@ -445,7 +459,6 @@ class Main:
         rt,rank = self.ordenar(int(escolha))
         return (rt,escolha,rank)
 
-    
     def openData(self):
         with open('data.csv', newline='') as arquivo:
             leitor=csv.reader(arquivo)
@@ -454,10 +467,10 @@ class Main:
                 dadosTemp.append(linha)
 
     # saveNewDataCsv - recebe a 3árvore de dados com todas as alterações e manipulações e exportar para outro arquivo csv
-    def saveNewDataCsv(self,dadosFinal):
+    def saveNewDataCsv(self):
         with open('data_1.csv', 'w', newline='') as arquivo_csv:
             escrever = csv.writer(arquivo_csv)
-            for linha in dadosFinal:
+            for linha in listTemp2:
                 escrever.writerow(linha)
 
     #Da a opção de ordenação por determinados indices na tree (Rank,Qualidade de vida,Economia)
@@ -498,117 +511,38 @@ class Main:
             for i in range(len(dados)):
                 tree.insert(dados[i][0],dados[i][1],dados[i][2],dados[i][3],dados[i][4],dados[i][5],dados[i][6],dados[i][7],dados[i][8],dados[i][9],dados[i][10],dados[i][11],escolha)
             return (dados[-1][7], dados[-1][2])
-
-
-    # start - aqui são oferecidas aos usuários todas as opções disponíveis em um menu interativo
+    
+    #Remover por HappinessRank
     def removeHappinessRank(self,dado):
         rt = tree.removeHappinessRank(dado)
         if rt != None:
             messagebox.showinfo("OK","Remoção realizada")
             return
     
+    #Remover por Economia
     def removeEconomy(self,dado):
         rt = tree.removeEconomy(dado)
         if rt != None:
             messagebox.showinfo("OK","Remoção realizada")
             return
     
+    #Remover por Expectativa de Vida
     def removeHealth(self,dado):
         rt = tree.removeHealth(dado)
         if rt != None:
             messagebox.showinfo("OK","Remoção realizada")
             return
-    def show(self):
-        tree.postorder_traversal()
+    
+    def showTree(self):
+        rt = tree.postorder_traversal()
+        root = Tk()
+        show = Text(root,width=500, height=50,pady=10,padx=10)
+        show.pack()
+        for i in range(len(listTemp2)):
+                show.insert(END,"Pais: " + listTemp2[i][0] + "\nRegião: " + listTemp2[i][1] + "\nRank Felicidade: " + listTemp2[i][2] + "\nScore Felicidade: " + listTemp2[i][3] +
+                "\nErro Padrão: " + listTemp2[i][4] + "\nIndice de Economia: " + listTemp2[i][5] + "\nIndice da Familia: " + listTemp2[i][6] + "\nExpectativa de Vida: " + listTemp2[i][7] +
+                "\nIndice de Liberdade: " + listTemp2[i][8] + "\nIndice de Confiança: " + listTemp2[i][9] + "\nIndice de Genorosidade: "+ listTemp2[i][10]+ "\nIndice de Distopia Residual: "+
+                listTemp2[i][11] + "\n\n")
 
 
-    def start(self,retorno,escolha,rank):
-        print('Digite a opção desejada\n1-Criar\n2-Editar\n3-Mostrar Tree\n4-Deletar Item\n5-Exportar CSV\n6-Limpar Console\n0-Sair')
-        choose = int(input())
-        if choose == 1:
-            if escolha == 1:
-                rtCountry,region,happinessRank,happinessScore,standardError, economy, family, health, freedom, trust, genorosity, dystopiaResidual = country.insert(retorno,escolha,rank)
-                #tree.insert(rtCountry,region,happinessRank,happinessScore,standardError, economy, family, health, freedom, trust, genorosity, dystopiaResidual,escolha)
-            elif escolha == 2:
-                rtCountry,region,happinessRank,happinessScore,standardError, economy, family, health, freedom, trust, genorosity, dystopiaResidual = country.insert(retorno,escolha,rank)
-                #tree.insert(rtCountry,region,happinessRank,happinessScore,standardError, economy, family, health, freedom, trust, genorosity, dystopiaResidual,escolha)
-            else:
-                rtCountry,region,happinessRank,happinessScore,standardError, economy, family, health, freedom, trust, genorosity, dystopiaResidual = country.insert(retorno,escolha,rank)
-                #tree.insert(rtCountry,region,happinessRank,happinessScore,standardError, economy, family, health, freedom, trust, genorosity, dystopiaResidual,escolha)        
-            self.start(retorno,escolha,rank)
-        if choose == 2:
-            
-            id = int(input("Digite o id que deseja editar: "))
-            if tree.searchHappinessRank(id) == None:
-                print("Pais Não Existe")
-                self.start(retorno,escolha,rank)
-                
-            id,data,colum = country.editar(id)
-            tree.editarTree(id,data,colum)
-
-            self.start(retorno,escolha,rank)
-        if choose == 3:
-            tree.postorder_traversal()
-            self.start(retorno,escolha,rank)
-        if choose == 4:
-            if escolha == 1:
-                print("Exclusão Por ordenação de Rank")
-                data = int(input("Digite o indice do pais deseja remover: "))
-                if tree.searchHappinessRank(data) != None:
-                    tree.removeHappinessRank(data)
-                    print("Removido com sucesso")
-                    self.start(retorno,escolha,rank)
-                else:
-                    print("Pais não existe")
-                    self.start(retorno,escolha,rank)
-
-
-            elif escolha == 2:
-                print("Exclusão Por ordenação de Economia")
-                data = float(input("Digite o indice de Economia que deseja remover: "))
-                if tree.searchEconomy(data) != None:
-                    tree.removeEconomy(data)
-                    print("Removido com sucesso")
-                    self.start(retorno,escolha,rank)
-                else:
-                    print("Indice não existe")
-                    self.start(retorno,escolha,rank)
-
-            elif escolha == 3:
-                print("Exclusão Por ordenação de Expectativa de vida")
-                data = float(input("Digite o indice de Expectativa de vida que deseja remover: "))
-                if tree.searchHealth(data) != None:       
-                    tree.removeHealth(data)
-                    print("Removido com sucesso")
-                    self.start(retorno,escolha,rank)
-                else:
-                    print("Indice não existe")
-                    self.start(retorno,escolha,rank)
-                
-            else:
-                print("Opção Inválida")
-            self.start(retorno,escolha,rank)
-        if choose == 5:
-            dadosFinal = []
-            i = 1
-            data = 0
-            while data != None:
-                data,j= tree.saveTree(i)
-                print(data)
-                if data != None:
-                    dadosFinal.append(data)
-                    i = j
-                i+=1
-            self.saveNewDataCsv(dadosFinal)
-            self.start(retorno,escolha,rank)
-        if choose == 6:        
-            os.system('clear')
-            self.start(retorno,escolha,rank)
-        if choose == 0:
-            exit()
-        else:
-            print("Operação invalida!")
-            self.start(retorno,escolha,rank)
-
-
-
+    
