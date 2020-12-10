@@ -41,7 +41,7 @@ def aleatorioData():
 #showQueue - imprime todos os dados contidos na fila        
 def showQueue():
     for i in range(fila.size()):
-       print(fila.showQueue(i))
+       print(fila.showQueue(self,i))
 
 
 # removeFromQueue - cria uma lista temporaria, guarda o index do item da fila a ser removido
