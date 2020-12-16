@@ -1,11 +1,11 @@
 from numpy.core.arrayprint import printoptions
 from numpy.lib.function_base import gradient
+from numpy.lib.type_check import real_if_close
 import pandas as pd
 from grafo import Graph
 
-list = []
+list = {}
 listTemp = []
-busca = {}
 graphs = Graph()
 
 
@@ -15,7 +15,7 @@ def openData():
     dataset = pd.read_csv('datas/SocialNetwork.csv',encoding='ISO-8859-1')
 
     #Deletando as Colunas que não iram ser utilizadas
-    dataset.drop(['User ID', 'Gender','Purchased'], axis=1, inplace=True)
+    dataset.drop(['User ID', 'Gender','Purchased','Age'], axis=1, inplace=True)
     #Orderno o data set por idade
     dataset = dataset.sort_values('EstimatedSalary', ascending=False)
     #Excluo as repetições dos valores, deixando apenas a primeira aparição
@@ -26,22 +26,27 @@ def openData():
 
     #Faz a lista de adjacencia e calcula a distancia entre os vertices
     for i in range(len(salario)):
-        if salario[i] % 2 == 0: 
+        listAux = []
+
+        #print(i)
+        if salario[i] % 2 == 0:
             #print("Chave " + str(salario[i]))
             for j in range(len(salario)):
                 if abs(salario[i]-salario[j]) != 0:
-                    list.append((salario[i],salario[j]))
+                    #list.update({nome:(salario[j],abs(salario[i]-salario[j]))})
                     listTemp.append((salario[i],salario[j],abs(salario[i]-salario[j])))
-                    busca[salario[i]] = salario[j],abs(salario[i]-salario[j]) 
+                    listAux.insert(0,(salario[j],abs(salario[i]-salario[j])))
+        list.update({salario[i]: listAux})
+        del (listAux[0])
 
 def constructorGraph():
     #Transforma a lista de adjacencia em um dicionario
-    aresta = dict(list)
-    #Adicona as chaves do dicionairo com vertice do grafo
-    for i in aresta.keys():
+    #Cria as arestas (que são a ligação dos vertices) ponderadas (subtração dos salarios)
+        #Adicona as chaves do dicionairo com vertice do grafo
+    print(list.keys())
+    for i in list.keys():
         graphs.add_vertex(i)
 
-    #Cria as arestas (que são a ligação dos vertices) ponderadas (subtração dos salarios)
     for i,j,k in listTemp:
         graphs.add_edge(i,j,k) 
 
@@ -64,7 +69,7 @@ def showData():
 def search(start,end):
     shortest_distance = {}
     track_predecessor = {}
-    unseenNodes = busca
+    unseenNodes = list
     infinity = 999999
     track_path = []
     
@@ -80,21 +85,26 @@ def search(start,end):
                 min_distance_node = node
             elif shortest_distance[node] < shortest_distance[min_distance_node]:
                 min_distance_node = node
-        path_options = busca[min_distance_node]
-    
-        for weight,child_node in path_options:
-            if weight + shortest_distance[min_distance_node] < shortest_distance[child_node]:
-                shortest_distance[child_node] = weight + shortest_distance[min_distance_node]
-                track_predecessor[child_node] = min_distance_node
+        path_options = list[min_distance_node]
+        try:
+            for child_node,weight in path_options:
+                if weight + shortest_distance[min_distance_node] < shortest_distance[child_node]:
+                    shortest_distance[child_node] = weight + shortest_distance[min_distance_node]
+                    track_predecessor[child_node] = min_distance_node
 
             unseenNodes.pop(min_distance_node)
+        except TypeError:
+            weight, child_node = 0,0
     currentNode = end
 
     while currentNode != start:
-        track_path.insert(0,currentNode)
-        #print(currentNode)
-        currentNode = track_predecessor[currentNode] 
-        
+        try:
+            track_path.insert(0,currentNode)
+            #print(currentNode)
+            currentNode = track_predecessor[currentNode]
+        except:
+            print("caminho nao encontrado")
+            break            
     track_path.insert(0,start)
 
     if shortest_distance[end] != infinity:
@@ -103,11 +113,11 @@ def search(start,end):
 def main():
     openData()
     constructorGraph()
-    showData()
+    #showData()
     #a=input("Digite o Primeiro vertice: ")
     #b=input("Digite o Segundo vertice: ")
     #search(a,b)
-    search(16000,15000)
+    search(150000,149000)
 
 
 if __name__ == "__main__":
