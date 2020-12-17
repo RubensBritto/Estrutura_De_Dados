@@ -124,6 +124,7 @@ class Main():
         show.pack()
         #show.insert(END,"A Menor distância é: " + str(shortest_distance[end]) + "\n\n" + "Caminho a ser seguido, passa pelos Nós: " + str(track_path))
         if esc == '1':
+            show.insert(END, "Caminhos do grafo\n\n")
             #Printa os caminhos do grafo com seus respectivos pesos 
             for v in graphs:
                 for w in v.get_connections():
@@ -132,11 +133,23 @@ class Main():
                     show.insert(END,'( %s , %s, %3d )\n\n'  % ( vid, wid, v.get_weight(w)))
             return
         if esc == '2':
+            show.insert(END, "Lista de adjacencia do grafo\n\n")
             #Printa lista de adjacencia
             for v in graphs:
                 show.insert (END,'VERTICE [%s]= %s\n\n' %(v.get_id(), graphs.vert_dict[v.get_id()]))
             return
-
+        if esc == '3':
+            show.insert(END, "Nós do grafo\n\n")
+            j = 0
+            for i in list.keys():
+                
+                j+=1
+                if j == (len(list)):
+                    show.insert (END,'%s' % i)
+                    return
+                else:
+                    show.insert (END,'%s - ' % i)
+                
     def search(self,start,end):
         if start <= end:
             messagebox.showerror("Error", "O valor do Nó incial necessitar ser maior")

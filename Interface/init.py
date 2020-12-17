@@ -1936,6 +1936,7 @@ class newGrafo:
         self.windowsGrafo.config(bg="#1d2f38")
         self.buttonPrintarCaminho = Button(self.windowsGrafo, bg="red", text="Printar Os Caminhos", bd="5", fg="white",width=30,command= lambda: Grafo.Main().showData('1')).pack(pady=12)
         self.buttonPrintarAdjacencia = Button(self.windowsGrafo, bg="red", text="Printar Lista de Adjacencia", bd="5", fg="white",width=30,command= lambda: Grafo.Main().showData('2')).pack(pady=12)
+        self.buttonPrintarNos = Button(self.windowsGrafo, bg="red", text="Printar Nós", bd="5", fg="white",width=30,command= lambda: Grafo.Main().showData('3')).pack(pady=12)
         self.returnMain = Button(self.windowsGrafo, bg="red", text="Voltar", bd="5", fg="white",command= self.windowsGrafo.destroy).pack(pady=12)
 
 i = Interface()
