@@ -193,7 +193,7 @@ class Main():
             except:
                 messagebox.showerror("Error", "Caminho não existe")
                 #print("caminho nao encontrado")
-                break            
+                return            
         track_path.insert(0,start)
         if shortest_distance[end] != infinity:
             root = Tk()
