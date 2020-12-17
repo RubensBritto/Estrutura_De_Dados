@@ -2,6 +2,7 @@ from numpy.lib.function_base import insert
 import Fila
 import Pilha
 import Lista
+import Grafo
 #from Lista import *
 import Tree
 from tkinter import * 
@@ -22,6 +23,7 @@ class Interface:
         self.buttonFila = Button(self.frameMain, bg="#b5706b", text="Fila", bd="5", width=10, height=2, command= newFila().optionFila).pack(pady=12)
         self.buttonPilha = Button(self.frameMain, bg="#b5706b", text="Pilha", bd="5", width=10, height=2, command= newPilha().optionPilha).pack(pady=12)
         self.buttonTree = Button(self.frameMain, bg="#b5706b", text="Tree", bd="5", width=10, height=2, command= newTree().optionOrdnenarTree).pack(pady=12)
+        self.buttonGrafo = Button(self.frameMain, bg="#b5706b", text="Grafo", bd="5", width=10, height=2, command= newGrafo().optionGrafo).pack(pady=12)
         self.returnMain = Button(self.frameMain, bg="#db2316", text="Voltar", bd="5", fg="white",width=10, height=2,command= self.windows.destroy).pack(pady=12,side="left")
 
 
@@ -1884,10 +1886,56 @@ class newTree:
         
         self.returnMain = Button(self.frameTree, bg="red", text="Voltar", bd="0", fg="white",command= self.windowsTree.destroy).pack(pady=12)
 
-#class newPilha:
+class newGrafo:
+    def optionGrafo(self):
+        self.windowsGrafo = Tk()
+        self.windowsGrafo.title("Esturuta de Dados")
+        self.windowsGrafo.minsize(width = 1280, height= 720)
+        self.windowsGrafo.config(bg="#1d2f38")
+        
+        self.frameGrafo = Frame(self.windowsGrafo, width = 1280, height= 720, bg="#1d2f38", pady="20")
+        self.frameGrafo.pack()
 
-#Fila.Main()
+        self.labelOption = Label(self.frameGrafo, text="Marque a Opção Desejada",font= "arial 45")
+        self.labelOption.config(bg="#1d2f38")
+        self.labelOption.pack()
+        Grafo.Main().iniciar()
+
+        self.buttonBuscar = Button(self.frameGrafo, bg="red", text="Buscar Caminho", bd="5", fg="white",width=20,command= self.buscarGrafo).pack(pady=12)
+        self.buttonPrintar = Button(self.frameGrafo, bg="red", text="Printar", bd="5", fg="white",width=20,command=  self.showGrafo).pack(pady=12)
+        self.returnMain = Button(self.frameGrafo, bg="red", text="Voltar", bd="5", fg="white",command= self.windowsGrafo.destroy).pack(pady=12, side="left")
+    
+    def buscarGrafo(self):
+        self.windowsGrafo = Tk()
+        self.windowsGrafo.title("Grafo")
+        self.windowsGrafo.minsize(width = 1280, height= 720)
+        self.windowsGrafo.config(bg="#1d2f38")
+
+        self.frameGrafo = Frame(self.windowsGrafo, width = 1280, height= 720, bg="white", pady="20")
+        self.frameGrafo.pack()
+    
+        self.labelNode1 = Label(self.frameGrafo, text="Inserir o Valor do Primeiro Nó",font= "arial 12",width=30)
+        self.labelNode1.pack()
+
+        self.insertNode1 = Entry(self.frameGrafo)
+        self.insertNode1.pack()
+
+        self.labelNode2 = Label(self.frameGrafo, text="Inserir o Valor do Segundo Nó", font= "arial 12",width=30)
+        self.labelNode2.pack()
+
+        self.insertNode2 = Entry(self.frameGrafo)
+        self.insertNode2.pack()
+        
+        self.salvarData = Button(self.frameGrafo, bg="red", text="Buscar", bd="0", fg="white",command= lambda: Grafo.Main().search(int(self.insertNode1.get()), int(self.insertNode2.get()))).pack()
+
+        self.returnMain = Button(self.frameGrafo, bg="red", text="Voltar", bd="0", fg="white",command= self.windowsGrafo.destroy).pack()
+    def showGrafo(self):
+        self.windowsGrafo = Tk()
+        self.windowsGrafo.title("Grafo")
+        self.windowsGrafo.minsize(width = 1280, height= 720)
+        self.windowsGrafo.config(bg="#1d2f38")
+        self.buttonPrintarCaminho = Button(self.windowsGrafo, bg="red", text="Printar Os Caminhos", bd="5", fg="white",width=30,command= lambda: Grafo.Main().showData('1')).pack(pady=12)
+        self.buttonPrintarAdjacencia = Button(self.windowsGrafo, bg="red", text="Printar Lista de Adjacencia", bd="5", fg="white",width=30,command= lambda: Grafo.Main().showData('2')).pack(pady=12)
+        self.returnMain = Button(self.windowsGrafo, bg="red", text="Voltar", bd="5", fg="white",command= self.windowsGrafo.destroy).pack(pady=12)
+
 i = Interface()
-#Tree.Main()
-#Pilha.Main()
-#Fila.Main()
