@@ -149,7 +149,16 @@ class Main():
                     return
                 else:
                     show.insert (END,'%s - ' % i)
-                
+    '''
+    Atribua valor zero à estimativa do custo mínimo do vértice s (a raiz da busca) e infinito às demais estimativas;
+    Atribua um valor qualquer aos precedentes (o precedente de um vértice t é o vértice que precede t no caminho de custo mínimo de s para t);
+    Enquanto houver vértice aberto:
+        seja k um vértice ainda aberto cuja estimativa seja a menor dentre todos os vértices abertos;
+        feche o vértice k
+        Para todo vértice j ainda aberto que seja sucessor de k faça:
+            some a estimativa do vértice k com o custo do arco que une k a j;
+            caso esta soma seja melhor que a estimativa anterior para o vértice j, substitua-a e anote k como precedente de j.
+    '''           
     def search(self,start,end):
         if start <= end:
             messagebox.showerror("Error", "O valor do Nó incial necessitar ser maior")
@@ -188,17 +197,14 @@ class Main():
         while currentNode != start:
             try:
                 track_path.insert(0,currentNode)
-                #print(currentNode)
                 currentNode = track_predecessor[currentNode]
             except:
                 messagebox.showerror("Error", "Caminho não existe")
-                #print("caminho nao encontrado")
-                return            
+                return
         track_path.insert(0,start)
         if shortest_distance[end] != infinity:
             root = Tk()
             show = Text(root,width=500, height=50,pady=10,padx=10)
             show.pack()
             show.insert(END,"A Menor distância é: " + str(shortest_distance[end]) + "\n\n" + "Caminho a ser seguido, passa pelos Nós: " + str(track_path))
-            #print("Menor distancia é" + str(shortest_distance[end]))
-            #print("Caminho a ser seguido" + str(track_path))
+
