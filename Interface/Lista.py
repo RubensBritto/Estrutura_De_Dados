@@ -192,7 +192,6 @@ class Main:
         else:
             retorno = newLine.criarNewDado(newCountry, newRegion, newHappinessRank, newHappinessScore, newStandardError,newEconomy, newFamily, newHealth, newFreedom, newTrust, newGenerosity, newDystopiaResidual)
             dados.append(retorno)
-            print(dados)
             messagebox.showinfo("Ok", "Pais criado com Sucesso")
             return
             
@@ -271,7 +270,6 @@ class Main:
         root = Tk()
         show = Text(root,width=500, height=50,pady=10,padx=10)
         show.pack()
-        print(len(dados))
         for i in range(len(dados)):
                 show.insert(END,"Pais: " + dados[i][0] + "\nRegião: " + dados[i][1] + "\nRank Felicidade: " + dados[i][2] + "\nScore Felicidade: " + dados[i][3] +
                 "\nErro Padrão: " + dados[i][4] + "\nIndice de Economia: " + dados[i][5] + "\nIndice da Familia: " + dados[i][6] + "\nExpectativa de Vida: " + dados[i][7] +

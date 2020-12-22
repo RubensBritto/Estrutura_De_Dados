@@ -195,7 +195,7 @@ class newLista:
         self.editName = Entry(self.frameLista)
         self.editName.pack()
         
-        self.salvarData = Button(self.frameLista, bg="red", text="SALVAR", bd="0", fg="white",command=lambda: Lista.Main().editar(1,str(self.insertName.get()),str(self.editName.get()))).pack(pady=12)
+        self.salvarData = Button(self.frameLista, bg="red", text="SALVAR", bd="0", fg="white",command=lambda: Lista.Main().editarDado(1,str(self.insertName.get()),str(self.editName.get()))).pack(pady=12)
         self.returnMain = Button(self.frameLista, bg="red", text="Voltar", bd="0", fg="white",command= self.windowsLista.destroy).pack(pady=12)
     
     def editarRegion(self):
@@ -220,7 +220,7 @@ class newLista:
         self.editRegion = Entry(self.frameLista)
         self.editRegion.pack()
         
-        self.salvarData = Button(self.frameLista, bg="red", text="SALVAR", bd="0", fg="white",command=lambda: Lista.Main().editar(2,str(self.insertName.get()),str(self.editRegion.get()))).pack(pady=12)
+        self.salvarData = Button(self.frameLista, bg="red", text="SALVAR", bd="0", fg="white",command=lambda: Lista.Main().editarDado(2,str(self.insertName.get()),str(self.editRegion.get()))).pack(pady=12)
         self.returnMain = Button(self.frameLista, bg="red", text="Voltar", bd="0", fg="white",command= self.windowsLista.destroy).pack(pady=12)
     
     def editarHappinessRank(self):
@@ -245,7 +245,7 @@ class newLista:
         self.editHappinessRank = Entry(self.frameLista)
         self.editHappinessRank.pack()
         
-        self.salvarData = Button(self.frameLista, bg="red", text="SALVAR", bd="0", fg="white",command=lambda: Lista.Main().editar(3,str(self.insertName.get()),str(self.editHappinessRank.get()))).pack(pady=12)
+        self.salvarData = Button(self.frameLista, bg="red", text="SALVAR", bd="0", fg="white",command=lambda: Lista.Main().editarDado(3,str(self.insertName.get()),str(self.editHappinessRank.get()))).pack(pady=12)
         self.returnMain = Button(self.frameLista, bg="red", text="Voltar", bd="0", fg="white",command= self.windowsLista.destroy).pack(pady=12)
     
     def editarHappinessScore(self):
@@ -270,7 +270,7 @@ class newLista:
         self.editHappinessScore  = Entry(self.frameLista)
         self.editHappinessScore.pack()
         
-        self.salvarData = Button(self.frameLista, bg="red", text="SALVAR", bd="0", fg="white",command=lambda: Lista.Main().editar(4,str(self.insertName.get()),str(self.editHappinessScore.get()))).pack(pady=12)
+        self.salvarData = Button(self.frameLista, bg="red", text="SALVAR", bd="0", fg="white",command=lambda: Lista.Main().editarDado(4,str(self.insertName.get()),str(self.editHappinessScore.get()))).pack(pady=12)
         self.returnMain = Button(self.frameLista, bg="red", text="Voltar", bd="0", fg="white",command= self.windowsLista.destroy).pack(pady=12)
     
     def editarStandardError(self):
@@ -295,7 +295,7 @@ class newLista:
         self.editStandardError  = Entry(self.frameLista)
         self.editStandardError.pack()
         
-        self.salvarData = Button(self.frameLista, bg="red", text="SALVAR", bd="0", fg="white",command=lambda: Lista.Main().editar(5,str(self.insertName.get()),str(self.editStandardError.get()))).pack(pady=12)
+        self.salvarData = Button(self.frameLista, bg="red", text="SALVAR", bd="0", fg="white",command=lambda: Lista.Main().editarDado(5,str(self.insertName.get()),str(self.editStandardError.get()))).pack(pady=12)
         self.returnMain = Button(self.frameLista, bg="red", text="Voltar", bd="0", fg="white",command= self.windowsLista.destroy).pack(pady=12)
 
     def editarEconomy(self):
@@ -320,7 +320,7 @@ class newLista:
         self.editEconomy  = Entry(self.frameLista)
         self.editEconomy.pack()
         
-        self.salvarData = Button(self.frameLista, bg="red", text="SALVAR", bd="0", fg="white",command=lambda: Lista.Main().editar(6,str(self.insertName.get()),str(self.editEconomy.get()))).pack(pady=12)
+        self.salvarData = Button(self.frameLista, bg="red", text="SALVAR", bd="0", fg="white",command=lambda: Lista.Main().editarDado(6,str(self.insertName.get()),str(self.editEconomy.get()))).pack(pady=12)
         self.returnMain = Button(self.frameLista, bg="red", text="Voltar", bd="0", fg="white",command= self.windowsLista.destroy).pack(pady=12)
 
     def editarFamily(self):
@@ -345,7 +345,7 @@ class newLista:
         self.editFamily  = Entry(self.frameLista)
         self.editFamily.pack()
         
-        self.salvarData = Button(self.frameLista, bg="red", text="SALVAR", bd="0", fg="white",command=lambda: Lista.Main().editar(7,str(self.insertName.get()),str(self.editFamily.get()))).pack(pady=12)
+        self.salvarData = Button(self.frameLista, bg="red", text="SALVAR", bd="0", fg="white",command=lambda: Lista.Main().editarDado(7,str(self.insertName.get()),str(self.editFamily.get()))).pack(pady=12)
         self.returnMain = Button(self.frameLista, bg="red", text="Voltar", bd="0", fg="white",command= self.windowsLista.destroy).pack(pady=12)
     
     def editarHealth(self):
@@ -370,7 +370,7 @@ class newLista:
         self.editHealth  = Entry(self.frameLista)
         self.editHealth.pack()
         
-        self.salvarData = Button(self.frameLista, bg="red", text="SALVAR", bd="0", fg="white",command=lambda: Lista.Main().editar(8,str(self.insertName.get()),str(self.editHealth.get()))).pack(pady=12)
+        self.salvarData = Button(self.frameLista, bg="red", text="SALVAR", bd="0", fg="white",command=lambda: Lista.Main().editarDado(8,str(self.insertName.get()),str(self.editHealth.get()))).pack(pady=12)
         self.returnMain = Button(self.frameLista, bg="red", text="Voltar", bd="0", fg="white",command= self.windowsLista.destroy).pack(pady=12)
     
     def editarFreedom(self):
@@ -395,7 +395,7 @@ class newLista:
         self.editFreedom  = Entry(self.frameLista)
         self.editFreedom.pack()
         
-        self.salvarData = Button(self.frameLista, bg="red", text="SALVAR", bd="0", fg="white",command=lambda: Lista.Main().editar(9,str(self.insertName.get()),str(self.editFreedom.get()))).pack(pady=12)
+        self.salvarData = Button(self.frameLista, bg="red", text="SALVAR", bd="0", fg="white",command=lambda: Lista.Main().editarDado(9,str(self.insertName.get()),str(self.editFreedom.get()))).pack(pady=12)
         self.returnMain = Button(self.frameLista, bg="red", text="Voltar", bd="0", fg="white",command= self.windowsLista.destroy).pack(pady=12)
     
     def editarTrust(self):
@@ -420,7 +420,7 @@ class newLista:
         self.editTrust  = Entry(self.frameLista)
         self.editTrust.pack()
         
-        self.salvarData = Button(self.frameLista, bg="red", text="SALVAR", bd="0", fg="white",command=lambda: Lista.Main().editar(10,str(self.insertName.get()),str(self.editTrust.get()))).pack(pady=12)
+        self.salvarData = Button(self.frameLista, bg="red", text="SALVAR", bd="0", fg="white",command=lambda: Lista.Main().editarDado(10,str(self.insertName.get()),str(self.editTrust.get()))).pack(pady=12)
         self.returnMain = Button(self.frameLista, bg="red", text="Voltar", bd="0", fg="white",command= self.windowsLista.destroy).pack(pady=12)
 
     def editarGenorosity(self):
@@ -445,7 +445,7 @@ class newLista:
         self.editGenorosity  = Entry(self.frameLista)
         self.editGenorosity.pack()
         
-        self.salvarData = Button(self.frameLista, bg="red", text="SALVAR", bd="0", fg="white",command=lambda: Lista.Main().editar(11,str(self.insertName.get()),str(self.editGenorosity.get()))).pack(pady=12)
+        self.salvarData = Button(self.frameLista, bg="red", text="SALVAR", bd="0", fg="white",command=lambda: Lista.Main().editarDado(11,str(self.insertName.get()),str(self.editGenorosity.get()))).pack(pady=12)
         self.returnMain = Button(self.frameLista, bg="red", text="Voltar", bd="0", fg="white",command= self.windowsLista.destroy).pack(pady=12)
 
     def editarDystopiaResidual(self):
@@ -470,7 +470,7 @@ class newLista:
         self.editDystopiaResidual  = Entry(self.frameLista)
         self.editDystopiaResidual.pack()
         
-        self.salvarData = Button(self.frameLista, bg="red", text="SALVAR", bd="0", fg="white",command=lambda: Lista.Main().editar(12,str(self.insertName.get()),str(self.editDystopiaResidual.get()))).pack(pady=12)
+        self.salvarData = Button(self.frameLista, bg="red", text="SALVAR", bd="0", fg="white",command=lambda: Lista.Main().editarDado(12,str(self.insertName.get()),str(self.editDystopiaResidual.get()))).pack(pady=12)
         self.returnMain = Button(self.frameLista, bg="red", text="Voltar", bd="0", fg="white",command= self.windowsLista.destroy).pack(pady=12)
 
     def deletarItem(self):
